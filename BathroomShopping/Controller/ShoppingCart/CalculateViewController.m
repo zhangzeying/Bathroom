@@ -129,6 +129,7 @@
 
     if ([payType isEqualToString:@"alipay"]) {//支付宝支付
         
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(callBackAlipay:) name:@"payAlipayCallBack" object:nil];
         NSString *orderSpec = [dict objectForKey:@"reqStr"];
         [[AlipaySDK defaultService] payOrder:orderSpec fromScheme:@"bathroomalisdk" callback:^(NSDictionary *resultDic) {
             
@@ -160,6 +161,7 @@
             return;
         }
         
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(callBackWXpay:) name:@"payWXCallBack" object:nil];
         PayReq *req = [[PayReq alloc] init];
         req.openID = [dict objectForKey:@"appid"];
         req.partnerId = [dict objectForKey:@"partnerid"];
@@ -170,6 +172,44 @@
         req.sign = [dict objectForKey:@"sign"];
         NSLog(@"%@",req);
         [WXApi sendReq:req];
+    }
+    
+}
+
+/**
+ * 支付宝支付回调处理
+ */
+- (void)callBackAlipay:(NSNotification *)sender {
+
+    NSString *state = sender.object;
+    //如果支付成功跳转成功的页面
+    if ([state isEqualToString:@"1"]) {
+        
+    }
+    
+    //如果支付失败跳转失败的页面
+    else {
+       
+        
+    }
+}
+
+/**
+ *微信支付回调处理
+ */
+- (void)callBackWXpay:(NSNotification *)sender {
+    
+    NSString *state = sender.object;
+    //如果支付成功跳转成功的页面
+    if ([state isEqualToString:@"1"]) {
+        
+        
+    }
+    
+    //如果支付失败跳转失败的页面
+    else {
+        
+        
     }
     
 }
