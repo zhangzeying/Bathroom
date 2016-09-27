@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="140" id="KGk-i7-Jjw" customClass="AddressManageTableCell">
+            <rect key="frame" x="0.0" y="0.0" width="384" height="130"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="384" height="129.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4W4-Xo-STn">
+                        <rect key="frame" x="13" y="13" width="39.5" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15244343434" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTH-PC-OAG">
+                        <rect key="frame" x="72" y="13" width="105" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="浙江省杭州我我浙江省杭州我我浙江省杭州我我浙江省杭州我我浙江省杭州我我浙江省杭州我我浙江省杭州我我浙江省杭州我我" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="353" translatesAutoresizingMaskIntoConstraints="NO" id="Kv1-co-kbj">
+                        <rect key="frame" x="13" y="37" width="358" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="vxU-45-OLo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lo4-Gt-FOp">
+                        <rect key="frame" x="13" y="85" width="371" height="1"/>
+                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="3sh-Bo-uTw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gqx-1g-yBZ">
+                        <rect key="frame" x="13" y="101" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="ZeD-sV-BzP"/>
+                            <constraint firstAttribute="width" constant="20" id="vgV-cH-2jz"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="not_select_icon"/>
+                        <connections>
+                            <action selector="checkClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IcO-s4-QVj"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设为默认" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bua-ja-Hnn">
+                        <rect key="frame" x="43" y="102" width="56" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCt-Of-zbt">
+                        <rect key="frame" x="251" y="102" width="60" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="OHx-7Y-qxm"/>
+                            <constraint firstAttribute="width" constant="70" id="Yvx-DM-9tC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="编辑" image="edit_icon">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Yvx-DM-9tC"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <action selector="editClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lhy-yr-VWt"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hi0-G4-TTt">
+                        <rect key="frame" x="311" y="102" width="60" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="SbS-Fi-Qbo"/>
+                            <constraint firstAttribute="width" constant="70" id="xh9-p8-T9V"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="删除" image="delete_icon">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="xh9-p8-T9V"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <action selector="deleteClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="u9g-0U-XNQ"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Kv1-co-kbj" firstAttribute="top" secondItem="CTH-PC-OAG" secondAttribute="bottom" constant="5" id="C16-gz-4Pd"/>
+                    <constraint firstItem="4W4-Xo-STn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="DHg-Dz-olv"/>
+                    <constraint firstItem="Hi0-G4-TTt" firstAttribute="leading" secondItem="vCt-Of-zbt" secondAttribute="trailing" id="Hh9-ua-MQr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="lo4-Gt-FOp" secondAttribute="trailing" constant="-8" id="KvD-gH-NfM"/>
+                    <constraint firstItem="4W4-Xo-STn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="M2A-jA-H4I"/>
+                    <constraint firstItem="CTH-PC-OAG" firstAttribute="leading" secondItem="4W4-Xo-STn" secondAttribute="trailing" constant="20" id="Rt3-DC-o4q"/>
+                    <constraint firstItem="bua-ja-Hnn" firstAttribute="top" secondItem="lo4-Gt-FOp" secondAttribute="bottom" constant="10" id="UsD-RO-hig"/>
+                    <constraint firstItem="bua-ja-Hnn" firstAttribute="centerY" secondItem="gqx-1g-yBZ" secondAttribute="centerY" id="Vq1-TJ-KUa"/>
+                    <constraint firstItem="gqx-1g-yBZ" firstAttribute="leading" secondItem="Kv1-co-kbj" secondAttribute="leading" id="Vvh-CK-R8E"/>
+                    <constraint firstItem="gqx-1g-yBZ" firstAttribute="top" secondItem="lo4-Gt-FOp" secondAttribute="bottom" constant="15" id="X0h-f9-iIF"/>
+                    <constraint firstItem="CTH-PC-OAG" firstAttribute="top" secondItem="4W4-Xo-STn" secondAttribute="top" id="Xsa-d2-BnN"/>
+                    <constraint firstItem="lo4-Gt-FOp" firstAttribute="leading" secondItem="Kv1-co-kbj" secondAttribute="leading" id="Yze-zt-jNg"/>
+                    <constraint firstItem="Kv1-co-kbj" firstAttribute="leading" secondItem="4W4-Xo-STn" secondAttribute="leading" id="dhL-QQ-rfP"/>
+                    <constraint firstItem="lo4-Gt-FOp" firstAttribute="top" secondItem="Kv1-co-kbj" secondAttribute="bottom" constant="8" id="eT8-o2-ipC"/>
+                    <constraint firstItem="Hi0-G4-TTt" firstAttribute="trailing" secondItem="Kv1-co-kbj" secondAttribute="trailing" id="fTL-7m-A9i"/>
+                    <constraint firstItem="Hi0-G4-TTt" firstAttribute="centerY" secondItem="bua-ja-Hnn" secondAttribute="centerY" id="kTg-9l-g1w"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Kv1-co-kbj" secondAttribute="trailing" constant="5" id="n4n-pM-kU0"/>
+                    <constraint firstItem="bua-ja-Hnn" firstAttribute="leading" secondItem="gqx-1g-yBZ" secondAttribute="trailing" constant="10" id="w3E-EN-7ct"/>
+                    <constraint firstItem="vCt-Of-zbt" firstAttribute="centerY" secondItem="bua-ja-Hnn" secondAttribute="centerY" id="yMV-9s-jE2"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="UsD-RO-hig"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addressLbl" destination="Kv1-co-kbj" id="Tpd-iX-P1z"/>
+                <outlet property="checkBox" destination="gqx-1g-yBZ" id="D7M-2y-1O8"/>
+                <outlet property="deleteBtn" destination="Hi0-G4-TTt" id="Juk-9S-OMM"/>
+                <outlet property="editBtn" destination="vCt-Of-zbt" id="tiZ-Hy-sVF"/>
+                <outlet property="line" destination="lo4-Gt-FOp" id="Mix-aF-9Tv"/>
+                <outlet property="nameLbl" destination="4W4-Xo-STn" id="jbh-BH-EMc"/>
+                <outlet property="phoneLbl" destination="CTH-PC-OAG" id="kjN-8b-qgb"/>
+            </connections>
+            <point key="canvasLocation" x="307" y="251"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="delete_icon" width="14" height="15"/>
+        <image name="edit_icon" width="17" height="17"/>
+        <image name="not_select_icon" width="20" height="20"/>
+    </resources>
+</document>

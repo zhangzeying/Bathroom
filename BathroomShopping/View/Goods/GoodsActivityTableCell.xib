@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="49" id="KGk-i7-Jjw" customClass="GoodsActivityTableCell">
+            <rect key="frame" x="0.0" y="0.0" width="337" height="49"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="337" height="48.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="促销活动" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUh-UK-Ddh">
+                        <rect key="frame" x="13" y="15" width="60" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_icon" translatesAutoresizingMaskIntoConstraints="NO" id="kaf-Er-KOP">
+                        <rect key="frame" x="317" y="18" width="7" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="V4J-Pj-VFE"/>
+                            <constraint firstAttribute="height" constant="13" id="ald-q5-UgP"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="满2000减100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="at2-15-tbD">
+                        <rect key="frame" x="83" y="15" width="226" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="133" id="hz8-nI-tIf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="hz8-nI-tIf"/>
+                            </mask>
+                        </variation>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="at2-15-tbD" firstAttribute="leading" secondItem="fUh-UK-Ddh" secondAttribute="trailing" constant="10" id="EWL-Fu-MnK"/>
+                    <constraint firstItem="kaf-Er-KOP" firstAttribute="leading" secondItem="at2-15-tbD" secondAttribute="trailing" constant="8" id="QLZ-ga-4fe"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="kaf-Er-KOP" secondAttribute="trailing" constant="5" id="WOc-vX-T2n"/>
+                    <constraint firstItem="kaf-Er-KOP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="arG-ik-xIq"/>
+                    <constraint firstItem="fUh-UK-Ddh" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iam-MF-kcm"/>
+                    <constraint firstItem="at2-15-tbD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="kqj-7Z-hmK"/>
+                    <constraint firstItem="fUh-UK-Ddh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="oxo-Rf-bNX"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="activityLbl" destination="at2-15-tbD" id="mR3-D8-vQp"/>
+            </connections>
+            <point key="canvasLocation" x="385.5" y="171.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="arrow_icon" width="7" height="13"/>
+    </resources>
+</document>

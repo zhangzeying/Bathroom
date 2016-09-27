@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HotGoodsCollectionCell">
+            <rect key="frame" x="0.0" y="0.0" width="217" height="159"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="217" height="159"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8H-89-KSg">
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥89" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8vF-Fj-psD">
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="已售数量1139" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdm-I4-WHd">
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="复古简单木椅" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Di-3U-jRR">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" image="sys_xiao8" translatesAutoresizingMaskIntoConstraints="NO" id="bMW-T5-ez8">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="9Ws-7n-EmL"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="3Di-3U-jRR" firstAttribute="top" secondItem="bMW-T5-ez8" secondAttribute="bottom" id="1fp-ny-907"/>
+                            <constraint firstItem="bMW-T5-ez8" firstAttribute="top" secondItem="I8H-89-KSg" secondAttribute="top" id="3Vp-LI-33c"/>
+                            <constraint firstAttribute="trailing" secondItem="Gdm-I4-WHd" secondAttribute="trailing" constant="5" id="GeC-eN-CuU"/>
+                            <constraint firstItem="3Di-3U-jRR" firstAttribute="leading" secondItem="8vF-Fj-psD" secondAttribute="leading" id="Piu-2f-QV9"/>
+                            <constraint firstItem="Gdm-I4-WHd" firstAttribute="centerY" secondItem="8vF-Fj-psD" secondAttribute="centerY" id="eRb-mF-ojq"/>
+                            <constraint firstItem="8vF-Fj-psD" firstAttribute="top" secondItem="3Di-3U-jRR" secondAttribute="bottom" id="h0C-jX-Ijd"/>
+                            <constraint firstAttribute="bottom" secondItem="8vF-Fj-psD" secondAttribute="bottom" constant="5" id="hoe-9p-HAs"/>
+                            <constraint firstItem="bMW-T5-ez8" firstAttribute="leading" secondItem="I8H-89-KSg" secondAttribute="leading" id="jAY-sP-eoR"/>
+                            <constraint firstAttribute="trailing" secondItem="bMW-T5-ez8" secondAttribute="trailing" id="s1O-Hu-AgL"/>
+                            <constraint firstAttribute="trailing" secondItem="3Di-3U-jRR" secondAttribute="trailing" id="vXf-LF-J24"/>
+                            <constraint firstItem="8vF-Fj-psD" firstAttribute="leading" secondItem="I8H-89-KSg" secondAttribute="leading" constant="5" id="xKJ-l7-VOJ"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1fp-ny-907"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="I8H-89-KSg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="4" id="SWd-rQ-tQK"/>
+                <constraint firstAttribute="trailing" secondItem="I8H-89-KSg" secondAttribute="trailing" constant="4" id="VE4-Jr-FfO"/>
+                <constraint firstItem="I8H-89-KSg" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="VtY-g2-95W"/>
+                <constraint firstAttribute="bottom" secondItem="I8H-89-KSg" secondAttribute="bottom" constant="4" id="jmI-ZM-vMe"/>
+            </constraints>
+            <size key="customSize" width="217" height="159"/>
+            <connections>
+                <outlet property="bgView" destination="I8H-89-KSg" id="p2D-lh-YUd"/>
+                <outlet property="goodsImage" destination="bMW-T5-ez8" id="0c8-E2-tlZ"/>
+                <outlet property="goodsNameLbl" destination="3Di-3U-jRR" id="x3n-Dr-RS4"/>
+                <outlet property="price" destination="8vF-Fj-psD" id="aaH-2q-wQQ"/>
+                <outlet property="saleCountLbl" destination="Gdm-I4-WHd" id="afd-hR-R37"/>
+            </connections>
+            <point key="canvasLocation" x="-47.5" y="185.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="sys_xiao8" width="52" height="89"/>
+    </resources>
+</document>
