@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ActivityGoodsDetailModel;
+@class MallPackageModel;
 
 @interface MallTableCell : UITableViewCell
 + (instancetype)cellWithTableView:(UITableView *)table;
 /** 模型 */
-@property(nonatomic,strong)ActivityGoodsDetailModel *model;
+@property(nonatomic,strong)MallPackageModel *model;
 @end

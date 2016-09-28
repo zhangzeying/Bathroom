@@ -156,6 +156,7 @@
 		5A9C858C1D35E09400FB7782 /* MineHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9C858B1D35E09400FB7782 /* MineHeaderView.m */; };
 		5A9C85921D360F8400FB7782 /* MineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9C85911D360F8400FB7782 /* MineTableViewCell.m */; };
 		5A9E084B1D584C580032129C /* GoodsRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E084A1D584C580032129C /* GoodsRefreshHeader.m */; };
+		5AAC15241D9AB0240024A5FC /* MallPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAC15231D9AB0240024A5FC /* MallPackageModel.m */; };
 		5ADBAFF11D93672B002225E5 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADBAFF01D93672B002225E5 /* OrderModel.m */; };
 		5ADBAFF41D936CA4002225E5 /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADBAFF31D936CA4002225E5 /* OrderDetailModel.m */; };
 		5ADBAFF71D93BEA5002225E5 /* LimitBuyProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADBAFF61D93BEA5002225E5 /* LimitBuyProductModel.m */; };
@@ -170,8 +171,6 @@
 		5AE10D991D4DE6FC003551C1 /* BathroomService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE10D981D4DE6FC003551C1 /* BathroomService.m */; };
 		5AE10D9E1D4DFFF5003551C1 /* MallTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE10D9C1D4DFFF5003551C1 /* MallTableCell.m */; };
 		5AE10D9F1D4DFFF5003551C1 /* MallTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE10D9D1D4DFFF5003551C1 /* MallTableCell.xib */; };
-		5AE10DA21D4E0017003551C1 /* MallHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE10DA11D4E0017003551C1 /* MallHeaderView.m */; };
-		5AE10DA41D4E0026003551C1 /* MallHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE10DA31D4E0026003551C1 /* MallHeaderView.xib */; };
 		5AE10DA71D4E2F64003551C1 /* ScrollTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE10DA61D4E2F64003551C1 /* ScrollTitleView.m */; };
 		5AE28F2C1D990CEB00EF685C /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE28F2B1D990CEB00EF685C /* AboutViewController.m */; };
 		5AE566B91D6A947700CF5055 /* GoodsSpecView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE566B81D6A947700CF5055 /* GoodsSpecView.m */; };
@@ -576,6 +575,8 @@
 		5A9C85911D360F8400FB7782 /* MineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTableViewCell.m; sourceTree = "<group>"; };
 		5A9E08491D584C580032129C /* GoodsRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsRefreshHeader.h; sourceTree = "<group>"; };
 		5A9E084A1D584C580032129C /* GoodsRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsRefreshHeader.m; sourceTree = "<group>"; };
+		5AAC15221D9AB0240024A5FC /* MallPackageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallPackageModel.h; sourceTree = "<group>"; };
+		5AAC15231D9AB0240024A5FC /* MallPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallPackageModel.m; sourceTree = "<group>"; };
 		5ADBAFEF1D93672B002225E5 /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
 		5ADBAFF01D93672B002225E5 /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
 		5ADBAFF21D936CA4002225E5 /* OrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailModel.h; sourceTree = "<group>"; };
@@ -603,9 +604,6 @@
 		5AE10D9B1D4DFFF5003551C1 /* MallTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallTableCell.h; sourceTree = "<group>"; };
 		5AE10D9C1D4DFFF5003551C1 /* MallTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallTableCell.m; sourceTree = "<group>"; };
 		5AE10D9D1D4DFFF5003551C1 /* MallTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MallTableCell.xib; sourceTree = "<group>"; };
-		5AE10DA01D4E0017003551C1 /* MallHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallHeaderView.h; sourceTree = "<group>"; };
-		5AE10DA11D4E0017003551C1 /* MallHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallHeaderView.m; sourceTree = "<group>"; };
-		5AE10DA31D4E0026003551C1 /* MallHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MallHeaderView.xib; sourceTree = "<group>"; };
 		5AE10DA51D4E2F64003551C1 /* ScrollTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollTitleView.h; sourceTree = "<group>"; };
 		5AE10DA61D4E2F64003551C1 /* ScrollTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollTitleView.m; sourceTree = "<group>"; };
 		5AE28F2A1D990CEB00EF685C /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -1210,6 +1208,7 @@
 		5A3B85D81D2613CB00E9B3E4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5AAC15211D9AB0150024A5FC /* Mall */,
 				5A7E00911D5ECE4900526228 /* Goods */,
 				5A00F5281D5D58EC007141E1 /* User */,
 				5A521C2B1D5C087900950C03 /* ShoppingCart */,
@@ -1376,6 +1375,15 @@
 			path = Mine;
 			sourceTree = "<group>";
 		};
+		5AAC15211D9AB0150024A5FC /* Mall */ = {
+			isa = PBXGroup;
+			children = (
+				5AAC15221D9AB0240024A5FC /* MallPackageModel.h */,
+				5AAC15231D9AB0240024A5FC /* MallPackageModel.m */,
+			);
+			path = Mall;
+			sourceTree = "<group>";
+		};
 		5AE10D881D4CBDC3003551C1 /* LoginAndRegister */ = {
 			isa = PBXGroup;
 			children = (
@@ -1422,9 +1430,6 @@
 				5AE10D9B1D4DFFF5003551C1 /* MallTableCell.h */,
 				5AE10D9C1D4DFFF5003551C1 /* MallTableCell.m */,
 				5AE10D9D1D4DFFF5003551C1 /* MallTableCell.xib */,
-				5AE10DA01D4E0017003551C1 /* MallHeaderView.h */,
-				5AE10DA11D4E0017003551C1 /* MallHeaderView.m */,
-				5AE10DA31D4E0026003551C1 /* MallHeaderView.xib */,
 			);
 			path = Mall;
 			sourceTree = "<group>";
@@ -1766,7 +1771,6 @@
 				5A6FB4DA1D81519B0067B500 /* AppointGoodsViewController.xib in Resources */,
 				5AFF728E1D716B7900A1A04A /* OrderDetailGoodsTableCell.xib in Resources */,
 				5A28762A1D65F09800C6A064 /* AlipaySDK.bundle in Resources */,
-				5AE10DA41D4E0026003551C1 /* MallHeaderView.xib in Resources */,
 				5A0186D51D80365800721D96 /* MyLikedTableCell.xib in Resources */,
 				5A76D0571D437F8800F65AE2 /* ActivityGoodsCollectionCell.xib in Resources */,
 				5A2111181D61FBCF0008EEEB /* SpecificationTableCell.xib in Resources */,
@@ -1907,7 +1911,6 @@
 				5A1680781D29F788007D5AC2 /* RestService.m in Sources */,
 				5A28769E1D66D61900C6A064 /* VPImageCropperViewController.m in Sources */,
 				5A6FB4D91D81519B0067B500 /* AppointGoodsViewController.m in Sources */,
-				5AE10DA21D4E0017003551C1 /* MallHeaderView.m in Sources */,
 				5A28081E1D34BAE500DCFC30 /* ShoppingCartCellTableViewCell.m in Sources */,
 				5A1017411D57546800FF3969 /* GoodsRefreshFooter.m in Sources */,
 				5AE10D911D4DB1F9003551C1 /* CustomLabel.m in Sources */,
@@ -1987,6 +1990,7 @@
 				5A3510E81D6549D00067A8F8 /* MyButton.m in Sources */,
 				5A2808251D34E47700DCFC30 /* HotAndHistorySearchView.m in Sources */,
 				5A7370D41D3E48B5004DD025 /* HomeScrollNewsView.m in Sources */,
+				5AAC15241D9AB0240024A5FC /* MallPackageModel.m in Sources */,
 				5A5798A51D6972A200D62CCC /* GoodsSpecModel.m in Sources */,
 				5A3246231D6831DB0043ACBD /* AddressManageViewController.m in Sources */,
 				5A0186C81D7FFCD200721D96 /* DataVerifier.m in Sources */,

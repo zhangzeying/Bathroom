@@ -10,7 +10,6 @@
 #import "CategoryView.h"
 #import "BathroomService.h"
 #import "MallTableCell.h"
-#import "MallHeaderView.h"
 #import "MallService.h"
 #import "GoodsCategoryModel.h"
 #import "GoodsCategoryViewController.h"
@@ -88,25 +87,21 @@
     table.delegate = self;
     table.rowHeight = 220;
     table.showsVerticalScrollIndicator = NO;
-    MallHeaderView *mallHeaderView = [MallHeaderView instanceHeaderView];
-    mallHeaderView.width = ScreenW;
-    mallHeaderView.height = 30;
-    table.tableHeaderView = mallHeaderView;
-    [self.view addSubview:table];
-    self.table = table;
-    CategoryView *headerView = [[CategoryView alloc]init];
-    headerView.frame = CGRectMake(0, 0, ScreenW, 180);
-    headerView.categoryType = Mall;
+    
+    UIView *headerView = [[UIView alloc]init];
+    
+    CategoryView *categoryView = [[CategoryView alloc]init];
+    categoryView.frame = CGRectMake(0, 0, ScreenW, 180);
+    categoryView.categoryType = Mall;
     __weak typeof (self)weakSelf = self;
     
-    headerView.categoryViewBlock = ^(GoodsCategoryModel *model){
+    categoryView.categoryViewBlock = ^(GoodsCategoryModel *model){
         
         if (model.index == 7) {
             
             GoodsCategoryViewController *goodsCategoryVC = [[GoodsCategoryViewController alloc]init];
             goodsCategoryVC.categoryArr = self.categoryArr;
             goodsCategoryVC.hidesBottomBarWhenPushed = YES;
-            goodsCategoryVC.categoryArr = self.categoryArr;
             [weakSelf.navigationController pushViewController:goodsCategoryVC animated:YES];
             return;
         }
@@ -117,12 +112,46 @@
         [weakSelf.navigationController pushViewController:mallGoodsVC animated:YES];
     };
     
+    [headerView addSubview:categoryView];
+    __block CategoryView *categoryV = categoryView;
     [self.service getGoodsCategory:^(NSMutableArray *categoryArr) {
         
         [categoryArr removeObjectAtIndex:0];
         weakSelf.categoryArr = categoryArr;
-        headerView.categoryArr = categoryArr;
+        categoryV.categoryArr = categoryArr;
     }];
+   
+    
+    UIView *titleView = [[UIView alloc]init];
+    titleView.frame = CGRectMake(0, CGRectGetMaxY(categoryView.frame), ScreenW, 30);
+    UILabel *titleLbl = [[UILabel alloc]init];
+    titleLbl.text = @"特色好货";
+    titleLbl.textColor = CustomColor(51, 51, 51);
+    titleLbl.font = [UIFont systemFontOfSize:13];
+    [titleLbl sizeToFit];
+    titleLbl.frame = CGRectMake(0, 0, titleLbl.width, titleLbl.height);
+    titleLbl.centerY = titleView.height / 2;
+    titleLbl.centerX = titleView.width / 2;
+    [titleView addSubview:titleLbl];
+    
+    UILabel *leftLine = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(titleLbl.frame) - 15 - 70, 0, 70, 1)];
+    leftLine.backgroundColor = [UIColor lightGrayColor];
+    leftLine.centerY = titleLbl.centerY;
+    [titleView addSubview:leftLine];
+
+    UILabel *rightLine = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLbl.frame) + 15, 0, 70, 1)];
+    rightLine.backgroundColor = [UIColor lightGrayColor];
+    rightLine.centerY = titleLbl.centerY;
+    [titleView addSubview:rightLine];
+    
+    [headerView addSubview:titleView];
+    
+    headerView.width = ScreenW;
+    headerView.height = categoryView.height + titleView.height;
+    
+    [self.view addSubview:table];
+    self.table = table;
+    
     
     table.tableHeaderView = headerView;
     table.backgroundColor = [UIColor whiteColor];

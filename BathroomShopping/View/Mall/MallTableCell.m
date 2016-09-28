@@ -7,15 +7,13 @@
 //
 
 #import "MallTableCell.h"
-#import "ActivityGoodsDetailModel.h"
+#import "MallPackageModel.h"
 static NSString *ID = @"mallCell";
 
 @interface MallTableCell()
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImg;
 @property (weak, nonatomic) IBOutlet UILabel *goodsNameLbl;
-
 @property (weak, nonatomic) IBOutlet UILabel *price;
-@property (weak, nonatomic) IBOutlet UILabel *saleCountLbl;
 @end
 
 @implementation MallTableCell
@@ -40,14 +38,12 @@ static NSString *ID = @"mallCell";
     return cell;
 }
 
-- (void)setModel:(ActivityGoodsDetailModel *)model {
+- (void)setModel:(MallPackageModel *)model {
     
     _model = model;
     self.goodsNameLbl.text = model.name;
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, model.picture];
     [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-//    self.goodsImg.contentMode = UIViewContentModeScaleAspectFit;
-    self.price.text = [NSString stringWithFormat:@"￥%@",model.price];
-    self.saleCountLbl.text = [NSString stringWithFormat:@"已售数量%ld",(long)model.sellCount];
+    self.price.text = [NSString stringWithFormat:@"￥%.2f",model.totalPrice];
 }
 @end

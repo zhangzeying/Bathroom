@@ -11,6 +11,7 @@
 #import "ActivityGoodsDetailModel.h"
 #import "GoodsCategoryModel.h"
 #import "ActivityGoodsModel.h"
+#import "MallPackageModel.h"
 @interface MallService()
 @property(nonatomic ,strong)RestService *restService;
 @end
@@ -90,17 +91,7 @@
             
             NSDictionary *dictData = myAfNetBlokResponeDic;
             ActivityGoodsModel *model = [ActivityGoodsModel mj_objectWithKeyValues:dictData];
-            NSMutableArray *tempArr = @[].mutableCopy;
-            for (NSDictionary *dict in model.list) {
-                
-                NSArray *productArr = dict[@"productList"];
-                for (NSDictionary *productDict in productArr) {
-                    
-                    ActivityGoodsDetailModel *detailModel = [ActivityGoodsDetailModel mj_objectWithKeyValues:productDict];
-                    [tempArr addObject:detailModel];
-                }
-            }
-            model.list = tempArr;
+            model.list = [MallPackageModel mj_objectArrayWithKeyValuesArray:model.list];
             completion(model);
         }
         

@@ -21,12 +21,7 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥89" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLu-qs-KKz">
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已售" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYT-ev-Cab">
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电视" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgX-fN-L4d">
@@ -40,8 +35,6 @@
                     <constraint firstAttribute="bottomMargin" secondItem="leI-v1-vMM" secondAttribute="bottom" id="41H-Kk-wbh"/>
                     <constraint firstItem="xgX-fN-L4d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="70i-ZW-OKQ"/>
                     <constraint firstItem="kLu-qs-KKz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="Ah9-4h-kxG"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="jYT-ev-Cab" secondAttribute="bottom" constant="12" id="C9i-Aa-Com"/>
-                    <constraint firstItem="jYT-ev-Cab" firstAttribute="leading" secondItem="kLu-qs-KKz" secondAttribute="trailing" constant="5" id="GWY-r8-xVI"/>
                     <constraint firstAttribute="trailingMargin" secondItem="leI-v1-vMM" secondAttribute="trailing" id="KPu-1m-JV4"/>
                     <constraint firstItem="kLu-qs-KKz" firstAttribute="top" secondItem="xgX-fN-L4d" secondAttribute="bottom" constant="2" id="LTX-6s-Udw"/>
                     <constraint firstAttribute="bottomMargin" secondItem="kLu-qs-KKz" secondAttribute="bottom" constant="10" id="lqS-bz-Eb3"/>
@@ -53,7 +46,6 @@
                 <outlet property="goodsImg" destination="leI-v1-vMM" id="5yQ-45-4Wp"/>
                 <outlet property="goodsNameLbl" destination="xgX-fN-L4d" id="tSj-lz-liF"/>
                 <outlet property="price" destination="kLu-qs-KKz" id="pmg-BR-ipA"/>
-                <outlet property="saleCountLbl" destination="jYT-ev-Cab" id="XBC-II-skd"/>
             </connections>
             <point key="canvasLocation" x="79" y="322"/>
         </tableViewCell>

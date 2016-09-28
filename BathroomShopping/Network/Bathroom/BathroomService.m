@@ -97,7 +97,6 @@
             }];
             
             ActivityGoodsModel *model = [ActivityGoodsModel mj_objectWithKeyValues:dictData];
-            NSMutableArray *arr = model.list;
             completion(model);
         }
         
