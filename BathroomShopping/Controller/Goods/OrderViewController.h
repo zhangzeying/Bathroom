@@ -17,6 +17,4 @@ typedef NS_ENUM(NSInteger, OrderType){
 };
 /** <##> */
 @property(assign,nonatomic)OrderType orderType;
-/** <##> */
-@property(nonatomic,strong)NSMutableArray *dataArr;
 @end

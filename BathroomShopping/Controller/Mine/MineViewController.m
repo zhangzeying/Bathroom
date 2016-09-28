@@ -21,10 +21,6 @@
 /** <##> */
 @property(nonatomic,strong)OrderService *service;
 /** <##> */
-@property(nonatomic,strong)NSMutableArray *nopayOrderArr;
-/** <##> */
-@property(nonatomic,strong)NSMutableArray *noReceiveOrderArr;
-/** <##> */
 @property(nonatomic,strong)UILabel *nopayCountLbl;
 /** <##> */
 @property(nonatomic,strong)UILabel *noReceiveCountLbl;
@@ -42,26 +38,6 @@
     }
     
     return _service;
-}
-
-- (NSMutableArray *)nopayOrderArr {
-    
-    if (_nopayOrderArr == nil) {
-        
-        _nopayOrderArr = [NSMutableArray array];
-    }
-    
-    return _nopayOrderArr;
-}
-
-- (NSMutableArray *)noReceiveOrderArr {
-    
-    if (_noReceiveOrderArr == nil) {
-        
-        _noReceiveOrderArr = [NSMutableArray array];
-    }
-    
-    return _noReceiveOrderArr;
 }
 
 - (UILabel *)nopayCountLbl {
@@ -294,7 +270,6 @@
         
         [self.service getOrder:@"nopay" completion:^(NSMutableArray *dataArr) {
             
-            weakSelf.nopayOrderArr = dataArr;
             weakSelf.nopayCountLbl.text = [NSString stringWithFormat:@"%ld",dataArr.count];
             if (dataArr.count == 0) {
                 
@@ -310,7 +285,6 @@
         
         [self.service getOrder:@"send" completion:^(NSMutableArray *dataArr) {
             
-            weakSelf.noReceiveOrderArr = dataArr;
             weakSelf.noReceiveCountLbl.text = [NSString stringWithFormat:@"%ld",dataArr.count];
             
             if (dataArr.count == 0) {
@@ -333,7 +307,6 @@
         
         OrderViewController *orderVC = [[OrderViewController alloc]init];
         orderVC.orderType = NoPayOrder;
-        orderVC.dataArr = self.nopayOrderArr;
         orderVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:orderVC animated:YES];
         
@@ -342,7 +315,6 @@
     
         OrderViewController *orderVC = [[OrderViewController alloc]init];
         orderVC.orderType = NoReceiveOrder;
-        orderVC.dataArr = self.noReceiveOrderArr;
         orderVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:orderVC animated:YES];
     }

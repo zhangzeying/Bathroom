@@ -71,13 +71,6 @@
                 }];
                 
                 NSArray *orderArr = [OrderModel mj_objectArrayWithKeyValuesArray:listArr];
-                for (OrderModel *model in orderArr) {
-                    
-                    for (OrderDetailModel *detailModel in model.orders) {
-                        
-                        model.productsNum += detailModel.quantity;
-                    }
-                }
                 completion(orderArr);
                 
             }else {

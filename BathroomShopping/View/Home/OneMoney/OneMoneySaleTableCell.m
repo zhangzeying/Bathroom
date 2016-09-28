@@ -47,7 +47,6 @@ static NSString *ID = @"oneMoneySaleTableCell";
 
     _model = model;
     self.goodsImg.contentMode = UIViewContentModeScaleAspectFit;
-    UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, model.picture];
     [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"sys_xiao8"]];
     self.nameLbl.text = model.name;
