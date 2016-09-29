@@ -28,6 +28,7 @@
 		5A023A621D87CB100067815E /* AddressListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A023A601D87CB100067815E /* AddressListTableCell.xib */; };
 		5A023A661D87E6AC0067815E /* BathroomHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A023A651D87E6AC0067815E /* BathroomHeaderCell.m */; };
 		5A02DED01D6BE28600115B5D /* LotteryUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A02DECF1D6BE28600115B5D /* LotteryUserModel.m */; };
+		5A030DEF1D9D607A00F01D1A /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A030DEE1D9D607A00F01D1A /* NSObject+Extension.m */; };
 		5A0858C31D78463300B78879 /* OrderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0858C21D78463300B78879 /* OrderService.m */; };
 		5A0941411D964193009CAF01 /* GradualLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0941401D964193009CAF01 /* GradualLabel.m */; };
 		5A09A5251D600EB4002C1A02 /* GoodsActivityTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A09A5231D600EB4002C1A02 /* GoodsActivityTableCell.m */; };
@@ -273,6 +274,8 @@
 		5A023A651D87E6AC0067815E /* BathroomHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BathroomHeaderCell.m; sourceTree = "<group>"; };
 		5A02DECE1D6BE28600115B5D /* LotteryUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LotteryUserModel.h; sourceTree = "<group>"; };
 		5A02DECF1D6BE28600115B5D /* LotteryUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LotteryUserModel.m; sourceTree = "<group>"; };
+		5A030DED1D9D607A00F01D1A /* NSObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Extension.h"; path = "../../../../../../Downloads/XHRuntimeDemo-master/XHRuntimeDemo/NSObject+Extension.h"; sourceTree = "<group>"; };
+		5A030DEE1D9D607A00F01D1A /* NSObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Extension.m"; path = "../../../../../../Downloads/XHRuntimeDemo-master/XHRuntimeDemo/NSObject+Extension.m"; sourceTree = "<group>"; };
 		5A0858C11D78463300B78879 /* OrderService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderService.h; sourceTree = "<group>"; };
 		5A0858C21D78463300B78879 /* OrderService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderService.m; sourceTree = "<group>"; };
 		5A09413F1D964193009CAF01 /* GradualLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradualLabel.h; sourceTree = "<group>"; };
@@ -1087,6 +1090,8 @@
 		5A3B85D31D2613B400E9B3E4 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				5A030DED1D9D607A00F01D1A /* NSObject+Extension.h */,
+				5A030DEE1D9D607A00F01D1A /* NSObject+Extension.m */,
 				5A0DCF221D6ED61800C8CAE7 /* NSDate+Extension.h */,
 				5A0DCF231D6ED61800C8CAE7 /* NSDate+Extension.m */,
 				5A28769F1D66D6F100C6A064 /* UIImage+Rotate.h */,
@@ -1860,6 +1865,7 @@
 				5AE10D8B1D4CBDE3003551C1 /* LoginAndRegisterService.m in Sources */,
 				5AF6E5AA1D44C31F00185E8C /* HotGoodsCollectionCell.m in Sources */,
 				5A7E00981D5ED24D00526228 /* GoodsInfoTableCell.m in Sources */,
+				5A030DEF1D9D607A00F01D1A /* NSObject+Extension.m in Sources */,
 				5A1436F51D72A671008E89C6 /* ReceiverAddressModel.m in Sources */,
 				5AE10DA71D4E2F64003551C1 /* ScrollTitleView.m in Sources */,
 				5A0D91E51D2BEB4B00EB4FCD /* CustomSearchBar.m in Sources */,
