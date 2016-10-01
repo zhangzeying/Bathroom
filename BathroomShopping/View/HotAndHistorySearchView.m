@@ -118,6 +118,7 @@
             UIButton *btn = self.hotView.subviews[i];
             btn.titleLabel.lineBreakMode =  NSLineBreakByTruncatingTail;
             GoodsDetailModel *model = self.hotArr[i - 1];
+            btn.searchContent = model.name;
             if (model.name.length > 15) {
                 
                 model.name = [model.name substringToIndex:15];
@@ -126,7 +127,6 @@
             [btn setTitle:model.name forState:UIControlStateNormal];
             btn.titleLabel.font = [UIFont systemFontOfSize:15];
             [btn sizeToFit];
-            btn.searchContent = model.name;
             CGFloat btnW = MAX(btn.frame.size.width + 5, 60);
             CGFloat btnH = btn.frame.size.height;
             CGFloat btnX;

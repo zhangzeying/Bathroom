@@ -45,7 +45,7 @@ static NSString *ID = @"LimitBuyTableCell";
     self.buyCountLbl.layer.borderColor = CustomColor(247, 213, 67).CGColor;
     self.buyCountLbl.layer.borderWidth = 0.5;
     self.buyCountLbl.layer.cornerRadius = 5;
-    self.goodsImg.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.goodsImg.layer.borderColor = CustomColor(235, 235, 235).CGColor;
     self.goodsImg.layer.borderWidth = 0.8;
 }
 

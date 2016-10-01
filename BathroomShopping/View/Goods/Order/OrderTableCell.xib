@@ -13,12 +13,12 @@
             <rect key="frame" x="0.0" y="0.0" width="358" height="204"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="358" height="203"/>
+                <frame key="frameInset" width="358" height="203.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交易成功" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3n-1x-DkN">
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d6r-gg-Jlh">
@@ -80,6 +80,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="bgView" destination="d6r-gg-Jlh" id="1Ks-cT-cfw"/>
+                <outlet property="line" destination="WqN-TE-FJ8" id="8PQ-0A-ygi"/>
                 <outlet property="operationBtn" destination="yhy-sq-fnN" id="8kc-Bk-MNI"/>
                 <outlet property="orderStateLbl" destination="X3n-1x-DkN" id="l6j-0f-hdc"/>
                 <outlet property="totalNumLbl" destination="Vaq-2J-BSR" id="S92-xX-2Ff"/>

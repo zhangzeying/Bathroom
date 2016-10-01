@@ -142,7 +142,7 @@
     if (self.orderType == NoPayOrder) {//未付款
         
         btn = self.scrollTitleView.subviews[2];
-        [self getOrderList:@"nopay"];
+        [self getOrderList:@"all"];
         
     }else if (self.orderType == NoReceiveOrder) {
     
