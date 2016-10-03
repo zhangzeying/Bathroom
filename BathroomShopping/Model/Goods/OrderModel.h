@@ -27,4 +27,8 @@
 @property(nonatomic,strong)NSMutableArray *orders;
 /** 商品总数 */
 @property(assign,nonatomic)NSInteger productsNum;
+/** n，表示未支付 y 表示已支付 */
+@property(nonatomic,copy)NSString *paystatus;
+/** init表示已付款，send表示已发货，sign，表示签收 */
+@property(nonatomic,copy)NSString *status;
 @end

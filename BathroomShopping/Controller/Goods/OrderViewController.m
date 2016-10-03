@@ -27,9 +27,25 @@
 @property (nonatomic, weak)UIView *scrollTitleView;
 /** <##> */
 @property(nonatomic,strong)NSMutableArray *dataArr;
+/** <##> */
+@property (nonatomic, strong)ErrorView *errorView;
 @end
 
 @implementation OrderViewController
+
+- (ErrorView *)errorView {
+    
+    if (_errorView == nil) {
+        
+        _errorView = [[ErrorView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.line.frame), ScreenW, ScreenH - CGRectGetMaxY(self.line.frame))];
+        _errorView.warnStr = @"您还没有相关的订单哦！";
+        _errorView.imgName = @"sys_xiao8";
+        _errorView.btnTitle = @"";
+        [self.view addSubview:_errorView];
+    }
+    
+    return _errorView;
+}
 
 - (NSMutableArray *)dataArr {
     
@@ -106,7 +122,22 @@
         self.indicatorView.centerX = sender.centerX;
     }];
     
-    
+    switch (sender.tag) {
+        case 0:
+            [self getOrderList:@"all"];
+            break;
+        case 1:
+            [self getOrderList:@"nopay"];
+            break;
+        case 2:
+            [self getOrderList:@"send"];
+            break;
+        case 3:
+            [self getOrderList:@"payed"];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)initTableView {
@@ -142,15 +173,17 @@
     if (self.orderType == NoPayOrder) {//未付款
         
         btn = self.scrollTitleView.subviews[2];
-        [self getOrderList:@"all"];
+        [self getOrderList:@"nopay"];
         
     }else if (self.orderType == NoReceiveOrder) {
     
         btn = self.scrollTitleView.subviews[3];
+        [self getOrderList:@"send"];
         
     }else {
     
         btn = self.scrollTitleView.subviews[1];
+        [self getOrderList:@"all"];
     }
     
     btn.enabled = NO;
@@ -173,16 +206,14 @@
         weakSelf.dataArr = dataArr;
         if (dataArr.count == 0) {
             
-            [weakSelf.tableView removeFromSuperview];
-            ErrorView *errorView = [[ErrorView alloc]initWithFrame:self.view.frame];
-            errorView.warnStr = @"您还没有相关的订单哦！";
-            errorView.imgName = @"sys_xiao8";
-            errorView.btnTitle = @"";
-            [weakSelf.view addSubview:errorView];
+            weakSelf.errorView.hidden = NO;
+            weakSelf.tableView.hidden = YES;
             
         }else {
             
-             [weakSelf.tableView reloadData];
+            self.errorView.hidden = YES;
+            weakSelf.tableView.hidden = NO;
+            [weakSelf.tableView reloadData];
         }
         
     }];
