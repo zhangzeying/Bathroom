@@ -14,6 +14,7 @@
     [super layoutSubviews];
     CGFloat midX = self.frame.size.width / 2;
     CGFloat midY = self.frame.size.height/ 2 ;
+    [self.titleLabel sizeToFit];
     self.titleLabel.center = CGPointMake(midX, midY + self.centerOffset);
     self.imageView.center = CGPointMake(midX, midY - 10);
 }
