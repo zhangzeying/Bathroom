@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="424" height="151"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="424" height="150"/>
+                <frame key="frameInset" width="424" height="150.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vPI-zG-g5E">
@@ -178,13 +178,14 @@
                 <outlet property="hourLbl" destination="wFc-4N-pVd" id="7Dv-fu-f5t"/>
                 <outlet property="joinCount" destination="Sel-k8-gid" id="MYg-Xh-xxZ"/>
                 <outlet property="line" destination="Qdz-DS-XXM" id="AAP-Sg-cqt"/>
+                <outlet property="lotteryBtn" destination="4QZ-sN-RZ8" id="tM7-Ez-tin"/>
                 <outlet property="minuteLbl" destination="aei-CO-p9I" id="rx9-MW-ryl"/>
                 <outlet property="nameLbl" destination="iX5-AW-kC3" id="uEN-Se-w9u"/>
                 <outlet property="nowPrice" destination="zTJ-Vj-Qa6" id="BHh-PO-fyo"/>
                 <outlet property="price" destination="SyF-EN-0BF" id="F4p-u9-eDj"/>
                 <outlet property="secondsLbl" destination="z4v-4G-bOQ" id="bzi-rq-0D6"/>
             </connections>
-            <point key="canvasLocation" x="373" y="309"/>
+            <point key="canvasLocation" x="262" y="256"/>
         </tableViewCell>
     </objects>
 </document>

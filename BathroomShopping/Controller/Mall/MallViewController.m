@@ -17,6 +17,7 @@
 #import "ActivityGoodsModel.h"
 #import "GoodsInfoViewController.h"
 #import "ActivityGoodsDetailModel.h"
+#import "CustomRefreshHeader.h"
 @interface MallViewController ()<UITableViewDataSource, UITableViewDelegate>
 /** 网络请求对象 */
 @property(nonatomic,strong)MallService *service;
@@ -170,35 +171,36 @@
 - (void)setupRefresh {
     
     // 设置自动切换透明度(在导航栏下面自动隐藏)
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    header.automaticallyChangeAlpha = YES;
-    // 隐藏时间
-    header.lastUpdatedTimeLabel.hidden = YES;
-    
+    CustomRefreshHeader *header = [CustomRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];    
     self.table.mj_header = header;
 }
 
 - (void)loadNewData {
 
     __weak typeof(self) weakSelf = self;
-    dispatch_group_async(self.group, dispatch_get_global_queue(0,0), ^{
+    dispatch_group_enter(self.group);
+    [self.service getGoodsCategory:^(NSMutableArray *categoryArr) {
         
-        [self.service getGoodsCategory:^(NSMutableArray *categoryArr) {
+        if (categoryArr != nil) {
             
             weakSelf.categoryArr = categoryArr;
             [weakSelf.table reloadData];
-        }];
-        
-    });
+        }
+
+        dispatch_group_leave(weakSelf.group);
+    }];
     
-    dispatch_group_async(self.group, dispatch_get_global_queue(0,0), ^{
+    dispatch_group_enter(self.group);
+    [self.service getPackageList:^(ActivityGoodsModel *model) {
         
-        [self.service getPackageList:^(ActivityGoodsModel *model) {
+        if (model != nil) {
             
             weakSelf.goodsArr = model.list;
             [weakSelf.table reloadData];
-        }];
-    });
+        }
+        
+        dispatch_group_leave(weakSelf.group);
+    }];
     
     dispatch_group_notify(self.group, dispatch_get_global_queue(0,0), ^{
         

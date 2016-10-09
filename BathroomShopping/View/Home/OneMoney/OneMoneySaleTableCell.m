@@ -18,6 +18,7 @@ static NSString *ID = @"oneMoneySaleTableCell";
 @property (weak, nonatomic) IBOutlet UILabel *price;
 @property (weak, nonatomic) IBOutlet UILabel *joinCount;
 @property (weak, nonatomic) IBOutlet UILabel *line;
+@property (weak, nonatomic) IBOutlet UIButton *lotteryBtn;
 @end
 
 @implementation OneMoneySaleTableCell
@@ -26,6 +27,7 @@ static NSString *ID = @"oneMoneySaleTableCell";
     [super awakeFromNib];
     self.price.textColor = CustomColor(153, 153, 153);
     self.line.backgroundColor = CustomColor(235, 235, 235);
+    self.lotteryBtn.isCheckLogin = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

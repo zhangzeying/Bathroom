@@ -29,7 +29,7 @@
 #import "ShoppingCartInfoDB.h"
 #import "TriangleView.h"
 #import "AppointGoodsViewController.h"
-
+#import "UserInfoModel.h"
 typedef NS_ENUM(NSInteger ,PopViewType){
     
     SpecView, //规格view
@@ -81,6 +81,8 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 @property (nonatomic, weak)GoodsInfoDetailViewController *goodsInfoDetailVC;
 /** <##> */
 @property (nonatomic, weak)ScrollTitleView *titleView;
+/** <##> */
+@property (nonatomic, weak)UIImageView *detailImage;
 @end
 
 @implementation GoodsInfoViewController
@@ -227,12 +229,12 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn1 setImage:[UIImage imageNamed:@"goodsinfo_rightnav_icon"] forState:UIControlStateNormal];
-    btn1.width = 40;
-    btn1.height = 44;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:btn1];
-    self.navigationItem.rightBarButtonItem = item;
+//    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn1 setImage:[UIImage imageNamed:@"goodsinfo_rightnav_icon"] forState:UIControlStateNormal];
+//    btn1.width = 40;
+//    btn1.height = 44;
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:btn1];
+//    self.navigationItem.rightBarButtonItem = item;
     
     ScrollTitleView *titleView = [[ScrollTitleView alloc]init];
     titleView.width = 200;
@@ -270,6 +272,18 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         weakSelf.pageScrollView.imageUrlArr = imageArr;
         weakSelf.likeBtn.selected = goodsDetailModel.favorite;
         
+        UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
+        if (userModel.isshow) {
+            
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
+            [weakSelf.detailImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+            
+        }else {
+            
+            weakSelf.detailImage.image = [UIImage imageNamed:@"sys_xiao8"];
+            weakSelf.detailImage.contentMode = UIViewContentModeScaleAspectFit;
+        }
+
         [weakSelf.service getRecommendGoodsList:goodsDetailModel.catalogID completion:^(NSMutableArray *recommendGoodsArr) {
             
             weakSelf.recommendGoodsArr = recommendGoodsArr;
@@ -347,13 +361,16 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [self.contentScrollView addSubview:tableView];
     self.tableView = tableView;
     
-    
     //轮播图
     PageScrollView *pageScrollView = [[PageScrollView alloc]initWithIsStartTimer:NO];
     pageScrollView.height = 200;
     pageScrollView.width = ScreenW;
     tableView.tableHeaderView = pageScrollView;
     self.pageScrollView = pageScrollView;
+    
+    UIImageView *detailImage = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenW, 0, ScreenW, ScreenH - 64 - 50)];
+    [self.contentScrollView addSubview:detailImage];
+    self.detailImage = detailImage;
     
 }
 
@@ -716,7 +733,16 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 - (void)dismiss {
 
     GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadSpecValue" object:[NSString stringWithFormat:@"%@%@，%ld个",model.specColor,model.specSize,self.goodsSpecView.buyNumber]];
+    NSString *str;
+    if (model == nil) {
+        
+        str = [NSString stringWithFormat:@"%ld个",self.goodsSpecView.buyNumber];
+        
+    }else {
+    
+        str = [NSString stringWithFormat:@"%@%@，%ld个",model.specColor,model.specSize,self.goodsSpecView.buyNumber];
+    }
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadSpecValue" object:str];
     [UIView animateWithDuration:0.3 animations:^{
         self.navigationController.view.layer.transform = [Animate firstStepTransform];
         if (self.popViewType == SpecView) {

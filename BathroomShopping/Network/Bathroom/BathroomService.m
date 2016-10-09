@@ -49,9 +49,12 @@
                 
             }else {
                 
-                return;
+                completion(nil);
             }
             
+        }else {
+        
+            completion(nil);
         }
         
     }];
@@ -73,8 +76,15 @@
                 NSArray *resultArr = dictData[@"result"];
                 NSArray *hotGoodsArr = [ActivityGoodsDetailModel mj_objectArrayWithKeyValuesArray:resultArr];
                 completion(hotGoodsArr);
+                
+            }else {
+            
+                completion(nil);
             }
             
+        }else {
+        
+            completion(nil);
         }
         
     }];

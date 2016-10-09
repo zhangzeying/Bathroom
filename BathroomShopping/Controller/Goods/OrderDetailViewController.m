@@ -16,10 +16,13 @@
 @implementation OrderDetailViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    self.navigationItem.title = @"订单详情";
 }
 
 - (void)didReceiveMemoryWarning {
+    
     [super didReceiveMemoryWarning];
 }
 

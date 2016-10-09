@@ -81,6 +81,10 @@
             ActivityGoodsModel *activityGoodsModel = [ActivityGoodsModel mj_objectWithKeyValues:dictData];
             activityGoodsModel.buyModel = [LimitTimeBuyModel mj_objectWithKeyValues:dictData[@"buy"]];
             handler(activityGoodsModel);
+            
+        }else {
+        
+            handler(nil);
         }
         
     }];
@@ -104,6 +108,9 @@
                 completion(hotGoodsArr);
             }
             
+        }else {
+        
+            completion(nil);
         }
         
     }];

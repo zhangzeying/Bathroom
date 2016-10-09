@@ -23,6 +23,7 @@
 #import "HomeHeaderCell.h"
 #import "LimitTimeBuyModel.h"
 #import "ShoppingSaleViewController.h"
+#import "CustomRefreshHeader.h"
 static NSString *preferenID = @"preferenCell";
 static NSString *limitTimeID = @"limitTimeCell";
 static NSString *oneMoneyID = @"oneMoneyCell";
@@ -90,7 +91,7 @@ static NSString *homeHeaderID = @"homeHeader";
     searchBar.height = 30;
     self.navigationItem.titleView = searchBar;
     self.searchBar = searchBar;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"navigationItem_left_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:nil];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"navigationItem_left_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:nil];
     [self initUI];
     
 }
@@ -169,11 +170,7 @@ static NSString *homeHeaderID = @"homeHeader";
 - (void)setupRefresh {
     
     // 设置自动切换透明度(在导航栏下面自动隐藏)
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    header.automaticallyChangeAlpha = YES;
-    // 隐藏时间
-    header.lastUpdatedTimeLabel.hidden = YES;
-    
+    CustomRefreshHeader *header = [CustomRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.collect.mj_header = header;
     self.collect.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     self.collect.mj_footer.hidden = YES;
@@ -198,23 +195,28 @@ static NSString *homeHeaderID = @"homeHeader";
 - (void)onLoad {
 
     __weak typeof(self) weakSelf = self;
-    dispatch_group_async(self.group, dispatch_get_global_queue(0,0), ^{
+    dispatch_group_enter(self.group);
+    [self.homeService getActivityGoodsList:^(ActivityGoodsModel *activityGoodsModel) {
         
-        [self.homeService getActivityGoodsList:^(ActivityGoodsModel *activityGoodsModel) {
+        if (activityGoodsModel != nil) {
             
             weakSelf.activityGoodsModel = activityGoodsModel;
             [weakSelf.collect reloadData];
-        }];
-    });
+        }
+        dispatch_group_leave(weakSelf.group);
+    }];
     
-    dispatch_group_async(self.group, dispatch_get_global_queue(0,0), ^{
+    dispatch_group_enter(self.group);
+    [self.homeService getHotGoodsList:^(NSMutableArray *hotGoodsArr) {
         
-        [self.homeService getHotGoodsList:^(NSMutableArray *hotGoodsArr) {
+        if (hotGoodsArr != nil) {
             
             weakSelf.hotGoodsArr = hotGoodsArr;
             [weakSelf.collect reloadData];
-        }];
-    });
+        }
+        dispatch_group_leave(weakSelf.group);
+        
+    }];
     
     dispatch_group_notify(self.group, dispatch_get_global_queue(0,0), ^{
        

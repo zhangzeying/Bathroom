@@ -49,9 +49,12 @@
                 
             }else {
                 
-                return;
+                completion(nil);
             }
             
+        }else {
+        
+            completion(nil);
         }
         
     }];
@@ -93,9 +96,11 @@
             ActivityGoodsModel *model = [ActivityGoodsModel mj_objectWithKeyValues:dictData];
             model.list = [MallPackageModel mj_objectArrayWithKeyValuesArray:model.list];
             completion(model);
+            
+        }else {
+        
+            completion(nil);
         }
-        
-        
         
     }];
 }

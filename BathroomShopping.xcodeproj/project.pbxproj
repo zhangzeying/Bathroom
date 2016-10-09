@@ -152,6 +152,7 @@
 		5A8BDBDF1D9BF72900499D34 /* OrderTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8BDBDD1D9BF72900499D34 /* OrderTableCell.m */; };
 		5A8BDBE01D9BF72900499D34 /* OrderTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BDBDE1D9BF72900499D34 /* OrderTableCell.xib */; };
 		5A8CDED11D91168A0028C37F /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8CDED01D91168A0028C37F /* libBPush.a */; };
+		5A8D6E1A1DA8BD94007B3D9A /* CustomRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8D6E191DA8BD94007B3D9A /* CustomRefreshHeader.m */; };
 		5A93AF571D33691C0043F4EE /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A93AF551D33691C0043F4EE /* RegisterViewController.m */; };
 		5A93AF581D33691C0043F4EE /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A93AF561D33691C0043F4EE /* RegisterViewController.xib */; };
 		5A93AF5B1D3379AD0043F4EE /* GoodsSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A93AF5A1D3379AD0043F4EE /* GoodsSearchViewController.m */; };
@@ -569,6 +570,8 @@
 		5A8BDBDE1D9BF72900499D34 /* OrderTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderTableCell.xib; sourceTree = "<group>"; };
 		5A8CDECF1D91168A0028C37F /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
 		5A8CDED01D91168A0028C37F /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
+		5A8D6E181DA8BD94007B3D9A /* CustomRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRefreshHeader.h; sourceTree = "<group>"; };
+		5A8D6E191DA8BD94007B3D9A /* CustomRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRefreshHeader.m; sourceTree = "<group>"; };
 		5A93AF541D33691C0043F4EE /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		5A93AF551D33691C0043F4EE /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		5A93AF561D33691C0043F4EE /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -1165,6 +1168,8 @@
 				5AEE14FE1D371DB9003C3D9E /* GoodsCategoryViewController.m */,
 				5AEE150A1D376A1B003C3D9E /* GoodsViewController.h */,
 				5AEE150B1D376A1B003C3D9E /* GoodsViewController.m */,
+				5A8D6E181DA8BD94007B3D9A /* CustomRefreshHeader.h */,
+				5A8D6E191DA8BD94007B3D9A /* CustomRefreshHeader.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1895,6 +1900,7 @@
 				5A7E00941D5ECE5700526228 /* GoodsModel.m in Sources */,
 				5A4074751D3F4AC400A2E382 /* HomeScrollNewsTableCell.m in Sources */,
 				5A8BDBDF1D9BF72900499D34 /* OrderTableCell.m in Sources */,
+				5A8D6E1A1DA8BD94007B3D9A /* CustomRefreshHeader.m in Sources */,
 				5A93AF5B1D3379AD0043F4EE /* GoodsSearchViewController.m in Sources */,
 				5A7B9E911D88DF9300E95D4D /* UIButton+Extension.m in Sources */,
 				5A749E451D86366F00123C88 /* LimitTimeBuyViewController.m in Sources */,

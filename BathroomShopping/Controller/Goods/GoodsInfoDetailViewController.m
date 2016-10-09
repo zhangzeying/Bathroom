@@ -8,7 +8,7 @@
 
 #import "GoodsInfoDetailViewController.h"
 #import "GoodsRefreshHeader.h"
-
+#import "UserInfoModel.h"
 @interface GoodsInfoDetailViewController ()
 /** <##> */
 @property(nonatomic,strong)UIScrollView *scroll;
@@ -23,13 +23,14 @@
     [super viewDidLoad];
     self.scroll = [[UIScrollView alloc]initWithFrame:self.view.frame];
     self.scroll.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    self.scroll.contentSize = CGSizeMake(0, 2 * ScreenH);
     [self.view addSubview:self.scroll];
     
     UIImageView *image = [[UIImageView alloc]initWithFrame:self.view.frame];
     [self.scroll addSubview:image];
     self.image = image;
     [self setupRefresh];
+    
+    self.scroll.contentSize = CGSizeMake(0, CGRectGetMaxY(image.frame) + 64);
 }
 
 - (void)setupRefresh {
@@ -48,7 +49,17 @@
 
 - (void)setImageUrl:(NSString *)imageUrl {
 
-    [self.image sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+    UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
+    if (userModel.isshow) {
+        
+        [self.image sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+        
+    }else {
+        
+        self.image.image = [UIImage imageNamed:@"sys_xiao8"];
+        self.image.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

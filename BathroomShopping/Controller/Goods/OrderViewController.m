@@ -204,16 +204,20 @@
     [self.service getOrder:orderType completion:^(NSMutableArray *dataArr) {
         
         weakSelf.dataArr = dataArr;
+        if (weakSelf.tableView != nil) {
+            
+            [weakSelf.tableView removeFromSuperview];
+            weakSelf.tableView = nil;
+        }
+        
         if (dataArr.count == 0) {
             
             weakSelf.errorView.hidden = NO;
-            weakSelf.tableView.hidden = YES;
             
         }else {
             
             self.errorView.hidden = YES;
-            weakSelf.tableView.hidden = NO;
-            [weakSelf.tableView reloadData];
+            [weakSelf initTableView];
         }
         
     }];

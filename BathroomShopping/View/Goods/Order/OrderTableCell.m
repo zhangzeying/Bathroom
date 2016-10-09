@@ -115,6 +115,9 @@ static NSString *ID = @"orderTableCell";
     if ([model.paystatus isEqualToString:@"n"]) {
         
         self.orderStateLbl.text = @"等待付款";
+        [self.operationBtn setTitle:@"去支付" forState:UIControlStateNormal];
+        [self.operationBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        self.operationBtn.layer.borderColor = [UIColor redColor].CGColor;
         
     }else {
     
@@ -136,6 +139,11 @@ static NSString *ID = @"orderTableCell";
     self.totalPriceLbl.text = [NSString stringWithFormat:@"合计:¥ %.2f",model.amount];
 }
 
-- (IBAction)operationClick:(id)sender {
+- (IBAction)operationClick:(UIButton *)sender {
+    
+    if ([sender.titleLabel.text isEqualToString:@"去支付"]) {
+        
+        
+    }
 }
 @end
