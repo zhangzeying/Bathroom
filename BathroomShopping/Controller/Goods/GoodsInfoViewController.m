@@ -236,13 +236,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 //    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:btn1];
 //    self.navigationItem.rightBarButtonItem = item;
     
-    ScrollTitleView *titleView = [[ScrollTitleView alloc]init];
-    titleView.width = 200;
-    titleView.height = 44;
-    titleView.delegate = self;
-    titleView.titleArr = [NSMutableArray arrayWithArray:@[@"商品",@"详情"]];
-    self.navigationItem.titleView = titleView;
-    self.titleView = titleView;
+    [self setupTitleView];
     
     [self setupScrollView];
     
@@ -332,6 +326,23 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 
 }
 
+- (void)setupTitleView {
+
+    if (self.titleView != nil) {
+        
+        self.titleView = nil;
+        self.navigationItem.titleView = nil;
+    }
+    
+    ScrollTitleView *titleView = [[ScrollTitleView alloc]init];
+    titleView.width = 200;
+    titleView.height = 44;
+    titleView.delegate = self;
+    titleView.titleArr = [NSMutableArray arrayWithArray:@[@"商品",@"详情"]];
+    self.navigationItem.titleView = titleView;
+    self.titleView = titleView;
+}
+
 /**
  * 创建内容scrollview
  */
@@ -404,6 +415,8 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [UIView animateWithDuration:0.4 animations:^{
         
        self.contentScrollView.transform = CGAffineTransformTranslate(self.contentScrollView.transform, 0, -(ScreenH + 50));
+        self.navigationItem.titleView = nil;
+        self.navigationItem.title = @"商品详情";
     }];
     self.titleView.index = 2;
     self.contentScrollView.contentSize = CGSizeMake(0, 0);
@@ -414,10 +427,17 @@ typedef NS_ENUM(NSInteger ,PopViewType){
  */
 - (void)pullDown {
 
+    
     [UIView animateWithDuration:0.4 animations:^{
         
         self.contentScrollView.transform = CGAffineTransformIdentity;
+        self.navigationItem.title = nil;
+        
+    } completion:^(BOOL finished) {
+        
+        [self setupTitleView];
     }];
+    
     self.titleView.index = 1;
     self.contentScrollView.contentSize = CGSizeMake(2 * ScreenW, 0);
 }
@@ -803,6 +823,16 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     self.titleView.index = index + 1;
 }
 
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//
+//    if (scrollView.contentOffset.y > 0) {
+//        
+//        [UIView animateWithDuration:0.4 animations:^{
+//            
+//           
+//        }];
+//    }
+//}
 
 #pragma mark --- UIAlertViewDelegate ---
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
