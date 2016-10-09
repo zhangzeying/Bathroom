@@ -74,6 +74,8 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:editBtn];
     self.editBtn = editBtn;
     self.navigationItem.rightBarButtonItem = rightItem;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearCart) name:@"order" object:nil];
 }
 
 #pragma mark --- CreatUI ---
@@ -357,6 +359,58 @@
 
     self.total = totalPrice;
     self.footerView.totalMoney = totalPrice;
+}
+
+- (void)clearCart {
+
+    __weak typeof (self)weakSelf = self;
+    if ([[CommUtils sharedInstance] isLogin]) {
+        
+        //获取购物车清单
+        [self.service getCartList:^(ShoppingCartModel *model) {
+            
+            if (model.productList.count == 0) {
+                
+                [weakSelf.table removeFromSuperview];
+                [weakSelf.footerView removeFromSuperview];
+                ErrorView *errorView = [[ErrorView alloc]initWithFrame:self.view.frame];
+                errorView.warnStr = @"购物车空空如也！";
+                errorView.imgName = @"sys_xiao8";
+                errorView.btnTitle = @"";
+                [weakSelf.view addSubview:errorView];
+                
+            }else {
+                
+                weakSelf.model = model;
+                weakSelf.footerView.model = model;
+                [weakSelf.table reloadData];
+            }
+            
+        }];
+        
+    }else {
+        
+        NSMutableArray *dataArr = [ShoppingCartDetailModel getCartList];
+        if (dataArr.count == 0) {
+            
+            [self.table removeFromSuperview];
+            [self.footerView removeFromSuperview];
+            ErrorView *errorView = [[ErrorView alloc]initWithFrame:self.view.frame];
+            errorView.warnStr = @"购物车空空如也！";
+            errorView.imgName = @"sys_xiao8";
+            errorView.btnTitle = @"";
+            [self.view addSubview:errorView];
+            
+        }else {
+            
+            ShoppingCartModel *cModel = [[ShoppingCartModel alloc]init];
+            cModel.productList = dataArr;
+            self.model = cModel;
+            self.footerView.model = cModel;
+            [self.table reloadData];
+        }
+        
+    }
 }
 
 #pragma mark --- UIActionSheetDelegate ---

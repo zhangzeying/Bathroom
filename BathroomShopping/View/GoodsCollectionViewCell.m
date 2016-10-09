@@ -7,12 +7,27 @@
 //
 
 #import "GoodsCollectionViewCell.h"
+#import "ActivityGoodsDetailModel.h"
+@interface GoodsCollectionViewCell()
+@property (weak, nonatomic) IBOutlet UILabel *goodNameLbl;
+@property (weak, nonatomic) IBOutlet UIImageView *goodsImg;
+@end
 
 @implementation GoodsCollectionViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.backgroundColor = [UIColor whiteColor];
-    self.goodNameLbl.text = @"11";
+}
+
+- (void)setModel:(ActivityGoodsDetailModel *)model {
+    
+    _model = model;
+    self.goodNameLbl.text = model.name;
+    
+    self.goodsImg.contentMode = UIViewContentModeScaleAspectFit;
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, model.picture];
+    [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"sys_xiao8"]];
+    
 }
 @end

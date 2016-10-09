@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface GoodsViewController : BaseViewController
-
+/** 类别code */
+@property(nonatomic,strong)NSString *code;
 @end

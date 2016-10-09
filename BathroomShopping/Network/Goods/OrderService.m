@@ -38,6 +38,7 @@
             NSLog(@"%@",dictData);
             if ([[dictData objectForKey:@"flag"] isEqualToString:@"0"]) {//操作成功
                 
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"order" object:nil];
                 completion(dictData[@"result"]);
                 
             }else {

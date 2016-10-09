@@ -10,6 +10,7 @@
 #import "OrderTableCell.h"
 #import "OrderService.h"
 #import "ErrorView.h"
+#import "CustomRefreshHeader.h"
 @interface OrderViewController ()<UITableViewDelegate, UITableViewDataSource>
 /** <##> */
 @property(nonatomic,strong)OrderService *service;
@@ -150,6 +151,34 @@
     tableView.rowHeight = 204;
     [self.view addSubview:tableView];
     self.tableView = tableView;
+    [self setupRefresh];
+}
+
+- (void)setupRefresh {
+    
+    // 设置自动切换透明度(在导航栏下面自动隐藏)
+    CustomRefreshHeader *header = [CustomRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    self.tableView.mj_header = header;
+}
+
+- (void)loadNewData {
+
+    switch (self.selectedBtn.tag) {
+        case 0:
+            [self getOrderList:@"all"];
+            break;
+        case 1:
+            [self getOrderList:@"nopay"];
+            break;
+        case 2:
+            [self getOrderList:@"send"];
+            break;
+        case 3:
+            [self getOrderList:@"payed"];
+            break;
+        default:
+            break;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

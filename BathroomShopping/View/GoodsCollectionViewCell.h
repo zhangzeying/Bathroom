@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class ActivityGoodsDetailModel;
 @interface GoodsCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UILabel *goodNameLbl;
+/** <##> */
+@property(nonatomic,strong)ActivityGoodsDetailModel *model;
 @end

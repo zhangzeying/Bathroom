@@ -265,9 +265,9 @@
     
     
     NSDictionary *parameters = @{@"token":[[CommUtils sharedInstance] fetchToken]};
-    
+    [SVProgressHUD show];
     [self.restService afnetworkingPost:kAPIGetAppoint parameters:parameters completion:^(id myAfNetBlokResponeDic, BOOL flag) {
-        
+        [SVProgressHUD dismiss];
         if (flag) {
             
             NSDictionary *dictData = myAfNetBlokResponeDic;

@@ -15,29 +15,32 @@
                 <rect key="frame" x="0.0" y="0.0" width="136" height="130"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uxf-XN-qr2">
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uxf-XN-qr2">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="22w-Ve-Inl">
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="22w-Ve-Inl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6FL-yD-QUb"/>
                 <constraint firstAttribute="bottom" secondItem="Uxf-XN-qr2" secondAttribute="bottom" constant="10" id="Lil-Em-2KE"/>
+                <constraint firstAttribute="trailing" secondItem="Uxf-XN-qr2" secondAttribute="trailing" id="UUa-9I-vc1"/>
                 <constraint firstItem="22w-Ve-Inl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="YLO-WV-qSg"/>
                 <constraint firstAttribute="trailing" secondItem="22w-Ve-Inl" secondAttribute="trailing" id="jhJ-fN-RCL"/>
-                <constraint firstItem="Uxf-XN-qr2" firstAttribute="top" secondItem="22w-Ve-Inl" secondAttribute="bottom" constant="15" id="lUI-dQ-6Fq"/>
+                <constraint firstItem="Uxf-XN-qr2" firstAttribute="top" secondItem="22w-Ve-Inl" secondAttribute="bottom" constant="5" id="lUI-dQ-6Fq"/>
+                <constraint firstItem="Uxf-XN-qr2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="nxL-zf-OtM"/>
                 <constraint firstItem="Uxf-XN-qr2" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="y6z-eU-FUW"/>
             </constraints>
             <size key="customSize" width="136" height="137"/>
             <connections>
                 <outlet property="goodNameLbl" destination="Uxf-XN-qr2" id="E0P-YK-Vi6"/>
+                <outlet property="goodsImg" destination="22w-Ve-Inl" id="niV-dV-ki4"/>
             </connections>
-            <point key="canvasLocation" x="111" y="439"/>
+            <point key="canvasLocation" x="-104" y="449"/>
         </collectionViewCell>
     </objects>
 </document>

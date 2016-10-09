@@ -32,8 +32,6 @@
     return _service;
 }
 
-
-
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -137,9 +135,7 @@
             switch (resultCode) {
                     //支付成功
                 case 9000:
-                    
                     break;
-                    
                     //支付失败
                 case 4000:
                     break;

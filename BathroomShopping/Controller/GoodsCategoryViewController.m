@@ -13,6 +13,10 @@
 @interface GoodsCategoryViewController ()<UITableViewDataSource, UITableViewDelegate>
 /** categoryTable */
 @property (nonatomic, weak)UITableView *categoryTable;
+/** <##> */
+@property (nonatomic, weak)GoodsViewController *goodsVC;
+/** <##> */
+@property(assign,nonatomic)NSInteger currentIndex;
 @end
 
 @implementation GoodsCategoryViewController
@@ -21,6 +25,7 @@
     
     [super viewDidLoad];
     self.navigationItem.title = @"卫浴";
+    self.currentIndex = 0;
 }
 
 /**
@@ -45,8 +50,10 @@
 
     GoodsViewController *goodsVC = [[GoodsViewController alloc]init];
     [self addChildViewController:goodsVC];
-
     [self.view addSubview:goodsVC.view];
+    self.goodsVC = goodsVC;
+    GoodsCategoryModel *model = self.categoryArr[0];
+    self.goodsVC.code = model.code;
 }
 
 #pragma mark --- UITableViewDataSource ---
@@ -60,15 +67,22 @@
     GoodsCategoryTableCell *cell = [GoodsCategoryTableCell cellWithTableView:tableView];
     GoodsCategoryModel *model = self.categoryArr[indexPath.row];
     cell.categoryLbl.text = model.name;
-    
     return cell;
 }
 
 #pragma mark --- UITableViewDelegate ---
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-     //把选择的行滚动到最上方
-     [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+    if (indexPath.row == self.currentIndex) {
+        
+        return;
+    }
+    GoodsCategoryModel *model = self.categoryArr[indexPath.row];
+    //把选择的行滚动到最上方
+    [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+    self.goodsVC.code = model.code;
+    self.currentIndex = indexPath.row;
 }
 
 - (void)setCategoryArr:(NSMutableArray *)categoryArr {
