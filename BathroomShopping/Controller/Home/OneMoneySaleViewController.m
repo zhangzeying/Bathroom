@@ -185,7 +185,7 @@
         NSDate *finishDate = [[CommUtils sharedInstance] dateFromString:model.activityEndDateTime];
         NSDate *startDate = [NSDate date];
         NSTimeInterval timeInterval =[finishDate timeIntervalSinceDate:startDate];
-        if (timeInterval < 0) {
+        if (timeInterval <= 0) {
             
             
             

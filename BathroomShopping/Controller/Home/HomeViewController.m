@@ -93,6 +93,7 @@ static NSString *homeHeaderID = @"homeHeader";
     self.searchBar = searchBar;
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"navigationItem_left_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:nil];
     [self initUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadActivityData) name:@"LimitTimeOut" object:nil];
     
 }
 
@@ -144,8 +145,6 @@ static NSString *homeHeaderID = @"homeHeader";
     
     self.collect = collect;
     
-    
-    
     __weak typeof(self) weakSelf = self;
     
     [self.homeService getActivityGoodsList:^(ActivityGoodsModel *activityGoodsModel) {
@@ -190,6 +189,19 @@ static NSString *homeHeaderID = @"homeHeader";
 - (void)loadMoreData {
 
     
+}
+
+/**
+ * 限时抢购时间段结束重新刷新数据
+ */
+- (void)reloadActivityData {
+
+    __weak typeof(self) weakSelf = self;
+    [self.homeService getActivityGoodsList:^(ActivityGoodsModel *activityGoodsModel) {
+        
+        weakSelf.activityGoodsModel = activityGoodsModel;
+        [weakSelf.collect reloadData];
+    }];
 }
 
 - (void)onLoad {
@@ -467,6 +479,11 @@ static NSString *homeHeaderID = @"homeHeader";
         default:
             break;
     }
+}
+
+- (void)dealloc {
+
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

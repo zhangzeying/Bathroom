@@ -101,7 +101,7 @@
                     self.timer = nil;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
-                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"LimitTimeOut" object:nil];
                     });
                 }else{
                     int days = (int)(timeout/(3600*24));

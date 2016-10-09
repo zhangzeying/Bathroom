@@ -56,6 +56,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationItem.title = @"限时抢购";
+    [self onLoad];
+}
+
+- (void)onLoad {
+
     __weak typeof (self)weakSelf = self;
     [self.service getLimitTimeBuyPeriod:^(NSMutableArray *timeArr) {
         
@@ -72,7 +77,6 @@
         // 默认显示第0个子控制器
         [weakSelf scrollViewDidEndScrollingAnimation:weakSelf.contentScrollView];
     }];
-    
 }
 
 - (void)setupChildVC {
@@ -360,7 +364,7 @@
                     self.timer = nil;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
-                        
+                        [weakSelf onLoad];
                     });
                 }else{
                     int days = (int)(timeout/(3600*24));
@@ -378,6 +382,16 @@
             });
             dispatch_resume(self.timer);
         }
+    }
+}
+
+
+- (void)dealloc {
+    
+    if (self.timer) {
+        
+        dispatch_source_cancel(self.timer);
+        self.timer = nil;
     }
 }
 

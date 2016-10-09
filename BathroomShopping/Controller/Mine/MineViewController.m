@@ -102,6 +102,8 @@
     [self setupTable];
     
     [self getOrderList];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderList) name:@"loginStateChange" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -297,6 +299,11 @@
                 weakSelf.noReceiveCountLbl.hidden = NO;
             }
         }];
+        
+    }else {
+    
+        self.nopayCountLbl.hidden = YES;
+        self.noReceiveCountLbl.hidden = YES;
     }
 }
 
@@ -326,6 +333,11 @@
     orderVC.orderType = MyOrder;
     orderVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:orderVC animated:YES];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
