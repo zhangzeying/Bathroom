@@ -74,7 +74,7 @@
     __weak typeof (self)weakSelf = self;
     cell.limitBuyBlock = ^(NSString *productId){
     
-        GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:productId];
+        GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:productId packageId:nil];
         goodsInfoVC.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:goodsInfoVC animated:YES];
     };

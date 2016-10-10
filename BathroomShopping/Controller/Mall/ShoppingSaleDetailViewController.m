@@ -156,7 +156,7 @@ static NSString *ID = @"ID";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     ActivityGoodsDetailModel *model = self.dataArr[indexPath.row];
-    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:model.id];
+    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:model.id packageId:nil];
     goodsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:goodsInfoVC animated:YES];
 }

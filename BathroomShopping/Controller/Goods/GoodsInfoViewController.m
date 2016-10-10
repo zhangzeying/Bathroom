@@ -30,6 +30,7 @@
 #import "TriangleView.h"
 #import "AppointGoodsViewController.h"
 #import "UserInfoModel.h"
+#import "PackageDetailModel.h"
 typedef NS_ENUM(NSInteger ,PopViewType){
     
     SpecView, //规格view
@@ -55,12 +56,16 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 @property(nonatomic,strong)GoodsService *service;
 /** 商品ID */
 @property(nonatomic,copy)NSString *goodsId;
+/** <##> */
+@property(nonatomic,copy)NSString *packageId;
 /** 底部背景View */
 @property (nonatomic, weak)UIView *bottomView;
 /** 轮播图view */
 @property (nonatomic, weak)PageScrollView *pageScrollView;
 /** 商品信息数据模型 */
 @property(nonatomic,strong)GoodsDetailModel *goodsDetailModel;
+/** 套餐详情数据模型 */
+@property(nonatomic,strong)PackageDetailModel *packageDetailModel;
 /** 购物车数据模型 */
 @property(nonatomic,strong)ShoppingCartModel *cartModel;
 /** 选择地址view */
@@ -202,12 +207,13 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     return _recommendGoodsArr;
 }
 
-- (instancetype)initWithGoodsId:(NSString *)goodsId {
+- (instancetype)initWithGoodsId:(NSString *)goodsId packageId:(NSString *)packageId {
     
     self = [super init];
     if (self) {
         
         self.goodsId = goodsId;
+        self.packageId = packageId;
     }
     return self;
 }
@@ -249,43 +255,54 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [self setupGoodsDetailView];
     
     __weak typeof (self)weakSelf = self;
-    [self.service getGoodsDetailInfo:self.goodsId completion:^(GoodsDetailModel *goodsDetailModel) {
+    if (self.goodsId != nil) {
         
-        weakSelf.goodsDetailModel = goodsDetailModel;
-        [weakSelf.tableView reloadData];
-        
-        NSMutableArray *imageArr = @[].mutableCopy;
-        NSDictionary *dict = goodsDetailModel.productImageList[0];
-        for (int i = 0; i < dict.count; i++) {
+        [self.service getGoodsDetailInfo:self.goodsId completion:^(GoodsDetailModel *goodsDetailModel) {
             
-            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, dict[[NSString stringWithFormat:@"image%zd",i+1]]];
-            [imageArr addObject:imageUrl];
-        }
-        
-        weakSelf.goodsInfoDetailVC.imageUrl = imageArr[0];
-        weakSelf.pageScrollView.imageUrlArr = imageArr;
-        weakSelf.likeBtn.selected = goodsDetailModel.favorite;
-        
-        UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
-        if (userModel.isshow) {
-            
-            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
-            [weakSelf.detailImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-            
-        }else {
-            
-            weakSelf.detailImage.image = [UIImage imageNamed:@"sys_xiao8"];
-            weakSelf.detailImage.contentMode = UIViewContentModeScaleAspectFit;
-        }
-
-        [weakSelf.service getRecommendGoodsList:goodsDetailModel.catalogID completion:^(NSMutableArray *recommendGoodsArr) {
-            
-            weakSelf.recommendGoodsArr = recommendGoodsArr;
-            
+            weakSelf.goodsDetailModel = goodsDetailModel;
             [weakSelf.tableView reloadData];
+            
+            NSMutableArray *imageArr = @[].mutableCopy;
+            NSDictionary *dict = goodsDetailModel.productImageList[0];
+            for (int i = 0; i < dict.count; i++) {
+                
+                NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, dict[[NSString stringWithFormat:@"image%zd",i+1]]];
+                [imageArr addObject:imageUrl];
+            }
+            
+            weakSelf.goodsInfoDetailVC.imageUrl = imageArr[0];
+            weakSelf.pageScrollView.imageUrlArr = imageArr;
+            weakSelf.likeBtn.selected = goodsDetailModel.favorite;
+            
+            UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
+            if (userModel.isshow) {
+                
+                NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
+                [weakSelf.detailImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+                
+            }else {
+                
+                weakSelf.detailImage.image = [UIImage imageNamed:@"sys_xiao8"];
+                weakSelf.detailImage.contentMode = UIViewContentModeScaleAspectFit;
+            }
+            
+            //        [weakSelf.service getRecommendGoodsList:goodsDetailModel.catalogID completion:^(NSMutableArray *recommendGoodsArr) {
+            //
+            //            weakSelf.recommendGoodsArr = recommendGoodsArr;
+            //            
+            //            [weakSelf.tableView reloadData];
+            //        }];
+            
         }];
         
-    }];
+    }else {
+    
+        [self.service getPackageDetailInfo:self.packageId completion:^(PackageDetailModel *packageDetailModel) {
+            
+            weakSelf.packageDetailModel = packageDetailModel;
+            [weakSelf.tableView reloadData];
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -550,7 +567,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
         if (model.specColor.length == 0 && model.specSize.length == 0) {
             
-             cell.specStr = [NSString stringWithFormat:@"%ld个",(long)self.goodsSpecView.buyNumber];
+            cell.specStr = [NSString stringWithFormat:@"%ld个",(long)self.goodsSpecView.buyNumber];
             
         }else {
             

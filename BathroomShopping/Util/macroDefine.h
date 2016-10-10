@@ -96,6 +96,8 @@
 #define kAPIDeleteAddress @"/app/api/account/deleteAddress"
 //获取套餐列表
 #define kAPIPackageList @"/app/api/package/selectList"
+//获取套餐详情
+#define kAPIPackageDetail @"/app/api/package/detail"
 //下订单
 #define kAPIOrder @"/app/api/order/pay"
 //获取配送方式

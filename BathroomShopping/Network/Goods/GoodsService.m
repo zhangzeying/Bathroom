@@ -14,6 +14,7 @@
 #import "DeliveryModel.h"
 #import "ShoppingCartDetailModel.h"
 #import "GoodsSpecModel.h"
+#import "PackageDetailModel.h"
 @interface GoodsService()
 @property(nonatomic ,strong)RestService *restService;
 /** <##> */
@@ -60,6 +61,34 @@
                 
                 return;
             }
+            
+        }
+        
+    }];
+}
+
+/**
+ * 根据套餐id获取套餐详情
+ */
+- (void)getPackageDetailInfo:(NSString *)packageId completion:(void(^)(id))completion {
+    
+    NSDictionary *params = @{@"id":packageId};
+    [MBProgressHUD showMessage:@"加载中....."];
+    [self.restService afnetworkingPost:kAPIPackageDetail parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+        [MBProgressHUD hideHUD];
+        if (flag) {
+            
+            NSDictionary *dictData = myAfNetBlokResponeDic;
+            
+            [PackageDetailModel mj_setupObjectClassInArray:^NSDictionary *{
+                return @{
+                         @"specAllList" : @"PackageSpecModel"
+                         };
+            }];
+            
+            PackageDetailModel *model = [PackageDetailModel mj_objectWithKeyValues:dictData];
+
+            completion(model);
             
         }
         

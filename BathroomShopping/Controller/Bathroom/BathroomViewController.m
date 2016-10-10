@@ -169,7 +169,7 @@ static NSString *BathroomHeaderID = @"bathroomHeaderID";
     if (indexPath.section == 1) {
         
         ActivityGoodsDetailModel *model = self.hotGoodsArr[indexPath.row];
-        GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:model.id];
+        GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:model.id packageId:nil];
         goodsInfoVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:goodsInfoVC animated:YES];
     }

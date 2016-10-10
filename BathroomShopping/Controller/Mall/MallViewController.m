@@ -16,7 +16,7 @@
 #import "MallGoodsViewController.h"
 #import "ActivityGoodsModel.h"
 #import "GoodsInfoViewController.h"
-#import "ActivityGoodsDetailModel.h"
+#import "MallPackageModel.h"
 #import "CustomRefreshHeader.h"
 @interface MallViewController ()<UITableViewDataSource, UITableViewDelegate>
 /** 网络请求对象 */
@@ -224,8 +224,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    ActivityGoodsDetailModel *model = self.goodsArr[indexPath.row];
-    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:model.id];
+    MallPackageModel *model = self.goodsArr[indexPath.row];
+    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:nil packageId:model.id];
     goodsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:goodsInfoVC animated:YES];
 }

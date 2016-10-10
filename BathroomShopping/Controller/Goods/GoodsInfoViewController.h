@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface GoodsInfoViewController : BaseViewController
-- (instancetype)initWithGoodsId:(NSString *)goodsId;
+- (instancetype)initWithGoodsId:(NSString *)goodsId packageId:(NSString *)packageId;
 @end

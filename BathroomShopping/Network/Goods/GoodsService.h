@@ -14,6 +14,10 @@
  */
 - (void)getGoodsDetailInfo:(NSString *)goodsId completion:(void(^)(id))completion;
 /**
+ * 根据套餐id获取套餐详情
+ */
+- (void)getPackageDetailInfo:(NSString *)packageId completion:(void(^)(id))completion;
+/**
  * 获取购物车清单
  */
 - (void)getCartList:(void(^)(id))completion;
