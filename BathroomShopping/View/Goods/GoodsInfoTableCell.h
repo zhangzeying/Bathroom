@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @class GoodsDetailModel;
-
+@class PackageDetailModel;
 @interface GoodsInfoTableCell : UITableViewCell
 + (instancetype)cellWithTableView:(UITableView *)table;
 /** <##> */
 @property(nonatomic,strong)GoodsDetailModel *model;
+/** <##> */
+@property(nonatomic,strong)PackageDetailModel *packageModel;
 @end

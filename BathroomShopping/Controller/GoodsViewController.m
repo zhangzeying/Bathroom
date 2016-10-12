@@ -112,7 +112,7 @@ static NSString *headerID = @"goodsHeader";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
     ActivityGoodsDetailModel *model = self.goodsArr[indexPath.row];
-    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:model.id packageId:nil];
+    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:model.id packgeModel:nil];
     goodsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:goodsInfoVC animated:YES];
 }

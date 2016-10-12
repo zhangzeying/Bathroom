@@ -225,7 +225,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     MallPackageModel *model = self.goodsArr[indexPath.row];
-    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:nil packageId:model.id];
+    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:nil packgeModel:model];
     goodsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:goodsInfoVC animated:YES];
 }

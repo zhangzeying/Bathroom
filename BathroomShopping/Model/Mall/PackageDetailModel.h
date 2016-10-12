@@ -13,4 +13,12 @@
 @property(nonatomic,copy)NSString *allName;
 /** <##> */
 @property(nonatomic,strong)NSMutableArray *specAllList;
+/** <##> */
+@property(assign,nonatomic)double sellCount;
+/** <##> */
+@property(nonatomic,copy)NSString *picture;
+/** <##> */
+@property(assign,nonatomic)double totalPrice;
+/** <##> */
+@property(assign,nonatomic)CGFloat cellHeight;
 @end

@@ -64,7 +64,7 @@
             NSDictionary *dictData = myAfNetBlokResponeDic;
             if ([[dictData objectForKey:@"flag"] isEqualToString:@"0"]) {//操作成功
                 
-                NSArray *listArr = dictData[@"result"][@"orders"][@"list"];
+                NSArray *listArr = dictData[@"result"][@"orders"];
                 [OrderModel mj_setupObjectClassInArray:^NSDictionary *{
                     return @{
                              @"orders" : @"OrderDetailModel"

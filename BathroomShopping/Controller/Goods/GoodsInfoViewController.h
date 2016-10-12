@@ -7,7 +7,8 @@
 //
 
 #import "BaseViewController.h"
+@class MallPackageModel;
 
 @interface GoodsInfoViewController : BaseViewController
-- (instancetype)initWithGoodsId:(NSString *)goodsId packageId:(NSString *)packageId;
+- (instancetype)initWithGoodsId:(NSString *)goodsId packgeModel:(MallPackageModel *)packgeModel;
 @end

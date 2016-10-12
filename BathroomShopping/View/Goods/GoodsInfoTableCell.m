@@ -8,7 +8,7 @@
 
 #import "GoodsInfoTableCell.h"
 #import "GoodsDetailModel.h"
-
+#import "PackageDetailModel.h"
 static NSString *ID = @"goodsInfoTableCell";
 @interface GoodsInfoTableCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLbl;
@@ -50,7 +50,18 @@ static NSString *ID = @"goodsInfoTableCell";
     self.likedCountLbl.text = [NSString stringWithFormat:@"收藏数:%ld",(long)model.favCount];
     [self layoutIfNeeded];
     model.cellHeight = CGRectGetMaxY(self.likedCountLbl.frame) + 20;
-    
+}
+
+- (void)setPackageModel:(PackageDetailModel *)packageModel {
+
+    _packageModel = packageModel;
+    self.nameLbl.text = packageModel.allName;
+    self.price.text = [NSString stringWithFormat:@"¥%.2f", packageModel.totalPrice];
+    self.saleCountLbl.text = [NSString stringWithFormat:@"销量:%ld",(long)packageModel.sellCount];
+    self.likedCountLbl.hidden = YES;
+//    self.likedCountLbl.text = [NSString stringWithFormat:@"收藏数:%ld",(long)model.favCount];
+    [self layoutIfNeeded];
+    packageModel.cellHeight = CGRectGetMaxY(self.saleCountLbl.frame) + 20;
 }
 
 - (void)setFrame:(CGRect)frame {

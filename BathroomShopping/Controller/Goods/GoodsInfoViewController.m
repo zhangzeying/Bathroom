@@ -31,6 +31,7 @@
 #import "AppointGoodsViewController.h"
 #import "UserInfoModel.h"
 #import "PackageDetailModel.h"
+#import "MallPackageModel.h"
 typedef NS_ENUM(NSInteger ,PopViewType){
     
     SpecView, //规格view
@@ -57,7 +58,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 /** 商品ID */
 @property(nonatomic,copy)NSString *goodsId;
 /** <##> */
-@property(nonatomic,copy)NSString *packageId;
+@property(nonatomic,strong)MallPackageModel *packgeModel;
 /** 底部背景View */
 @property (nonatomic, weak)UIView *bottomView;
 /** 轮播图view */
@@ -207,13 +208,13 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     return _recommendGoodsArr;
 }
 
-- (instancetype)initWithGoodsId:(NSString *)goodsId packageId:(NSString *)packageId {
+- (instancetype)initWithGoodsId:(NSString *)goodsId packgeModel:(MallPackageModel *)packgeModel {
     
     self = [super init];
     if (self) {
         
         self.goodsId = goodsId;
-        self.packageId = packageId;
+        self.packgeModel = packgeModel;
     }
     return self;
 }
@@ -297,9 +298,12 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         
     }else {
     
-        [self.service getPackageDetailInfo:self.packageId completion:^(PackageDetailModel *packageDetailModel) {
+        [self.service getPackageDetailInfo:self.packgeModel.id completion:^(PackageDetailModel *packageDetailModel) {
             
             weakSelf.packageDetailModel = packageDetailModel;
+            weakSelf.packageDetailModel.totalPrice = weakSelf.packgeModel.totalPrice;
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, weakSelf.packageDetailModel.picture];
+            weakSelf.pageScrollView.imageUrlArr = @[imageUrl];
             [weakSelf.tableView reloadData];
         }];
     }
@@ -528,65 +532,134 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 #pragma mark --- UITableViewDataSource ---
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.goodsDetailModel == nil ? 0 : 3;
+    if (self.packgeModel == nil) {
+        
+        return self.goodsDetailModel == nil ? 0 : 3;
+        
+    }else {
+    
+        return self.packageDetailModel == nil ? 0 : 3;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    if (indexPath.row == 0) {
+    if (self.packgeModel == nil) {
         
-        return self.goodsDetailModel.cellHeight;
-        
-    }else if (indexPath.row == 1) {
-    
-        return 50;
-        
-    }else if (indexPath.row == 2){
-    
-        return 50;
+        if (indexPath.row == 0) {
+            
+            return self.goodsDetailModel.cellHeight;
+            
+        }else if (indexPath.row == 1) {
+            
+            return 50;
+            
+        }else if (indexPath.row == 2){
+            
+            return 50;
+            
+        }else {
+            
+            return [GoodsRecommendTableCell getCellHeight:self.recommendGoodsArr];
+            
+        }
         
     }else {
-        
-        return [GoodsRecommendTableCell getCellHeight:self.recommendGoodsArr];
-        
+    
+        if (indexPath.row == 0) {
+            
+            return self.packageDetailModel.cellHeight;
+            
+        }else if (indexPath.row == 1) {
+            
+            return 50;
+            
+        }else if (indexPath.row == 2){
+            
+            return 50;
+            
+        }else {
+            
+            return [GoodsRecommendTableCell getCellHeight:self.recommendGoodsArr];
+            
+        }
     }
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == 0) {
+    if (self.packgeModel == nil) {
         
-        GoodsInfoTableCell *cell = [GoodsInfoTableCell cellWithTableView:tableView];
-        cell.model = self.goodsDetailModel;
-        return cell;
-        
-    }else if (indexPath.row == 1){//规格cell
-    
-        SpecificationTableCell *cell = [SpecificationTableCell cellWithTableView:tableView];
-        GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
-        if (model.specColor.length == 0 && model.specSize.length == 0) {
+        if (indexPath.row == 0) {
             
-            cell.specStr = [NSString stringWithFormat:@"%ld个",(long)self.goodsSpecView.buyNumber];
+            GoodsInfoTableCell *cell = [GoodsInfoTableCell cellWithTableView:tableView];
+            cell.model = self.goodsDetailModel;
+            return cell;
             
-        }else {
+        }else if (indexPath.row == 1){//规格cell
             
-            cell.specStr = [NSString stringWithFormat:@"%@%@，%ld个",model.specColor?:@"",model.specSize?:@"",(long)self.goodsSpecView.buyNumber];
+            SpecificationTableCell *cell = [SpecificationTableCell cellWithTableView:tableView];
+            GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
+            if (model.specColor.length == 0 && model.specSize.length == 0) {
+                
+                cell.specStr = [NSString stringWithFormat:@"%ld个",(long)self.goodsSpecView.buyNumber];
+                
+            }else {
+                
+                cell.specStr = [NSString stringWithFormat:@"%@%@，%ld个",model.specColor?:@"",model.specSize?:@"",(long)self.goodsSpecView.buyNumber];
+            }
+            
+            return cell;
+            
+            
+        }else if (indexPath.row == 2){//活动cell
+            
+            GoodsActivityTableCell *cell = [GoodsActivityTableCell cellWithTableView:tableView];
+            return cell;
+            
+        }else {//推荐商品cell
+            
+            GoodsRecommendTableCell *cell = [GoodsRecommendTableCell cellWithTableView:tableView];
+            cell.recommendGoodsArr = self.recommendGoodsArr;
+            return cell;
         }
         
-        return cell;
-
-        
-    }else if (indexPath.row == 2){//活动cell
+    }else {
     
-        GoodsActivityTableCell *cell = [GoodsActivityTableCell cellWithTableView:tableView];
-        return cell;
-       
-    }else {//推荐商品cell
-    
-        GoodsRecommendTableCell *cell = [GoodsRecommendTableCell cellWithTableView:tableView];
-        cell.recommendGoodsArr = self.recommendGoodsArr;
-        return cell;
+        if (indexPath.row == 0) {
+            
+            GoodsInfoTableCell *cell = [GoodsInfoTableCell cellWithTableView:tableView];
+            cell.packageModel = self.packageDetailModel;
+            return cell;
+            
+        }else if (indexPath.row == 1){//规格cell
+            
+            SpecificationTableCell *cell = [SpecificationTableCell cellWithTableView:tableView];
+            GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
+            if (model.specColor.length == 0 && model.specSize.length == 0) {
+                
+                cell.specStr = [NSString stringWithFormat:@"%ld个",(long)self.goodsSpecView.buyNumber];
+                
+            }else {
+                
+                cell.specStr = [NSString stringWithFormat:@"%@%@，%ld个",model.specColor?:@"",model.specSize?:@"",(long)self.goodsSpecView.buyNumber];
+            }
+            
+            return cell;
+            
+            
+        }else if (indexPath.row == 2){//活动cell
+            
+            GoodsActivityTableCell *cell = [GoodsActivityTableCell cellWithTableView:tableView];
+            return cell;
+            
+        }else {//推荐商品cell
+            
+            GoodsRecommendTableCell *cell = [GoodsRecommendTableCell cellWithTableView:tableView];
+            cell.recommendGoodsArr = self.recommendGoodsArr;
+            return cell;
+        }
     }
 }
 

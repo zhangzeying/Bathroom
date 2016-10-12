@@ -352,7 +352,7 @@ static NSString *homeHeaderID = @"homeHeader";
             break;
     }
     
-    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:goodsId packageId:nil];
+    GoodsInfoViewController *goodsInfoVC = [[GoodsInfoViewController alloc]initWithGoodsId:goodsId packgeModel:nil];
     goodsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:goodsInfoVC animated:YES];
 }
