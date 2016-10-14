@@ -13,7 +13,8 @@ typedef NS_ENUM(NSInteger, OrderType){
     
     NoPayOrder, //待付款订单
     NoReceiveOrder, //待收货订单
-    MyOrder //我的订单
+    MyOrder, //我的订单
+    NoSendOrder //待发货订单
 };
 /** <##> */
 @property(assign,nonatomic)OrderType orderType;

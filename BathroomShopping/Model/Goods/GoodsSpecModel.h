@@ -19,9 +19,4 @@
 @property(nonatomic,assign)double specPrice;
 /** 库存 */
 @property(assign,nonatomic)NSInteger specStock;
-
-/** <##> */
-@property(nonatomic,copy)NSString *specIds;
-/** <##> */
-@property(nonatomic,copy)NSString *specColors;
 @end

@@ -21,6 +21,7 @@
 
 - (void)awakeFromNib {
 
+    [super awakeFromNib];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginStateChange) name:@"loginStateChange" object:nil];
     self.line.backgroundColor = CustomColor(235, 235, 235);
     [self.infomationBtn setTitleColor:CustomColor(102, 102, 102) forState:UIControlStateNormal];

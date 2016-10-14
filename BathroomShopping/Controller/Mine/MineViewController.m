@@ -270,9 +270,9 @@
     __weak typeof (self)weakSelf = self;
     if ([[CommUtils sharedInstance] isLogin]) {
         
-        [self.service getOrder:@"nopay" completion:^(NSMutableArray *dataArr) {
+        [self.service getOrder:@"nopay" offset:0 completion:^(NSMutableArray *dataArr, NSInteger total) {
             
-            weakSelf.nopayCountLbl.text = [NSString stringWithFormat:@"%ld",dataArr.count];
+            weakSelf.nopayCountLbl.text = [NSString stringWithFormat:@"%ld",total];
             if (dataArr.count == 0) {
                 
                 weakSelf.nopayCountLbl.hidden = YES;
@@ -285,9 +285,9 @@
             
         }];
         
-        [self.service getOrder:@"send" completion:^(NSMutableArray *dataArr) {
+        [self.service getOrder:@"send" offset:0 completion:^(NSMutableArray *dataArr, NSInteger total) {
             
-            weakSelf.noReceiveCountLbl.text = [NSString stringWithFormat:@"%ld",dataArr.count];
+            weakSelf.noReceiveCountLbl.text = [NSString stringWithFormat:@"%ld",total];
             
             if (dataArr.count == 0) {
                 

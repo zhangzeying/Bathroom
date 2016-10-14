@@ -20,4 +20,6 @@
 
 + (void)hideHUD;
 + (void)hideHUDForView:(UIView *)view;
+
++ (void)showNetErrorHUD:(UIView*)view;
 @end

@@ -11,6 +11,13 @@
 #import "OrderService.h"
 #import "ErrorView.h"
 #import "CustomRefreshHeader.h"
+
+typedef NS_ENUM(NSInteger, LoadType){
+    PullDown, //下拉刷新
+    PullUp, //上拉加载更多
+    Normal //正常加载
+};
+
 @interface OrderViewController ()<UITableViewDelegate, UITableViewDataSource>
 /** <##> */
 @property(nonatomic,strong)OrderService *service;
@@ -29,7 +36,15 @@
 /** <##> */
 @property(nonatomic,strong)NSMutableArray *dataArr;
 /** <##> */
+@property(assign,nonatomic)NSInteger total;
+/** <##> */
 @property (nonatomic, strong)ErrorView *errorView;
+/** 页码 */
+@property(assign,nonatomic)NSInteger offset;
+/** 记录操作之前的页码 */
+@property(assign,nonatomic)NSInteger lastOffset;
+/** <##> */
+@property(assign,nonatomic)LoadType loadType;
 @end
 
 @implementation OrderViewController
@@ -73,6 +88,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"我的订单";
     self.titleArr = @[@"全部",@"待付款",@"待收货",@"待发货"];
+    
 }
 
 - (void)initTitleView {
@@ -123,6 +139,8 @@
         self.indicatorView.centerX = sender.centerX;
     }];
     
+    self.offset = 0;
+    self.loadType = Normal;
     switch (sender.tag) {
         case 0:
             [self getOrderList:@"all"];
@@ -159,10 +177,16 @@
     // 设置自动切换透明度(在导航栏下面自动隐藏)
     CustomRefreshHeader *header = [CustomRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_header = header;
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    self.tableView.mj_footer.hidden = YES;
 }
 
 - (void)loadNewData {
 
+    self.lastOffset = self.offset;
+    self.offset = 0;
+    self.loadType = PullDown;
     switch (self.selectedBtn.tag) {
         case 0:
             [self getOrderList:@"all"];
@@ -181,8 +205,36 @@
     }
 }
 
+- (void)loadMoreData {
+
+    self.offset++;
+    self.loadType = PullUp;
+    switch (self.selectedBtn.tag) {
+        case 0:
+            [self getOrderList:@"all"];
+            break;
+        case 1:
+            [self getOrderList:@"nopay"];
+            break;
+        case 2:
+            [self getOrderList:@"send"];
+            break;
+        case 3:
+            [self getOrderList:@"payed"];
+            break;
+        default:
+            break;
+    }
+    if (self.dataArr.count == self.total) {//没有更多数据了
+        
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
+    self.tableView.mj_footer.hidden = self.dataArr.count == 0;
     return self.dataArr.count;
 }
 
@@ -196,6 +248,8 @@
 - (void)setOrderType:(OrderType)orderType {
 
     _orderType = orderType;
+    self.offset = 0;
+    self.loadType = Normal;
     [self initTitleView];
     [self initTableView];
     UIButton *btn;
@@ -230,25 +284,74 @@
 - (void)getOrderList:(NSString *)orderType {
     
     __weak typeof (self)weakSelf = self;
-    [self.service getOrder:orderType completion:^(NSMutableArray *dataArr) {
+    if (self.loadType == Normal) {
         
-        weakSelf.dataArr = dataArr;
-        if (weakSelf.tableView != nil) {
+        [SVProgressHUD show];
+    }
+    [self.service getOrder:orderType offset:self.offset completion:^(NSMutableArray *dataArr,NSInteger total) {
+        if (self.loadType == Normal) {
             
-            [weakSelf.tableView removeFromSuperview];
-            weakSelf.tableView = nil;
+            [SVProgressHUD dismiss];
         }
+        if (total != -1) { //加载成功
+         
+             weakSelf.total = total;
+            if (self.loadType == PullDown) {//下拉刷新
+                
+                [weakSelf.dataArr removeAllObjects];
+                weakSelf.dataArr = dataArr;
+                [weakSelf.tableView.mj_header endRefreshing];
+                [weakSelf.tableView reloadData];
+                
+            }else if(self.loadType == PullUp) {//上拉加载更多
+                
+                [weakSelf.dataArr addObjectsFromArray:dataArr];
+                if (weakSelf.dataArr.count >= self.total) {
+                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                } else {
+                    [weakSelf.tableView.mj_footer endRefreshing];
+                }
+                [weakSelf.tableView reloadData];
+                
+            }else {
+            
+                weakSelf.dataArr = dataArr;
+                if (weakSelf.tableView != nil) {
+                    
+                    [weakSelf.tableView removeFromSuperview];
+                    weakSelf.tableView = nil;
+                }
+                
+                if (dataArr.count == 0) {
+                    
+                    weakSelf.errorView.hidden = NO;
+                    
+                }else {
+                    
+                    self.errorView.hidden = YES;
+                    [weakSelf initTableView];
+                }
+            }
+            
+           
+            
+        }else {//加载失败
         
-        if (dataArr.count == 0) {
+            if (self.loadType == PullDown) {//下拉刷新
+                
+                self.offset = self.lastOffset;
+                [weakSelf.tableView.mj_header endRefreshing];
+                
+            }else if(self.loadType == PullUp) {
             
-            weakSelf.errorView.hidden = NO;
+                self.offset--;
+                [weakSelf.tableView.mj_footer endRefreshing];
+                
+            }else {
             
-        }else {
-            
-            self.errorView.hidden = YES;
-            [weakSelf initTableView];
+                
+            }
         }
-        
     }];
 }
 

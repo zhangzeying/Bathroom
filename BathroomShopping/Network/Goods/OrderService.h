@@ -16,7 +16,7 @@
 /**
  * 获取订单
  */
-- (void)getOrder:(NSString *)type completion:(void(^)(id))completion;
+- (void)getOrder:(NSString *)type offset:(NSInteger)offset completion:(void(^)(id,NSInteger))completion;
 /**
  * 生成一元抢购抽奖订单
  */

@@ -577,7 +577,8 @@
                                  @"otherRequirement":self.remarkTxt.text?:@"",
                                  @"productIds":[str copy],
                                  @"selectAddressID":addressModel.id,
-                                 @"token":[[CommUtils sharedInstance] fetchToken]};
+                                 @"token":[[CommUtils sharedInstance] fetchToken],
+                                 @"packageIdArr":@""};
         
         calculateVC.params = params;
     }

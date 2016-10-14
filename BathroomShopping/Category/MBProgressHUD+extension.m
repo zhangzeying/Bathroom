@@ -125,4 +125,19 @@
     if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
     [self hideHUDForView:view animated:YES];
 }
+
+
++ (void)showNetErrorHUD:(UIView*)view {
+    if (!view) {
+        return;
+    }
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tip_sys_error"]];
+    // Set custom view mode
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.label.text = @"网络异常，请重试";
+    [hud showAnimated:YES];
+    [hud hideAnimated:YES afterDelay:1.5f];
+}
 @end

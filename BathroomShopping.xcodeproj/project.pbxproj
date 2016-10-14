@@ -586,7 +586,6 @@
 		5A9C85911D360F8400FB7782 /* MineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTableViewCell.m; sourceTree = "<group>"; };
 		5A9E08491D584C580032129C /* GoodsRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsRefreshHeader.h; sourceTree = "<group>"; };
 		5A9E084A1D584C580032129C /* GoodsRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsRefreshHeader.m; sourceTree = "<group>"; };
-		5AAC15221D9AB0240024A5FC /* MallPackageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MallPackageModel.h; path = ../Model/Mall/MallPackageModel.h; sourceTree = "<group>"; };
 		5AAC15231D9AB0240024A5FC /* MallPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallPackageModel.m; sourceTree = "<group>"; };
 		5ADBAFEF1D93672B002225E5 /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
 		5ADBAFF01D93672B002225E5 /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
@@ -1164,7 +1163,6 @@
 			isa = PBXGroup;
 			children = (
 				5A1843A61D479D0C002EA34E /* Goods */,
-				5AAC15221D9AB0240024A5FC /* MallPackageModel.h */,
 				5A2808151D34BA7700DCFC30 /* ShoppingCart */,
 				5A246AB71D33D2D80060CA51 /* Mall */,
 				5A246AB61D33D2C30060CA51 /* Bathroom */,
@@ -2214,6 +2212,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BathroomShopping/Vendor/AlipaySDK",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "BathroomShopping/BathroomShopping-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

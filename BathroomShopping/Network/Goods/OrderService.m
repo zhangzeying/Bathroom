@@ -53,18 +53,18 @@
 /**
  * 获取订单
  */
-- (void)getOrder:(NSString *)type completion:(void(^)(id))completion {
+- (void)getOrder:(NSString *)type offset:(NSInteger)offset completion:(void(^)(id,NSInteger))completion {
     
-    NSDictionary *params = @{@"token":[[CommUtils sharedInstance] fetchToken]};
-    [SVProgressHUD show];
+    NSDictionary *params = @{@"token":[[CommUtils sharedInstance] fetchToken],
+                             @"offset":@(offset)};
     [self.restService afnetworkingPost:kAPIGetOrder(type) parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
-        [SVProgressHUD dismiss];
         if (flag) {
             
             NSDictionary *dictData = myAfNetBlokResponeDic;
             if ([[dictData objectForKey:@"flag"] isEqualToString:@"0"]) {//操作成功
                 
                 NSArray *listArr = dictData[@"result"][@"orders"];
+                NSInteger total = [dictData[@"result"][@"totle"] integerValue];
                 [OrderModel mj_setupObjectClassInArray:^NSDictionary *{
                     return @{
                              @"orders" : @"OrderDetailModel"
@@ -72,16 +72,16 @@
                 }];
                 
                 NSArray *orderArr = [OrderModel mj_objectArrayWithKeyValuesArray:listArr];
-                completion(orderArr);
+                completion(orderArr,total);
                 
             }else {
                 
-                return;
+                completion(nil,-1);
             }
             
         }else {
         
-            
+            completion(nil,-1);
         }
         
     }];

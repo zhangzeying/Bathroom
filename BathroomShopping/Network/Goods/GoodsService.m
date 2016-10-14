@@ -86,6 +86,7 @@
                          };
             }];
             
+            
             PackageDetailModel *model = [PackageDetailModel mj_objectWithKeyValues:dictData];
 
             completion(model);
