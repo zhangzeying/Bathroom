@@ -75,7 +75,7 @@
     self.editBtn = editBtn;
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearCart) name:@"order" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearCart) name:@"OrderSuccess" object:nil];
 }
 
 #pragma mark --- CreatUI ---

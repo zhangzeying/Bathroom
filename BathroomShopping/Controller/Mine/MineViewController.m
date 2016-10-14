@@ -104,6 +104,7 @@
     [self getOrderList];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderList) name:@"loginStateChange" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderList) name:@"OrderSuccess" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

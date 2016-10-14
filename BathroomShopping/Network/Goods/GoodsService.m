@@ -102,9 +102,7 @@
 - (void)getCartList:(void(^)(id))completion {
 
     NSDictionary *params = @{@"token":[[CommUtils sharedInstance] fetchToken]?:@""};
-    
     [self.restService afnetworkingPost:kAPICartList parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
-        
         if (flag) {
             
             NSDictionary *dictData = myAfNetBlokResponeDic;
