@@ -15,6 +15,7 @@ static NSString *ID = @"ID";
 @property (weak, nonatomic) IBOutlet UILabel *nameLbl;
 @property (weak, nonatomic) IBOutlet UILabel *priceLbl;
 @property (weak, nonatomic) IBOutlet UILabel *numLbl;
+@property (weak, nonatomic) IBOutlet UILabel *specLbl;
 
 @end
 
@@ -43,7 +44,7 @@ static NSString *ID = @"ID";
 
 - (void)setFrame:(CGRect)frame {
     
-    frame.size.height -= 10;
+    frame.origin.y += 10;
     [super setFrame:frame];
 }
 @end

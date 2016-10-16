@@ -16,9 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLbl;
 @property (weak, nonatomic) IBOutlet UILabel *orderNum;
 @property (weak, nonatomic) IBOutlet UILabel *state;
-@property (weak, nonatomic) IBOutlet UILabel *line;
-@property (weak, nonatomic) IBOutlet UIView *bgView1;
-@property (weak, nonatomic) IBOutlet UIView *bgView2;
+
 @end
 
 @implementation OrderDetailHeaderView
@@ -26,22 +24,13 @@
 - (void)awakeFromNib {
     
     [super awakeFromNib];
-    self.bgView1.layer.borderColor = [UIColor colorWithHexString:@"0xcfcfcf"].CGColor;
-    self.bgView1.layer.borderWidth = 0.5;
-    
-    self.bgView2.layer.borderColor = [UIColor colorWithHexString:@"0xcfcfcf"].CGColor;
-    self.bgView2.layer.borderWidth = 0.5;
+    self.backgroundColor = CustomColor(240, 242, 245);
 }
 
 + (OrderDetailHeaderView *)instanceHeaderView {
     
     NSArray *nibView = [[NSBundle mainBundle]loadNibNamed:NSStringFromClass(self) owner:nil options:nil];
     return [nibView lastObject];
-}
-
-- (IBAction)editClick:(id)sender {
-    
-    
 }
 
 @end

@@ -264,6 +264,7 @@
  ** 获取当前最顶层的ViewController
  */
 - (UIViewController *)topViewController {
+    
     UIViewController *resultVC;
     resultVC = [self _topViewController:[[UIApplication sharedApplication].keyWindow rootViewController]];
     while (resultVC.presentedViewController) {

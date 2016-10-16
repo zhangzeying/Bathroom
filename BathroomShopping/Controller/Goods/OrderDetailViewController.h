@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 
 @interface OrderDetailViewController : BaseViewController
-
+/** <##> */
+@property(nonatomic,strong)NSMutableArray *goodsArr;
 @end
     

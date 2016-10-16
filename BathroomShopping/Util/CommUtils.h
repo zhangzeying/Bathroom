@@ -95,4 +95,8 @@
  * 获取当前屏幕显示的viewcontroller
  */
 - (UIViewController *)getCurrentVC;
+/*
+ ** 获取当前最顶层的ViewController
+ */
+- (UIViewController *)topViewController;
 @end

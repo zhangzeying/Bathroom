@@ -9,6 +9,7 @@
 #import "OrderTableCell.h"
 #import "OrderModel.h"
 #import "OrderDetailModel.h"
+#import "OrderDetailViewController.h"
 static NSString *ID = @"orderTableCell";
 @interface OrderTableCell()
 @property (weak, nonatomic) IBOutlet UILabel *orderStateLbl;
@@ -53,10 +54,13 @@ static NSString *ID = @"orderTableCell";
 
 - (void)setModel:(OrderModel *)model {
 
+    _model = model;
     UIScrollView *scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 29, ScreenW, 90)];
     scroll.backgroundColor = CustomColor(245, 245, 245);
     [self addSubview:scroll];
-    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick)];
+    tap.numberOfTapsRequired = 1;
+    [scroll addGestureRecognizer:tap];
     if ([model.remark isEqualToString:@"一元抢购"]) {
         
         UILabel *nameLbl = [[UILabel alloc]init];
@@ -137,6 +141,13 @@ static NSString *ID = @"orderTableCell";
     
     
     self.totalPriceLbl.text = [NSString stringWithFormat:@"合计:¥ %.2f",model.amount];
+}
+
+- (void)tapClick {
+
+    OrderDetailViewController *orderDetailVC = [[OrderDetailViewController alloc]init];
+    orderDetailVC.goodsArr = self.model.orders;
+    [[[CommUtils sharedInstance] topViewController].navigationController pushViewController:orderDetailVC animated:YES];
 }
 
 - (IBAction)operationClick:(UIButton *)sender {

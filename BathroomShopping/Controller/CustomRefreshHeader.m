@@ -14,13 +14,15 @@
 {
     [super placeSubviews];
     self.gifView.frame = self.bounds;
+    
     //    self.gifView.superview.backgroundColor = [UIColor purpleColor];
     self.gifView.contentMode = UIViewContentModeTop;
     
     CGRect lbRect = self.stateLabel.frame;
     lbRect.origin.y += 20;
+    lbRect.size.height -= 5;
     self.stateLabel.frame = lbRect;
-    self.stateLabel.font = [UIFont systemFontOfSize:12];
+    self.stateLabel.font = [UIFont systemFontOfSize:11];
 }
 
 - (void)prepare {
@@ -32,7 +34,7 @@
     [self setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
     
     
-//    self.stateLabel.textColor = kRGBA(249, 209, 88, 1);
+    self.stateLabel.textColor = CustomColor(250, 215, 114);
     
     [self setImages:[self animateImages] forState:MJRefreshStateIdle];
     [self setImages:[self animateImages] forState:MJRefreshStatePulling];

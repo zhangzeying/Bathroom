@@ -116,7 +116,7 @@
 #define kAPILimitTimeBuyProduct @"/app/api/activity/getLimitTimeBuyProductList"
 //获取用户权限
 #define kAPIGetUserRoot @"/app/api/account/isShow"
-//生成一元抢购抽奖订单
+//生成一元抢购抽奖订单q
 #define kAPIPayOneYuan @"/app/api/order/payOneYuan"
 //获取特惠商城分类
 #define kAPIPerferenceActivity @"/app/api/activity/perferenceActivity"
@@ -124,6 +124,8 @@
 #define kAPIPerferenceProductList @"/app/api/activity/perferenceProductList"
 //获取关于我们的内容
 #define kAPIGetAboutContent @"/app/api/account/aboutOurs"
+//取消订单
+#define kAPICancelOrder @"/app/api/order/cancle"
 /**
  * 处于发布阶段
  */

@@ -142,7 +142,6 @@ static NSString *homeHeaderID = @"homeHeader";
     collect.delegate = self;
     collect.dataSource = self;
     collect.backgroundColor = [UIColor whiteColor];
-    
     self.collect = collect;
     
     __weak typeof(self) weakSelf = self;
