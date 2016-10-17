@@ -8,12 +8,13 @@
 //
 
 #import "OrderDetailHeaderView.h"
-
+#import "OrderModel.h"
+#import "MyLabel.h"
 @interface OrderDetailHeaderView()
 @property (weak, nonatomic) IBOutlet UILabel *reveiverLbl;
 @property (weak, nonatomic) IBOutlet UILabel *phoneLbl;
 
-@property (weak, nonatomic) IBOutlet UILabel *addressLbl;
+@property (weak, nonatomic) IBOutlet MyLabel *addressLbl;
 @property (weak, nonatomic) IBOutlet UILabel *orderNum;
 @property (weak, nonatomic) IBOutlet UILabel *state;
 
@@ -33,4 +34,10 @@
     return [nibView lastObject];
 }
 
+- (void)setModel:(OrderModel *)model {
+
+    self.phoneLbl.text = model.ordership[@"tel"];
+    self.orderNum.text = [NSString stringWithFormat:@"订单号:%@",model.id];
+    self.addressLbl.text = [NSString stringWithFormat:@"%@%@",model.ordership[@"shipaddress"],model.ordership[@"shipname"]];
+}
 @end

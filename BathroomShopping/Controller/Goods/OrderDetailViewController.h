@@ -7,9 +7,9 @@
 //
 
 #import "BaseViewController.h"
-
+@class OrderModel;
 @interface OrderDetailViewController : BaseViewController
 /** <##> */
-@property(nonatomic,strong)NSMutableArray *goodsArr;
+@property(nonatomic,strong)OrderModel *model;
 @end
     

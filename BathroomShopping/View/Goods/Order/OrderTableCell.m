@@ -146,7 +146,7 @@ static NSString *ID = @"orderTableCell";
 - (void)tapClick {
 
     OrderDetailViewController *orderDetailVC = [[OrderDetailViewController alloc]init];
-    orderDetailVC.goodsArr = self.model.orders;
+    orderDetailVC.model = self.model;
     [[[CommUtils sharedInstance] topViewController].navigationController pushViewController:orderDetailVC animated:YES];
 }
 

@@ -10,11 +10,23 @@
 #import "OrderDetailGoodsTableCell.h"
 #import "OrderDetailHeaderView.h"
 #import "OrderDetailFooterView.h"
+#import "OrderModel.h"
 @interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
-
+/** <##> */
+@property(nonatomic,strong)NSMutableArray *goodsArr;
 @end
 
 @implementation OrderDetailViewController
+
+- (NSMutableArray *)goodsArr {
+    
+    if (_goodsArr == nil) {
+        
+        _goodsArr = [NSMutableArray array];
+    }
+    
+    return _goodsArr;
+}
 
 - (void)viewDidLoad {
     
@@ -24,15 +36,15 @@
 
 - (void)initTable {
 
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH - 60)];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH - 60) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tableView.rowHeight = 110;
     tableView.backgroundColor = CustomColor(240, 242, 245);
     [self.view addSubview:tableView];
     
     OrderDetailHeaderView *header = [OrderDetailHeaderView instanceHeaderView];
+    header.model = self.model;
     header.height = 140;
     tableView.tableHeaderView = header;
     
@@ -41,20 +53,71 @@
     [self.view addSubview:footer];
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.goodsArr.count;
+    return section == 0 ? self.goodsArr.count : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    OrderDetailGoodsTableCell *cell = [OrderDetailGoodsTableCell cellWithTableView:tableView];
-    return cell;
+    if (indexPath.section == 0) {
+        
+        OrderDetailGoodsTableCell *cell = [OrderDetailGoodsTableCell cellWithTableView:tableView];
+        cell.model = self.goodsArr[indexPath.row];
+        return cell;
+        
+    }else {
+    
+        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        UILabel *titleLbl = [[UILabel alloc]init];
+        titleLbl.text = @"商品总额";
+        [titleLbl sizeToFit];
+        titleLbl.x = 15;
+        titleLbl.centerY = cell.height / 2;
+        titleLbl.font = [UIFont systemFontOfSize:13];
+        [cell.contentView addSubview:titleLbl];
+        
+        UILabel *priceLbl = [[UILabel alloc]init];
+        
+        priceLbl.text = [NSString stringWithFormat:@"¥%.2f",self.model.amount];
+        [priceLbl sizeToFit];
+        priceLbl.x = ScreenW - priceLbl.width;
+        priceLbl.centerY = cell.height / 2;
+        priceLbl.font = [UIFont systemFontOfSize:13];
+        [cell.contentView addSubview:priceLbl];
+        return cell;
+    }
 }
 
-- (void)setGoodsArr:(NSMutableArray *)goodsArr {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    _goodsArr = goodsArr;
+    return indexPath.section == 0 ? 90 : 40;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 0.f;
+    } else {
+        return 10.f;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+
+
+- (void)setModel:(OrderModel *)model {
+
+    _model = model;
+    self.goodsArr = model.orders;
     [self initTable];
 }
 

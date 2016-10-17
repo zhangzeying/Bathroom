@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class OrderDetailModel;
 @interface OrderDetailGoodsTableCell : UITableViewCell
 
 + (instancetype)cellWithTableView:(UITableView *)table;
-
+/** <##> */
+@property(nonatomic,strong)OrderDetailModel *model;
 @end

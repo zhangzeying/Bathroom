@@ -23,7 +23,9 @@
     lbRect.size.height -= 5;
     self.stateLabel.frame = lbRect;
     self.stateLabel.font = [UIFont systemFontOfSize:11];
+    
 }
+
 
 - (void)prepare {
 
@@ -50,4 +52,32 @@
     return images.copy; 
 }
 
+//- (void)gradient {
+//
+//    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+//    gradientLayer.frame = self.stateLabel.frame;    // 设置渐变层的颜色，随机颜色渐变
+//    gradientLayer.colors = @[(id)[self randomColor].CGColor, (id)[self randomColor].CGColor,(id)[self randomColor].CGColor];
+//    
+//    [self.layer addSublayer:gradientLayer];
+//    gradientLayer.mask = self.stateLabel.layer;
+//    
+//    self.stateLabel.frame = gradientLayer.bounds;    // 利用定时器，快速的切换渐变颜色，就有文字颜色变化效果
+//    //    CADisplayLink *link = [CADisplayLink displayLinkWithTarget:self selector:@selector(textColorChange)];
+//    //    [link addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+//}
+//-(void)textColorChange {
+//
+//    _gradientLayer.colors = @[(id)[self randomColor].CGColor,
+//                              (id)[self randomColor].CGColor,
+//                              (id)[self randomColor].CGColor,
+//                              (id)[self randomColor].CGColor,
+//                              (id)[self randomColor].CGColor];
+//}
+//-(UIColor *)randomColor {
+//    
+//    CGFloat r = arc4random_uniform(256) / 255.0;
+//    CGFloat g = arc4random_uniform(256) / 255.0;
+//    CGFloat b = arc4random_uniform(256) / 255.0;
+//    return [UIColor colorWithRed:r green:g blue:b alpha:1];
+//}
 @end

@@ -49,19 +49,19 @@ typedef NS_ENUM(NSInteger, LoadType){
 
 @implementation OrderViewController
 
-- (ErrorView *)errorView {
-    
-    if (_errorView == nil) {
-        
-        _errorView = [[ErrorView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.line.frame), ScreenW, ScreenH - CGRectGetMaxY(self.line.frame))];
-        _errorView.warnStr = @"您还没有相关的订单哦！";
-        _errorView.imgName = @"sys_xiao8";
-        _errorView.btnTitle = @"";
-        [self.view addSubview:_errorView];
-    }
-    
-    return _errorView;
-}
+//- (ErrorView *)errorView {
+//    
+//    if (_errorView == nil) {
+//        
+//        _errorView = [[ErrorView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.line.frame), ScreenW, ScreenH - CGRectGetMaxY(self.line.frame))];
+//        _errorView.warnStr = @"您还没有相关的订单哦！";
+//        _errorView.imgName = @"sys_xiao8";
+//        _errorView.btnTitle = @"";
+//        [self.view addSubview:_errorView];
+//    }
+//    
+//    return _errorView;
+//}
 
 - (NSMutableArray *)dataArr {
     
@@ -323,12 +323,12 @@ typedef NS_ENUM(NSInteger, LoadType){
                 }
                 
                 if (dataArr.count == 0) {
-                    
-                    weakSelf.errorView.hidden = NO;
+                   
+                    [self.view addWarnViewWithIcon:@"sys_xiao8" positionY:94 text:@"您还没有相关的订单哦！"];
                     
                 }else {
                     
-                    self.errorView.hidden = YES;
+                    [self.view removeWarnView];
                     [weakSelf initTableView];
                 }
             }

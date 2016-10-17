@@ -69,7 +69,7 @@
 - (void)setBtnTitle:(NSString *)btnTitle {
 
     _btnTitle = btnTitle;
-    if ([btnTitle isEqualToString:@""]) {
+    if ([btnTitle isEqualToString:@""] || btnTitle == nil) {
         
         self.btn.hidden = YES;
         

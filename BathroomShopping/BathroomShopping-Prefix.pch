@@ -24,4 +24,5 @@
 #import "UIColor+String.h"
 #import "UIButton+Extension.h"
 #import "MBProgressHUD+extension.h"
+#import "UIView+WarnView.h"
 #endif

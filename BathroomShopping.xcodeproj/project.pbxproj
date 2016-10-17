@@ -159,6 +159,9 @@
 		5A9C85891D35D61300FB7782 /* MineHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A9C85881D35D61300FB7782 /* MineHeaderView.xib */; };
 		5A9C858C1D35E09400FB7782 /* MineHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9C858B1D35E09400FB7782 /* MineHeaderView.m */; };
 		5A9C85921D360F8400FB7782 /* MineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9C85911D360F8400FB7782 /* MineTableViewCell.m */; };
+		5A9DA5B61DB4A5BB00726830 /* MyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9DA5B51DB4A5BB00726830 /* MyLabel.m */; };
+		5A9DA5B81DB4B18A00726830 /* OrderDetailGoodsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A9DA5B71DB4B18A00726830 /* OrderDetailGoodsTableCell.xib */; };
+		5A9DA5BE1DB4B58400726830 /* UIView+WarnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9DA5BD1DB4B58400726830 /* UIView+WarnView.m */; };
 		5A9E084B1D584C580032129C /* GoodsRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E084A1D584C580032129C /* GoodsRefreshHeader.m */; };
 		5AAC15241D9AB0240024A5FC /* MallPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAC15231D9AB0240024A5FC /* MallPackageModel.m */; };
 		5ADBAFF11D93672B002225E5 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADBAFF01D93672B002225E5 /* OrderModel.m */; };
@@ -212,7 +215,6 @@
 		5AFF72861D716B4B00A1A04A /* OrderDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFF72851D716B4B00A1A04A /* OrderDetailHeaderView.m */; };
 		5AFF72891D716B5E00A1A04A /* OrderDetailFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFF72881D716B5E00A1A04A /* OrderDetailFooterView.m */; };
 		5AFF728D1D716B7900A1A04A /* OrderDetailGoodsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFF728B1D716B7900A1A04A /* OrderDetailGoodsTableCell.m */; };
-		5AFF728E1D716B7900A1A04A /* OrderDetailGoodsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AFF728C1D716B7900A1A04A /* OrderDetailGoodsTableCell.xib */; };
 		5AFF72901D716B9700A1A04A /* OrderDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AFF728F1D716B9700A1A04A /* OrderDetailHeaderView.xib */; };
 		5AFF72921D716BB500A1A04A /* OrderDetailFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AFF72911D716BB500A1A04A /* OrderDetailFooterView.xib */; };
 /* End PBXBuildFile section */
@@ -584,6 +586,11 @@
 		5A9C858B1D35E09400FB7782 /* MineHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineHeaderView.m; sourceTree = "<group>"; };
 		5A9C85901D360F8400FB7782 /* MineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTableViewCell.h; sourceTree = "<group>"; };
 		5A9C85911D360F8400FB7782 /* MineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTableViewCell.m; sourceTree = "<group>"; };
+		5A9DA5B41DB4A5BB00726830 /* MyLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLabel.h; sourceTree = "<group>"; };
+		5A9DA5B51DB4A5BB00726830 /* MyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLabel.m; sourceTree = "<group>"; };
+		5A9DA5B71DB4B18A00726830 /* OrderDetailGoodsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailGoodsTableCell.xib; sourceTree = "<group>"; };
+		5A9DA5BC1DB4B58400726830 /* UIView+WarnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WarnView.h"; sourceTree = "<group>"; };
+		5A9DA5BD1DB4B58400726830 /* UIView+WarnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WarnView.m"; sourceTree = "<group>"; };
 		5A9E08491D584C580032129C /* GoodsRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsRefreshHeader.h; sourceTree = "<group>"; };
 		5A9E084A1D584C580032129C /* GoodsRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsRefreshHeader.m; sourceTree = "<group>"; };
 		5AAC15231D9AB0240024A5FC /* MallPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallPackageModel.m; sourceTree = "<group>"; };
@@ -685,7 +692,6 @@
 		5AFF72881D716B5E00A1A04A /* OrderDetailFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailFooterView.m; sourceTree = "<group>"; };
 		5AFF728A1D716B7900A1A04A /* OrderDetailGoodsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailGoodsTableCell.h; sourceTree = "<group>"; };
 		5AFF728B1D716B7900A1A04A /* OrderDetailGoodsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailGoodsTableCell.m; sourceTree = "<group>"; };
-		5AFF728C1D716B7900A1A04A /* OrderDetailGoodsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailGoodsTableCell.xib; sourceTree = "<group>"; };
 		5AFF728F1D716B9700A1A04A /* OrderDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailHeaderView.xib; sourceTree = "<group>"; };
 		5AFF72911D716BB500A1A04A /* OrderDetailFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailFooterView.xib; sourceTree = "<group>"; };
 		9935550CADFB775231D33BD3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1117,6 +1123,8 @@
 				5A7B9E901D88DF9300E95D4D /* UIButton+Extension.m */,
 				5A8A09C31D8FC7CB009338FA /* MBProgressHUD+extension.h */,
 				5A8A09C41D8FC7CB009338FA /* MBProgressHUD+extension.m */,
+				5A9DA5BC1DB4B58400726830 /* UIView+WarnView.h */,
+				5A9DA5BD1DB4B58400726830 /* UIView+WarnView.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1420,6 +1428,8 @@
 				5AE10D901D4DB1F9003551C1 /* CustomLabel.m */,
 				5A09413F1D964193009CAF01 /* GradualLabel.h */,
 				5A0941401D964193009CAF01 /* GradualLabel.m */,
+				5A9DA5B41DB4A5BB00726830 /* MyLabel.h */,
+				5A9DA5B51DB4A5BB00726830 /* MyLabel.m */,
 			);
 			path = UILabel;
 			sourceTree = "<group>";
@@ -1615,7 +1625,7 @@
 				5AFF72911D716BB500A1A04A /* OrderDetailFooterView.xib */,
 				5AFF728A1D716B7900A1A04A /* OrderDetailGoodsTableCell.h */,
 				5AFF728B1D716B7900A1A04A /* OrderDetailGoodsTableCell.m */,
-				5AFF728C1D716B7900A1A04A /* OrderDetailGoodsTableCell.xib */,
+				5A9DA5B71DB4B18A00726830 /* OrderDetailGoodsTableCell.xib */,
 				5A8BDBDC1D9BF72900499D34 /* OrderTableCell.h */,
 				5A8BDBDD1D9BF72900499D34 /* OrderTableCell.m */,
 				5A8BDBDE1D9BF72900499D34 /* OrderTableCell.xib */,
@@ -1764,6 +1774,7 @@
 				5A48E2CE1D461C6E00C0E12F /* OneMoneySaleTableCell.xib in Resources */,
 				5A93AF581D33691C0043F4EE /* RegisterViewController.xib in Resources */,
 				5A09A5261D600EB4002C1A02 /* GoodsActivityTableCell.xib in Resources */,
+				5A9DA5B81DB4B18A00726830 /* OrderDetailGoodsTableCell.xib in Resources */,
 				5AF9D17A1D25FA42009C2759 /* LaunchScreen.storyboard in Resources */,
 				5AE10D9F1D4DFFF5003551C1 /* MallTableCell.xib in Resources */,
 				5A09A5301D6016CE002C1A02 /* GoodsRecommendView.xib in Resources */,
@@ -1789,7 +1800,6 @@
 				5A8BDBE01D9BF72900499D34 /* OrderTableCell.xib in Resources */,
 				5A023A621D87CB100067815E /* AddressListTableCell.xib in Resources */,
 				5A6FB4DA1D81519B0067B500 /* AppointGoodsViewController.xib in Resources */,
-				5AFF728E1D716B7900A1A04A /* OrderDetailGoodsTableCell.xib in Resources */,
 				5A28762A1D65F09800C6A064 /* AlipaySDK.bundle in Resources */,
 				5A0186D51D80365800721D96 /* MyLikedTableCell.xib in Resources */,
 				5A76D0571D437F8800F65AE2 /* ActivityGoodsCollectionCell.xib in Resources */,
@@ -1901,6 +1911,7 @@
 				5A28768C1D65F5F400C6A064 /* WXApiManager.m in Sources */,
 				5A02DED01D6BE28600115B5D /* LotteryUserModel.m in Sources */,
 				5A2111171D61FBCF0008EEEB /* SpecificationTableCell.m in Sources */,
+				5A9DA5B61DB4A5BB00726830 /* MyLabel.m in Sources */,
 				5AF6E5AF1D44C33C00185E8C /* HotGoodsHeaderView.m in Sources */,
 				5AFF728D1D716B7900A1A04A /* OrderDetailGoodsTableCell.m in Sources */,
 				5AE10D951D4DB211003551C1 /* CustomButton.m in Sources */,
@@ -1917,6 +1928,7 @@
 				5A749E451D86366F00123C88 /* LimitTimeBuyViewController.m in Sources */,
 				5A2808221D34BBF500DCFC30 /* BathroomViewController.m in Sources */,
 				5A2876A11D66D6F100C6A064 /* UIImage+Rotate.m in Sources */,
+				5A9DA5BE1DB4B58400726830 /* UIView+WarnView.m in Sources */,
 				5AEE15081D375E45003C3D9E /* GoodsCategoryTableCell.m in Sources */,
 				5A09A5251D600EB4002C1A02 /* GoodsActivityTableCell.m in Sources */,
 				5A09A52E1D6016BD002C1A02 /* GoodsRecommendView.m in Sources */,

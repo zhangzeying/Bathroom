@@ -31,4 +31,6 @@
 @property(nonatomic,copy)NSString *paystatus;
 /** init表示已付款，send表示已发货，sign，表示签收 */
 @property(nonatomic,copy)NSString *status;
+/** <##> */
+@property(nonatomic,strong)NSDictionary *ordership;
 @end
