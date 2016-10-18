@@ -36,12 +36,21 @@
     NSArray *nibView = [[NSBundle mainBundle]loadNibNamed:NSStringFromClass(self) owner:nil options:nil];
     return [nibView lastObject];
 }
+
 - (IBAction)payClick:(id)sender {
+    
+    if (self.footerViewBlock) {
+        
+        self.footerViewBlock(@"pay");
+    }
 }
 
 - (IBAction)cancelClick:(id)sender {
  
-    
+    if (self.footerViewBlock) {
+        
+        self.footerViewBlock(@"cancel");
+    }
 }
 
 @end

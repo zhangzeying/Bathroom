@@ -11,12 +11,25 @@
 #import "OrderDetailHeaderView.h"
 #import "OrderDetailFooterView.h"
 #import "OrderModel.h"
-@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
+#import "OrderService.h"
+@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 /** <##> */
 @property(nonatomic,strong)NSMutableArray *goodsArr;
+/** <##> */
+@property(nonatomic,strong)OrderService *service;
 @end
 
 @implementation OrderDetailViewController
+
+- (OrderService *)service {
+    
+    if (_service == nil) {
+        
+        _service = [[OrderService alloc]init];
+    }
+    
+    return _service;
+}
 
 - (NSMutableArray *)goodsArr {
     
@@ -51,6 +64,19 @@
     OrderDetailFooterView *footer = [OrderDetailFooterView instanceFooterView];
     footer.frame = CGRectMake(0, CGRectGetMaxY(tableView.frame), ScreenW, 60);
     [self.view addSubview:footer];
+    __weak typeof (self)wSelf = self;
+    footer.footerViewBlock = ^(NSString *btnType) {
+    
+        if ([btnType isEqualToString:@"pay"]) {//去支付
+            
+            
+        }else {//取消订单
+            
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定取消订单吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alertView.delegate = wSelf;
+            [alertView show];
+        }
+    };
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -119,6 +145,18 @@
     _model = model;
     self.goodsArr = model.orders;
     [self initTable];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+    if (buttonIndex == 1) {
+        
+        __weak typeof (self)wSelf = self;
+        [self.service cancelOrder:self.model.id completion:^{
+            
+            [wSelf.navigationController popViewControllerAnimated:YES];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

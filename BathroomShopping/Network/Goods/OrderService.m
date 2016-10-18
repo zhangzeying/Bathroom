@@ -98,7 +98,6 @@
         if (flag) {
             
             NSDictionary *dictData = myAfNetBlokResponeDic;
-            NSLog(@"%@",dictData);
             if ([[dictData objectForKey:@"flag"] isEqualToString:@"0"]) {//操作成功
                 
                 completion(dictData[@"result"]);
@@ -113,4 +112,33 @@
     }];
 }
 
+/**
+ * 取消订单
+ */
+- (void)cancelOrder:(NSString *)orderId completion:(void(^)())completion {
+
+    NSDictionary *params = @{@"token":[[CommUtils sharedInstance] fetchToken],
+                             @"orderId":orderId};
+    [SVProgressHUD show];
+    [self.restService afnetworkingPost:kAPICancelOrder parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+        if (flag) {
+            
+            NSDictionary *dictData = myAfNetBlokResponeDic;
+            if ([[dictData objectForKey:@"flag"] isEqualToString:@"0"]) {//操作成功
+                
+                [SVProgressHUD showSuccessWithStatus:@"取消订单成功！" maskType:SVProgressHUDMaskTypeBlack];
+                completion();
+                
+            }else {
+                
+                [SVProgressHUD showErrorWithStatus:@"取消订单失败！" maskType:SVProgressHUDMaskTypeBlack];
+            }
+            
+        }else {
+        
+            [SVProgressHUD showErrorWithStatus:@"取消订单失败！" maskType:SVProgressHUDMaskTypeBlack];
+        }
+        
+    }];
+}
 @end

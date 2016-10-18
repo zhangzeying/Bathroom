@@ -21,4 +21,8 @@
  * 生成一元抢购抽奖订单
  */
 - (void)oneMoneyOrder:(NSDictionary *)params completion:(void(^)(id))completion;
+/**
+ * 取消订单
+ */
+- (void)cancelOrder:(NSString *)orderId completion:(void(^)())completion;
 @end

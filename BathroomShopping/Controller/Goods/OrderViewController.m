@@ -49,20 +49,6 @@ typedef NS_ENUM(NSInteger, LoadType){
 
 @implementation OrderViewController
 
-//- (ErrorView *)errorView {
-//    
-//    if (_errorView == nil) {
-//        
-//        _errorView = [[ErrorView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.line.frame), ScreenW, ScreenH - CGRectGetMaxY(self.line.frame))];
-//        _errorView.warnStr = @"您还没有相关的订单哦！";
-//        _errorView.imgName = @"sys_xiao8";
-//        _errorView.btnTitle = @"";
-//        [self.view addSubview:_errorView];
-//    }
-//    
-//    return _errorView;
-//}
-
 - (NSMutableArray *)dataArr {
     
     if (_dataArr == nil) {
@@ -88,7 +74,6 @@ typedef NS_ENUM(NSInteger, LoadType){
     [super viewDidLoad];
     self.navigationItem.title = @"我的订单";
     self.titleArr = @[@"全部",@"待付款",@"待收货",@"待发货"];
-    
 }
 
 - (void)initTitleView {

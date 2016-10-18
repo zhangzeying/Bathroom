@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void(^FooterViewBlock)(NSString *btnType);
 @interface OrderDetailFooterView : UIView
 + (OrderDetailFooterView *)instanceFooterView;
+/** <##> */
+@property(nonatomic,copy)FooterViewBlock footerViewBlock;
 @end
