@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet MyLabel *addressLbl;
 @property (weak, nonatomic) IBOutlet UILabel *orderNum;
 @property (weak, nonatomic) IBOutlet UILabel *state;
+@property (weak, nonatomic) IBOutlet UIView *addressBgView;
 
 @end
 
@@ -36,9 +37,18 @@
 
 - (void)setModel:(OrderModel *)model {
 
-    self.phoneLbl.text = model.ordership[@"tel"];
+    
     self.orderNum.text = [NSString stringWithFormat:@"订单号:%@",model.id];
-    self.addressLbl.text = [model.ordership[@"shipaddress"] stringByReplacingOccurrencesOfString:@" " withString:@""];
-    self.reveiverLbl.text = model.ordership[@"shipname"];
+    if ([model.remark isEqualToString:@"一元抢购"]) {
+        
+        self.addressBgView.hidden = YES;
+        
+    }else {
+    
+        self.addressBgView.hidden = NO;
+        self.phoneLbl.text = model.ordership[@"tel"];
+        self.addressLbl.text = [model.ordership[@"shipaddress"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+        self.reveiverLbl.text = model.ordership[@"shipname"];
+    }
 }
 @end

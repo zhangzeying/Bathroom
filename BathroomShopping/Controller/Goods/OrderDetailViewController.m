@@ -58,7 +58,7 @@
     
     OrderDetailHeaderView *header = [OrderDetailHeaderView instanceHeaderView];
     header.model = self.model;
-    header.height = 140;
+    header.height = [self.model.remark isEqualToString:@"一元抢购"] ? 50 : 140;
     tableView.tableHeaderView = header;
     
     OrderDetailFooterView *footer = [OrderDetailFooterView instanceFooterView];

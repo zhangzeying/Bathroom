@@ -88,13 +88,14 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="addressBgView" destination="d3p-do-nXa" id="3FK-Qw-0Qk"/>
                 <outlet property="addressLbl" destination="VoD-ZX-Drh" id="Y1H-SL-pGk"/>
                 <outlet property="orderNum" destination="Pml-KT-g2Y" id="5wb-H5-YSO"/>
                 <outlet property="phoneLbl" destination="jEr-Lp-0f7" id="Wkc-I3-WbL"/>
                 <outlet property="reveiverLbl" destination="YHB-eY-qN8" id="oqw-rZ-G3K"/>
                 <outlet property="state" destination="sbA-gk-Q3k" id="VYb-l2-VVs"/>
             </connections>
-            <point key="canvasLocation" x="869" y="161"/>
+            <point key="canvasLocation" x="517" y="140"/>
         </view>
     </objects>
     <resources>
