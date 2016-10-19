@@ -32,6 +32,7 @@
 #import "UserInfoModel.h"
 #import "PackageDetailModel.h"
 #import "MallPackageModel.h"
+#import "PackageSpecModel.h"
 typedef NS_ENUM(NSInteger ,PopViewType){
     
     SpecView, //规格view
@@ -108,30 +109,43 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         
         _goodsSpecView = [[GoodsSpecView alloc]initWithFrame:CGRectMake(0, ScreenH, ScreenW, ScreenH * 3 / 4)];
         _goodsSpecView.currentIndex = 0;
+        
+        if (self.packgeModel == nil) {
+            
+            _goodsSpecView.goodsType = SingleGood;
+            _goodsSpecView.imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
+            _goodsSpecView.specModelArr = self.goodsDetailModel.specList;
+            
+        }else {
+        
+            _goodsSpecView.goodsType = Package;
+            _goodsSpecView.price = self.packageDetailModel.totalPrice;
+            _goodsSpecView.imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.packgeModel.picture];
+            _goodsSpecView.specModelArr = self.packageDetailModel.specAllList;
+        }
+        
         __weak typeof (self)weakSelf = self;
         _goodsSpecView.goodsSpecViewBlock = ^(){
         
             [weakSelf dismiss];
         };
-        _goodsSpecView.specModelArr = self.goodsDetailModel.specList;
     }
-    
     return _goodsSpecView;
 }
 
-- (AddressView *)addressView {
-    
-    if (_addressView == nil) {
-        
-        _addressView = [[AddressView alloc]initWithFrame:CGRectMake(0, ScreenH, ScreenW, ScreenH * 2 / 3)];
-        __weak typeof (self)weakSelf = self;
-        _addressView.addressViewBlock = ^(){
-            
-            [weakSelf dismiss];
-        };
-    }
-    return _addressView;
-}
+//- (AddressView *)addressView {
+//    
+//    if (_addressView == nil) {
+//        
+//        _addressView = [[AddressView alloc]initWithFrame:CGRectMake(0, ScreenH, ScreenW, ScreenH * 2 / 3)];
+//        __weak typeof (self)weakSelf = self;
+//        _addressView.addressViewBlock = ^(){
+//            
+//            [weakSelf dismiss];
+//        };
+//    }
+//    return _addressView;
+//}
 
 - (UIView *)maskView {
     
@@ -304,6 +318,18 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             weakSelf.packageDetailModel.totalPrice = weakSelf.packgeModel.totalPrice;
             NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, weakSelf.packageDetailModel.picture];
             weakSelf.pageScrollView.imageUrlArr = @[imageUrl];
+            weakSelf.goodsInfoDetailVC.imageUrl = imageUrl;
+            UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
+            if (userModel.isshow) {
+                
+                NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.packgeModel.picture];
+                [weakSelf.detailImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+                
+            }else {
+                
+                weakSelf.detailImage.image = [UIImage imageNamed:@"sys_xiao8"];
+                weakSelf.detailImage.contentMode = UIViewContentModeScaleAspectFit;
+            }
             [weakSelf.tableView reloadData];
         }];
     }
@@ -636,14 +662,16 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         }else if (indexPath.row == 1){//规格cell
             
             SpecificationTableCell *cell = [SpecificationTableCell cellWithTableView:tableView];
-            GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
-            if (model.specColor.length == 0 && model.specSize.length == 0) {
+            
+            PackageSpecModel *model = self.packageDetailModel.specAllList[self.goodsSpecView.currentIndex];
+            
+            if (model.specDesc.length == 0) {
                 
                 cell.specStr = [NSString stringWithFormat:@"%ld个",(long)self.goodsSpecView.buyNumber];
                 
             }else {
                 
-                cell.specStr = [NSString stringWithFormat:@"%@%@，%ld个",model.specColor?:@"",model.specSize?:@"",(long)self.goodsSpecView.buyNumber];
+                cell.specStr = [NSString stringWithFormat:@"%@，%ld个",model.specDesc,(long)self.goodsSpecView.buyNumber];
             }
             
             return cell;
@@ -715,74 +743,148 @@ typedef NS_ENUM(NSInteger ,PopViewType){
  */
 - (void)addCartClick:(UIButton *)sender {
 
-    
-    GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
-    if (model.specStock < self.goodsSpecView.buyNumber) {
+    if (self.packgeModel == nil) {
         
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足，是否需要预约商品？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
-        return;
-    }
-    
-    sender.userInteractionEnabled = NO;
-    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
-    [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-    CGPoint startPoint = [self.bottomView convertPoint:self.addCartBtn.center toView:self.view];
-    CGPoint endPoint = [self.bottomView convertPoint:self.cartBtn.center toView:self.view];
-    self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 20, 20);
-    self.layer.contents = (id)self.goodsImage.layer.contents;
-    [self.view.layer addSublayer:self.layer];
-    
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
-    [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
-    
-    CAKeyframeAnimation *animation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
-    animation.fillMode = kCAFillModeBoth;
-    animation.duration = 0.6;
-    animation.delegate = self;
-    animation.path = path.CGPath;
-    [self.layer addAnimation:animation forKey:@"animation"];
-    if ([[CommUtils sharedInstance] isLogin]) {//如果登录
-        
-        __weak typeof (self)weakSelf = self;
-        [self.service addCart:self.goodsId buyCount:self.goodsSpecView.buyNumber buySpecID:model.id completion:^{
+        GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
+        if (model.specStock < self.goodsSpecView.buyNumber) {
             
-            weakSelf.cartCount.hidden = NO;
-            weakSelf.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
-        }];
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足，是否需要预约商品？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alertView show];
+            return;
+        }
         
-    }else {//如果未登录存本地
-
-        ShoppingCartDetailModel *cartDetailModel = [ShoppingCartDetailModel getCartModelById:self.goodsId specId:model.id];
-        if (cartDetailModel != nil) {//如果存在某个商品，更新数量
+        sender.userInteractionEnabled = NO;
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
+        [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+        CGPoint startPoint = [self.bottomView convertPoint:self.addCartBtn.center toView:self.view];
+        CGPoint endPoint = [self.bottomView convertPoint:self.cartBtn.center toView:self.view];
+        self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 20, 20);
+        self.layer.contents = (id)self.goodsImage.layer.contents;
+        [self.view.layer addSublayer:self.layer];
+        
+        UIBezierPath *path = [UIBezierPath bezierPath];
+        [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
+        [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
+        
+        CAKeyframeAnimation *animation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
+        animation.fillMode = kCAFillModeBoth;
+        animation.duration = 0.6;
+        animation.delegate = self;
+        animation.path = path.CGPath;
+        [self.layer addAnimation:animation forKey:@"animation"];
+        if ([[CommUtils sharedInstance] isLogin]) {//如果登录
             
-            cartDetailModel.buyCount += self.goodsSpecView.buyNumber;
-            if ([ShoppingCartDetailModel updateCartModel:cartDetailModel]) {
+            __weak typeof (self)weakSelf = self;
+            NSDictionary *params = @{@"productID":self.goodsId ,
+                                     @"buyCount":@(self.goodsSpecView.buyNumber),
+                                     @"buySpecID":model.id,
+                                     @"token":[[CommUtils sharedInstance] fetchToken]};
+            [self.service addCart:params goodsType:@"0" completion:^{
                 
-                self.cartCount.hidden = NO;
-                self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
-            }
+                weakSelf.cartCount.hidden = NO;
+                weakSelf.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+            }];
             
-        }else {//如果不存在，新增记录
-        
-            ShoppingCartDetailModel *detailModel = [[ShoppingCartDetailModel alloc]init];
-            detailModel.id = self.goodsDetailModel.id;
-            detailModel.name = self.goodsDetailModel.name;
-            detailModel.picture = self.goodsDetailModel.picture;
-            detailModel.buyCount = self.goodsSpecView.buyNumber;
-            detailModel.nowPrice = model.specPrice;
-            detailModel.buySpecInfo = model;
-            if ([ShoppingCartDetailModel saveCartModelToDB:detailModel]) {
+        }else {//如果未登录存本地
+            
+            ShoppingCartDetailModel *cartDetailModel = [ShoppingCartDetailModel getCartModelById:self.goodsId specId:model.id];
+            if (cartDetailModel != nil) {//如果存在某个商品，更新数量
                 
-                self.cartCount.hidden = NO;
-                self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+                cartDetailModel.buyCount += self.goodsSpecView.buyNumber;
+                if ([ShoppingCartDetailModel updateCartModel:cartDetailModel]) {
+                    
+                    self.cartCount.hidden = NO;
+                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+                }
+                
+            }else {//如果不存在，新增记录
+                
+                ShoppingCartDetailModel *detailModel = [[ShoppingCartDetailModel alloc]init];
+                detailModel.id = self.goodsDetailModel.id;
+                detailModel.name = self.goodsDetailModel.name;
+                detailModel.picture = self.goodsDetailModel.picture;
+                detailModel.buyCount = self.goodsSpecView.buyNumber;
+                detailModel.nowPrice = model.specPrice;
+                detailModel.buySpecInfo = model;
+                if ([ShoppingCartDetailModel saveCartModelToDB:detailModel]) {
+                    
+                    self.cartCount.hidden = NO;
+                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+                }
             }
         }
+        
+    }else {
+    
+        PackageSpecModel *model = self.packageDetailModel.specAllList[self.goodsSpecView.currentIndex];
+        if (model.minStock < self.goodsSpecView.buyNumber) {
+            
+            [SVProgressHUD showErrorWithStatus:@"当前套餐库存不足！" maskType:SVProgressHUDMaskTypeBlack];
+            return;
+        }
+        
+        sender.userInteractionEnabled = NO;
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.packgeModel.picture];
+        [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+        CGPoint startPoint = [self.bottomView convertPoint:self.addCartBtn.center toView:self.view];
+        CGPoint endPoint = [self.bottomView convertPoint:self.cartBtn.center toView:self.view];
+        self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 20, 20);
+        self.layer.contents = (id)self.goodsImage.layer.contents;
+        [self.view.layer addSublayer:self.layer];
+        
+        UIBezierPath *path = [UIBezierPath bezierPath];
+        [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
+        [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
+        
+        CAKeyframeAnimation *animation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
+        animation.fillMode = kCAFillModeBoth;
+        animation.duration = 0.6;
+        animation.delegate = self;
+        animation.path = path.CGPath;
+        [self.layer addAnimation:animation forKey:@"animation"];
+        if ([[CommUtils sharedInstance] isLogin]) {//如果登录
+            
+            __weak typeof (self)weakSelf = self;
+            NSDictionary *params = @{@"packageID":self.packgeModel.id ,
+                                     @"buyCount":@(self.goodsSpecView.buyNumber),
+                                     @"proIDs":model.productIds,
+                                     @"desIDs":model.specIds,
+                                     @"token":[[CommUtils sharedInstance] fetchToken]};
+            [self.service addCart:params goodsType:@"1" completion:^{
+                
+                weakSelf.cartCount.hidden = NO;
+                weakSelf.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+            }];
+            
+        }else {//如果未登录存本地
+            
+//            ShoppingCartDetailModel *cartDetailModel = [ShoppingCartDetailModel getCartModelById:self.goodsId specId:model.id];
+//            if (cartDetailModel != nil) {//如果存在某个商品，更新数量
+//                
+//                cartDetailModel.buyCount += self.goodsSpecView.buyNumber;
+//                if ([ShoppingCartDetailModel updateCartModel:cartDetailModel]) {
+//                    
+//                    self.cartCount.hidden = NO;
+//                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+//                }
+//                
+//            }else {//如果不存在，新增记录
+//                
+//                ShoppingCartDetailModel *detailModel = [[ShoppingCartDetailModel alloc]init];
+//                detailModel.id = self.goodsDetailModel.id;
+//                detailModel.name = self.goodsDetailModel.name;
+//                detailModel.picture = self.goodsDetailModel.picture;
+//                detailModel.buyCount = self.goodsSpecView.buyNumber;
+//                detailModel.nowPrice = model.specPrice;
+//                detailModel.buySpecInfo = model;
+//                if ([ShoppingCartDetailModel saveCartModelToDB:detailModel]) {
+//                    
+//                    self.cartCount.hidden = NO;
+//                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+//                }
+//            }
+        }
     }
-    
-    
-    
 }
 
 /**
@@ -842,17 +944,20 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 
 - (void)dismiss {
 
-    GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
-    NSString *str;
-    if (model == nil) {
+    if (self.goodsSpecView.goodsType == SingleGood) {
         
-        str = [NSString stringWithFormat:@"%ld个",self.goodsSpecView.buyNumber];
+        GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
+        NSString *str = model == nil ? [NSString stringWithFormat:@"%ld个",self.goodsSpecView.buyNumber] : [NSString stringWithFormat:@"%@%@，%ld个",model.specColor,model.specSize,self.goodsSpecView.buyNumber];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadSpecValue" object:str];
+        
         
     }else {
     
-        str = [NSString stringWithFormat:@"%@%@，%ld个",model.specColor,model.specSize,self.goodsSpecView.buyNumber];
+        PackageSpecModel *model = self.packageDetailModel.specAllList[self.goodsSpecView.currentIndex];
+        NSString *str = model == nil ? [NSString stringWithFormat:@"%ld个",self.goodsSpecView.buyNumber] : [NSString stringWithFormat:@"%@，%ld个",model.specDesc,self.goodsSpecView.buyNumber];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadSpecValue" object:str];
     }
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadSpecValue" object:str];
+    
     [UIView animateWithDuration:0.3 animations:^{
         self.navigationController.view.layer.transform = [Animate firstStepTransform];
         if (self.popViewType == SpecView) {
@@ -913,16 +1018,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     self.titleView.index = index + 1;
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//
-//    if (scrollView.contentOffset.y > 0) {
-//        
-//        [UIView animateWithDuration:0.4 animations:^{
-//            
-//           
-//        }];
-//    }
-//}
 
 #pragma mark --- UIAlertViewDelegate ---
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

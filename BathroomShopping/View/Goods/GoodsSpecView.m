@@ -10,6 +10,7 @@
 
 #import "GoodsSpecView.h"
 #import "GoodsSpecModel.h"
+#import "PackageSpecModel.h"
 // ----标签间垂直的距离----
 #define distanceV 9
 // ----标签水平间距----
@@ -61,11 +62,13 @@
     
     
     UIImageView *goodsImg = [[UIImageView alloc]init];
-    goodsImg.backgroundColor = [UIColor redColor];
     goodsImg.layer.cornerRadius = 5;
     goodsImg.layer.masksToBounds = YES;
     goodsImg.layer.borderColor = CustomColor(235, 235, 235).CGColor;
     goodsImg.layer.borderWidth = 0.5;
+    goodsImg.backgroundColor = [UIColor whiteColor];
+    goodsImg.contentMode = UIViewContentModeScaleAspectFit;
+    [goodsImg sd_setImageWithURL:[NSURL URLWithString:self.imageUrl] placeholderImage:[UIImage imageNamed:@"sys_xiao8"]];
     [self addSubview:goodsImg];
     self.goodsImg = goodsImg;
     
@@ -156,8 +159,15 @@
 
     self.bgView.frame = CGRectMake(0, 20, ScreenW, self.height - 20);
     self.goodsImg.frame = CGRectMake(15, 0, 80, 80);
-    GoodsSpecModel *model = self.specModelArr[self.currentIndex];
-    self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.specPrice];
+    if (self.goodsType == SingleGood) {
+        
+        GoodsSpecModel *model = self.specModelArr[self.currentIndex];
+        self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.specPrice];
+        
+    }else {
+    
+        self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",self.price];
+    }
     [self.priceLbl sizeToFit];
     self.priceLbl.frame = CGRectMake(CGRectGetMaxX(self.goodsImg.frame) + 10, 20, self.priceLbl.width, self.priceLbl.height);
     self.closeBtn.frame = CGRectMake(self.width - 10 - 19, 10, 19, 19);
@@ -171,8 +181,19 @@
         
         UIButton *btn = self.specBgView.subviews[i];
         btn.titleLabel.lineBreakMode =  NSLineBreakByTruncatingTail;
-        GoodsSpecModel *model = self.specModelArr[i - 1];
-        NSString *str = [NSString stringWithFormat:@"%@%@",model.specColor,model.specSize];
+        
+        NSString *str;
+        if (self.goodsType == SingleGood) {
+            
+            GoodsSpecModel *model = self.specModelArr[i - 1];
+            str = [NSString stringWithFormat:@"%@%@",model.specColor,model.specSize];
+            
+        }else {
+        
+            PackageSpecModel *model = self.specModelArr[i - 1];
+            str = [NSString stringWithFormat:@"%@",model.specDesc];
+        }
+        
         [btn setTitle:str forState:UIControlStateNormal];
         [btn sizeToFit];
         CGFloat btnW = MAX(btn.frame.size.width + 15, 60);
@@ -225,9 +246,16 @@
     self.selectedBtn = sender;
     sender.enabled = !sender.enabled;
     self.currentIndex = sender.tag;
-    GoodsSpecModel *model = self.specModelArr[self.currentIndex];
-    self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.specPrice];
     
+    if (self.goodsType == SingleGood) {
+    
+        GoodsSpecModel *model = self.specModelArr[self.currentIndex];
+        self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.specPrice];
+        
+    }else {
+    
+        self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",self.price];
+    }
     self.buyNumber = 1;
     self.countTxt.text = @"1";
 }
@@ -259,13 +287,26 @@
 - (void)increaseClick {
     
     self.buyNumber++;
-    GoodsSpecModel *model = self.specModelArr[self.currentIndex];
-    //如果大于库存
-    if (self.buyNumber > model.specStock) {
-        
-        self.buyNumber--;
-        [SVProgressHUD showErrorWithStatus:@"当前商品库存不足！" maskType:SVProgressHUDMaskTypeBlack];
-        return;
+    
+    if (self.goodsType == SingleGood) {
+    
+        GoodsSpecModel *model = self.specModelArr[self.currentIndex];
+        //如果大于库存
+        if (self.buyNumber > model.specStock) {
+            
+            self.buyNumber--;
+            [SVProgressHUD showErrorWithStatus:@"当前商品库存不足！" maskType:SVProgressHUDMaskTypeBlack];
+            return;
+        }
+    }else {
+    
+        PackageSpecModel *model = self.specModelArr[self.currentIndex];
+        if (self.buyNumber > model.minStock) {
+            
+            self.buyNumber--;
+            [SVProgressHUD showErrorWithStatus:@"当前商品库存不足！" maskType:SVProgressHUDMaskTypeBlack];
+            return;
+        }
     }
     self.countTxt.text = [NSString stringWithFormat:@"%ld",(long)self.buyNumber];
 }
@@ -281,5 +322,20 @@
     _specModelArr = specModelArr;
     [self initView];
     [self setNeedsLayout];
+}
+
+- (void)setPrice:(double)price {
+
+    _price = price;
+}
+
+- (void)setImageUrl:(NSString *)imageUrl {
+
+    _imageUrl = imageUrl;
+}
+
+- (void)setGoodsType:(GoodsType)goodsType {
+
+    _goodsType = goodsType;
 }
 @end

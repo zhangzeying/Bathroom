@@ -36,7 +36,7 @@
 /**
  * 加入购物车
  */
-- (void)addCart:(NSString *)productID buyCount:(NSInteger)buyCount buySpecID:(NSString *)buySpecID completion:(void(^)())completion;
+- (void)addCart:(NSDictionary *)params goodsType:(NSString *)goodsType completion:(void(^)())completion;
 /**
  * 上传未登录时的购物车
  */

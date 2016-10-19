@@ -52,6 +52,8 @@
 #define kAPICartList @"/app/api/cart/cart"
 //添加商品到购物车
 #define kAPIAddCart @"/app/api/cart/addToCart"
+//添加套餐到购物车
+#define kAPIAddCartForPackage @"/app/api/cart/addPgToCart"
 //上传未登录的购物车
 #define kAPIUploadCart @"/app/api/cart/addToCartForLogin"
 //删除购物车商品

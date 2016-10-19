@@ -38,6 +38,7 @@
 
     self.phoneLbl.text = model.ordership[@"tel"];
     self.orderNum.text = [NSString stringWithFormat:@"订单号:%@",model.id];
-    self.addressLbl.text = [NSString stringWithFormat:@"%@%@",model.ordership[@"shipaddress"],model.ordership[@"shipname"]];
+    self.addressLbl.text = [model.ordership[@"shipaddress"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.reveiverLbl.text = model.ordership[@"shipname"];
 }
 @end

@@ -100,6 +100,7 @@
             NSDictionary *dictData = myAfNetBlokResponeDic;
             if ([[dictData objectForKey:@"flag"] isEqualToString:@"0"]) {//操作成功
                 
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"OrderSuccess" object:nil];
                 completion(dictData[@"result"]);
                 
             }else {

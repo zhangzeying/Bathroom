@@ -191,20 +191,16 @@
 /**
  * 加入购物车
  */
-- (void)addCart:(NSString *)productID buyCount:(NSInteger)buyCount buySpecID:(NSString *)buySpecID completion:(void(^)())completion {
+- (void)addCart:(NSDictionary *)params goodsType:(NSString *)goodsType completion:(void(^)())completion {
     
-    NSDictionary *params = @{@"productID":productID,
-                             @"buyCount":@(buyCount),
-                             @"buySpecID":buySpecID,
-                             @"token":[[CommUtils sharedInstance] fetchToken]};
-    
-    [self.restService afnetworkingPost:kAPIAddCart parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+    NSString *url = [goodsType isEqualToString:@"0"] ? kAPIAddCart : kAPIAddCartForPackage;
+    [self.restService afnetworkingPost:url parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
         
         if (flag) {
             
             NSDictionary *dictData = myAfNetBlokResponeDic;
-            
-            if ([[dictData objectForKey:@"flag"] isEqualToString:@"0"]) {//操作成功
+            NSString *flag = [goodsType isEqualToString:@"0"] ? [dictData objectForKey:@"flag"] : [dictData objectForKey:@"retCode"];
+            if ([flag isEqualToString:@"0"]) {//操作成功
                 
                 completion();
                 

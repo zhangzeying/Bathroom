@@ -185,7 +185,7 @@
     self.phoneLbl = phoneLbl;
     
     UILabel *defaultLbl = [[UILabel alloc]init];
-    defaultLbl.text = @"默认";
+//    defaultLbl.text = @"默认";
     defaultLbl.textColor = [UIColor whiteColor];
     defaultLbl.backgroundColor = [UIColor redColor];
     defaultLbl.font = [UIFont systemFontOfSize:13];
@@ -202,7 +202,7 @@
     
     UILabel *addressLbl = [[UILabel alloc]init];
     addressLbl.numberOfLines = 0;
-    addressLbl.text = [NSString stringWithFormat:@"%@%@",addressModel.pcadetail,addressModel.address];
+    addressLbl.text = [[NSString stringWithFormat:@"%@%@",addressModel.pcadetail,addressModel.address] stringByReplacingOccurrencesOfString:@" " withString:@""];
     addressLbl.textColor = [UIColor darkGrayColor];
     addressLbl.font = [UIFont systemFontOfSize:14];
     addressLbl.x = 30;
