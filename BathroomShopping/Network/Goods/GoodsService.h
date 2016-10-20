@@ -44,11 +44,19 @@
 /**
  * 删除购物车商品
  */
-- (void)deleteCart:(NSDictionary *)params completion:(void(^)())completion;
+- (void)deleteCart:(NSDictionary *)params completion:(void(^)(BOOL))completion;
+/**
+ * 删除购物车套餐
+ */
+- (void)deletePackageCart:(NSDictionary *)params completion:(void(^)(BOOL))completion;
 /**
  * 更新购物车数量
  */
 - (void)updateCartCount:(NSDictionary *)params completion:(void(^)())completion;
+/**
+ * 更新购物车套餐数量
+ */
+- (void)updatePackageCartCount:(NSDictionary *)params completion:(void(^)())completion;
 /**
  * 推荐商品网络请求
  */

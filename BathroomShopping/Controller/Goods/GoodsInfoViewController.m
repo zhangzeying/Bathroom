@@ -316,7 +316,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             
             weakSelf.packageDetailModel = packageDetailModel;
             weakSelf.packageDetailModel.totalPrice = weakSelf.packgeModel.totalPrice;
-            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, weakSelf.packageDetailModel.picture];
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, weakSelf.packgeModel.picture];
             weakSelf.pageScrollView.imageUrlArr = @[imageUrl];
             weakSelf.goodsInfoDetailVC.imageUrl = imageUrl;
             UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
@@ -344,14 +344,19 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         [self.service getCartList:^(ShoppingCartModel *cartModel) {
             
             weakSelf.cartModel = cartModel;
-            weakSelf.cartCount.text = [NSString stringWithFormat:@"%ld",(long)cartModel.cartCount];
-            if (cartModel.cartCount == 0) {
+            NSInteger count = cartModel.cartCount;
+            for (ShoppingCartDetailModel *detailModel in cartModel.pgCartList) {
+                
+                count += detailModel.buyCount;
+            }
+
+            weakSelf.cartCount.text = [NSString stringWithFormat:@"%ld",(long)count];
+            if (count == 0) {
                 
                 weakSelf.cartCount.hidden = YES;
                 
             }else {
-                
-                
+
                 [weakSelf layoutCartCount];
                 weakSelf.cartCount.hidden = NO;
             }
@@ -536,6 +541,10 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     likeBtn.titleLabel.font = [UIFont systemFontOfSize:9];
     [bottomView addSubview:likeBtn];
     self.likeBtn = likeBtn;
+    
+    appointBtn.hidden = self.packgeModel != nil;
+    likeBtn.hidden = self.packgeModel != nil;
+    shareBtn.hidden = self.packgeModel != nil;
     
     UIButton *cartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cartBtn setImage:[UIImage imageNamed:@"cart"] forState:UIControlStateNormal];

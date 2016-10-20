@@ -58,8 +58,12 @@
 #define kAPIUploadCart @"/app/api/cart/addToCartForLogin"
 //删除购物车商品
 #define kAPIDeleteCart @"/app/api/cart/delete"
+//删除购物车套餐
+#define kAPIDeletePackageCart @"/app/api/cart/delPgToCart"
 //更新购物车数量
-#define kAPIupdateCartCount @"/app/api/cart/updateCount"
+#define kAPIUpdateCartCount @"/app/api/cart/updateCount"
+//更新购物车套餐数量
+#define kAPIUpdatePackageCartCount @"/app/api/cart/updatePgCartCount"
 //收藏商品
 #define kAPILikedGoods @"/app/api/product/addToFavorite"
 //取消收藏商品

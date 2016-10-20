@@ -75,43 +75,55 @@
  */
 - (IBAction)increaseClick:(id)sender {
 
-    
-    //如果大于库存
-    if (self.detailModel.buyCount + 1 > self.detailModel.buySpecInfo.specStock) {
+    if (!self.detailModel.isPackage) {
         
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足，是否需要预约商品？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
-        return;
-    }
-    
-    if ([[CommUtils sharedInstance] isLogin]) {
-        
-        NSDictionary *param = @{@"productID":self.detailModel.id,
-                                @"buySpecID":self.detailModel.buySpecInfo.id,
-                                @"buyCount":@(self.detailModel.buyCount + 1),
-                                @"token":[[CommUtils sharedInstance] fetchToken]};
-        
-        __weak typeof (self)weakSelf = self;
-        [self.service updateCartCount:param completion:^{
+        //如果大于库存
+        if (self.detailModel.buyCount + 1 > self.detailModel.buySpecInfo.specStock) {
             
-            weakSelf.detailModel.buyCount++;
-            weakSelf.buyCount.text = [NSString stringWithFormat:@"%ld",(long)weakSelf.detailModel.buyCount];
-            if ([weakSelf.delegate respondsToSelector:@selector(changeBuyCount)]) {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足，是否需要预约商品？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alertView show];
+            return;
+        }
+        
+        if ([[CommUtils sharedInstance] isLogin]) {
+            
+            NSDictionary *param = @{@"productID":self.detailModel.id,
+                                    @"buySpecID":self.detailModel.buySpecInfo.id,
+                                    @"buyCount":@(self.detailModel.buyCount + 1),
+                                    @"token":[[CommUtils sharedInstance] fetchToken]};
+            
+            __weak typeof (self)weakSelf = self;
+            [self.service updateCartCount:param completion:^{
                 
-                [weakSelf.delegate changeBuyCount];
-            }
+                weakSelf.detailModel.buyCount++;
+                weakSelf.buyCount.text = [NSString stringWithFormat:@"%ld",(long)weakSelf.detailModel.buyCount];
+                if ([weakSelf.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [weakSelf.delegate changeBuyCount];
+                }
+                
+            }];
             
-        }];
-        
+        }else {
+            
+            self.detailModel.buyCount++;
+            self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
+            if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                
+                [self.delegate changeBuyCount];
+            }
+        }
     }else {
     
-        self.detailModel.buyCount++;
-        self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
-        if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
-            
-            [self.delegate changeBuyCount];
-        }
+//        //如果大于库存
+//        if (self.detailModel.buyCount + 1 > self.detailModel.buySpecInfo.specStock) {
+//            
+//            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足，是否需要预约商品？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//            [alertView show];
+//            return;
+//        }
     }
+    
 }
 
 /**
@@ -178,7 +190,7 @@
             [self.delegate appoint:self.detailModel];
         }
     }
-}
+} 
 
 #pragma mark --- setter ---
 - (void)setDetailModel:(ShoppingCartDetailModel *)detailModel {
@@ -188,8 +200,8 @@
     
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, detailModel.picture];
     [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-    self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",detailModel.nowPrice];
+    self.priceLbl.text = !detailModel.isPackage ? [NSString stringWithFormat:@"￥%.2f",detailModel.nowPrice] : [NSString stringWithFormat:@"￥%.2f",detailModel.price];
     self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)detailModel.buyCount];
-    self.specLbl.text = [NSString stringWithFormat:@"%@%@",detailModel.buySpecInfo.specColor,detailModel.buySpecInfo.specSize];
+    self.specLbl.text = !detailModel.isPackage ? [NSString stringWithFormat:@"%@%@",detailModel.buySpecInfo.specColor,detailModel.buySpecInfo.specSize] : detailModel.specDesc;
 }
 @end

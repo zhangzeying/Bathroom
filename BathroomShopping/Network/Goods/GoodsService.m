@@ -117,13 +117,14 @@
                 
                 ShoppingCartModel *model = [ShoppingCartModel mj_objectWithKeyValues:dictData[@"result"]];
                 
+                model.pgCartList = [ShoppingCartDetailModel mj_objectArrayWithKeyValuesArray:dictData[@"pgCartList"]];
+                
                 completion(model);
                 
             }else {
                 
                 return;
             }
-            
         }
         
     }];
@@ -247,10 +248,54 @@
 /**
  * 删除购物车商品
  */
-- (void)deleteCart:(NSDictionary *)params completion:(void(^)())completion {
+- (void)deleteCart:(NSDictionary *)params completion:(void(^)(BOOL))completion {
+    
+    [self.restService afnetworkingPost:kAPIDeleteCart parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+       
+        BOOL isSuccess = NO;
+        if (flag) {
+            
+            NSDictionary *dictData = myAfNetBlokResponeDic;
+            if ([dictData[@"flag"] isEqualToString:@"0"]) {
+        
+                isSuccess = YES;
+            }
+        }
+        
+        completion(isSuccess);
+        
+    }];
+}
+
+/**
+ * 删除购物车套餐
+ */
+- (void)deletePackageCart:(NSDictionary *)params completion:(void(^)(BOOL))completion {
+    
+    [self.restService afnetworkingPost:kAPIDeletePackageCart parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+        
+        BOOL isSuccess = NO;
+        if (flag) {
+            
+            NSDictionary *dictData = myAfNetBlokResponeDic;
+            if ([dictData[@"retCode"] isEqualToString:@"0"]) {
+                
+                isSuccess = YES;
+            }
+        }
+        
+        completion(isSuccess);
+        
+    }];
+}
+
+/**
+ * 更新购物车数量
+ */
+- (void)updateCartCount:(NSDictionary *)params completion:(void(^)())completion {
     
     [SVProgressHUD show];
-    [self.restService afnetworkingPost:kAPIDeleteCart parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+    [self.restService afnetworkingPost:kAPIUpdateCartCount parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
         [SVProgressHUD dismiss];
         if (flag) {
             
@@ -268,18 +313,18 @@
 }
 
 /**
- * 更新购物车数量
+ * 更新购物车套餐数量
  */
-- (void)updateCartCount:(NSDictionary *)params completion:(void(^)())completion {
+- (void)updatePackageCartCount:(NSDictionary *)params completion:(void(^)())completion {
     
     [SVProgressHUD show];
-    [self.restService afnetworkingPost:kAPIupdateCartCount parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+    [self.restService afnetworkingPost:kAPIUpdatePackageCartCount parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
         [SVProgressHUD dismiss];
         if (flag) {
             
             NSDictionary *dictData = myAfNetBlokResponeDic;
             BSLog(@"%@",dictData);
-            if ([dictData[@"flag"] isEqualToString:@"0"]) {
+            if ([dictData[@"retCode"] isEqualToString:@"0"]) {
                 
                 completion();
                 

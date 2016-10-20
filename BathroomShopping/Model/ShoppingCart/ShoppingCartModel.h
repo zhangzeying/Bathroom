@@ -13,4 +13,6 @@
 @property(nonatomic,strong)NSMutableArray *productList;
 /** 购物车商品总数 */
 @property(assign,nonatomic)NSInteger cartCount;
+/** <##> */
+@property(nonatomic,strong)NSMutableArray *pgCartList;
 @end
