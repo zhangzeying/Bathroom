@@ -200,7 +200,7 @@
     
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, detailModel.picture];
     [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-    self.priceLbl.text = !detailModel.isPackage ? [NSString stringWithFormat:@"￥%.2f",detailModel.nowPrice] : [NSString stringWithFormat:@"￥%.2f",detailModel.price];
+    self.priceLbl.text = !detailModel.isPackage ? [NSString stringWithFormat:@"￥%.2f",detailModel.nowPrice] : [NSString stringWithFormat:@"￥%.2f",detailModel.packagePice];
     self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)detailModel.buyCount];
     self.specLbl.text = !detailModel.isPackage ? [NSString stringWithFormat:@"%@%@",detailModel.buySpecInfo.specColor,detailModel.buySpecInfo.specSize] : detailModel.specDesc;
 }

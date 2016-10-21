@@ -26,6 +26,8 @@
 @property(nonatomic,copy)NSString *specDesc;
 /** 单价格 */
 @property(assign,nonatomic)double price;
+/** 套餐价格 */
+@property(assign,nonatomic)double packagePice;
 
 #pragma mark --- 辅助属性 ---
 /** 购物车里是否被选中 */

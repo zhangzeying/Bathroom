@@ -36,7 +36,7 @@
     }
     @try {
         [_db open];
-        return [_db executeUpdate:@"CREATE TABLE IF NOT EXISTS tb_shoppingcart (id INTEGER PRIMARY KEY AUTOINCREMENT, goodsId TEXT, specId TEXT,buyNumber INTEGER, cartinfo BLOB)"];
+        return [_db executeUpdate:@"CREATE TABLE IF NOT EXISTS tb_shoppingcart (id INTEGER PRIMARY KEY AUTOINCREMENT, goodsId TEXT, specId TEXT,buyNumber INTEGER, cartinfo BLOB, ispackage TEXT)"];
     }
     @catch (NSException *exception) {
         BSLog(@"CREATE TABLE tb_shoppingcart %@",[exception reason]);
@@ -49,7 +49,7 @@
 /**
  * 新增
  */
-- (BOOL)saveShoppingcartData:(NSData *)cartinfo goodsId:(NSString *)goodsId specId:(NSString *)specId buyNumber:(NSInteger)buyNumber{
+- (BOOL)saveShoppingcartData:(NSData *)cartinfo goodsId:(NSString *)goodsId specId:(NSString *)specId buyNumber:(NSInteger)buyNumber isPackage:(BOOL)isPackage{
     
     if (!_db) {
         
@@ -57,12 +57,13 @@
     }
     @try {
         [_db open];
-        NSString * sql = [NSString stringWithFormat:@"insert into tb_shoppingcart(goodsId,specId,buyNumber,cartinfo) values (?,?,?,?)"];
+        NSString * sql = [NSString stringWithFormat:@"insert into tb_shoppingcart(goodsId,specId,buyNumber,cartinfo,ispackage) values (?,?,?,?,?)"];
         NSMutableArray *params = [NSMutableArray array];
         [params addObject:goodsId];
         [params addObject:specId];
         [params addObject:@(buyNumber)];
         [params addObject:cartinfo];
+        [params addObject:@(isPackage)];
         return [_db executeUpdate:sql withArgumentsInArray:params];
     }
     @catch (NSException *exception) {

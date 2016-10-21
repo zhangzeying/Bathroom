@@ -381,6 +381,8 @@
 - (void)cartDelete:(UITableViewCell *)cell model:(ShoppingCartDetailModel *)model{
 
     NSIndexPath *indexPath = [self.table indexPathForCell:cell];
+//    NSIndexSet *set = [NSIndexSet all]
+    NSLog(@"%d,%d",indexPath.row,indexPath.section);
     if ([[CommUtils sharedInstance] isLogin]) {
         
         
@@ -397,7 +399,9 @@
                     
                     [SVProgressHUD dismiss];
                     [weakSelf.model.productList removeObjectAtIndex:indexPath.row];
+                    
                     [weakSelf.table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                     [weakSelf.table endUpdates];
                     [weakSelf.table reloadData];
                     [weakSelf numerationPrice];
                     
@@ -420,7 +424,6 @@
                     
                     [SVProgressHUD dismiss];
                     [weakSelf.model.pgCartList removeObjectAtIndex:indexPath.row];
-                    [weakSelf.table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
                     [weakSelf.table reloadData];
                     [weakSelf numerationPrice];
                     
@@ -487,7 +490,7 @@
         ShoppingCartDetailModel *model = [self.model.pgCartList objectAtIndex:i];
         if (model.isChecked) {
             
-            totalPrice = totalPrice + model.buyCount * model.nowPrice;
+            totalPrice = totalPrice + model.buyCount * model.packagePice;
         }
     }
 
