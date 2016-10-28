@@ -464,7 +464,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
  * 下拉返回
  */
 - (void)pullDown {
-
     
     [UIView animateWithDuration:0.4 animations:^{
         
@@ -547,8 +546,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [addCartBtn addTarget:self action:@selector(addCartClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:addCartBtn];
     self.addCartBtn = addCartBtn;
-    
-    
 }
 
 
@@ -705,22 +702,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         }];
         self.popViewType = SpecView;
     }
-    
-//    else if (indexPath.row == 3) {
-//        
-//        [[UIApplication sharedApplication].keyWindow addSubview:self.maskView];
-//        [[UIApplication sharedApplication].keyWindow addSubview:self.addressView];
-//        [UIView animateWithDuration:0.2 animations:^{
-//            self.navigationController.view.layer.transform = [Animate firstStepTransform];
-//            self.maskView.alpha = 1.0;
-//        } completion:^(BOOL finished) {
-//            [UIView animateWithDuration:0.3 animations:^{
-//                self.navigationController.view.layer.transform = [Animate secondStepTransform];
-//                self.addressView.transform = CGAffineTransformTranslate(self.addressView.transform, 0, -ScreenH * 2 / 3.0f);
-//            }];
-//        }];
-//        self.popViewType = SelectAddressView;
-//    }
 }
 
 #pragma mark --- UIButtonClick ---
