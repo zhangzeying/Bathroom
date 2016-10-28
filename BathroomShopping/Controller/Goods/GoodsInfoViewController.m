@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 };
 
 #define cartCountH 15
-@interface GoodsInfoViewController()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, GoodsInfoDetailDelegate, UIAlertViewDelegate, CAAnimationDelegate,ScrollTitleViewDelegate>
+@interface GoodsInfoViewController()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, GoodsInfoDetailDelegate, UIAlertViewDelegate,ScrollTitleViewDelegate>
 /** 中间内容scrollview */
 @property (nonatomic, weak)UIScrollView *contentScrollView;
 /** table */
@@ -50,8 +50,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 @property (nonatomic, weak)UIButton *cartBtn;
 /** 加入购物车按钮 */
 @property (nonatomic, weak)UIButton *addCartBtn;
-/** layer */
-@property(nonatomic,strong)CALayer *layer;
 /** 商品图片 */
 @property (nonatomic, strong)UIImageView *goodsImage;
 /** 网络请求对象 */
@@ -94,15 +92,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 
 @implementation GoodsInfoViewController
 #pragma mark --- LazyLoad ---
-- (GoodsService *)service {
-    
-    if (_service == nil) {
-        
-        _service = [[GoodsService alloc]init];
-    }
-    return _service;
-}
-
 - (GoodsSpecView *)goodsSpecView {
     
     if (_goodsSpecView == nil) {
@@ -248,6 +237,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 //    btn1.height = 44;
 //    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:btn1];
 //    self.navigationItem.rightBarButtonItem = item;
+    self.service = [GoodsService sharedInstance];
     
     [self setupTitleView];
     
@@ -750,7 +740,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
  */
 - (void)addCartClick:(UIButton *)sender {
 
-    
     if (self.packgeModel == nil) {//单品
         
         GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
@@ -762,8 +751,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         }
         
         sender.userInteractionEnabled = NO;
-        
-        
         
         if ([[CommUtils sharedInstance] isLogin]) {//如果登录
             
@@ -867,34 +854,21 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         }
     }
     
-    self.layer = [[CALayer alloc]init];
     CGPoint startPoint = [self.bottomView convertPoint:self.addCartBtn.center toView:self.view];
-    self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 20, 20);
-    self.layer.contents = (id)self.goodsImage.layer.contents;
-    [self.view.layer addSublayer:self.layer];
-    
     CGPoint endPoint = [self.bottomView convertPoint:self.cartBtn.center toView:self.view];
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
-    [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
+    Animate *animate = [Animate sharedInstance];
+    __weak typeof (self)wSelf = self;
+    [animate addCartAnimation:startPoint endPoint:endPoint goodsImage:self.goodsImage completion:^{
+        
+        wSelf.addCartBtn.userInteractionEnabled = YES;
+        CABasicAnimation *shakeAnimation = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
+        shakeAnimation.duration = 0.25f;
+        shakeAnimation.fromValue = [NSNumber numberWithFloat:-5];
+        shakeAnimation.toValue = [NSNumber numberWithFloat:5];
+        shakeAnimation.autoreverses = YES;
+        [wSelf.cartBtn.layer addAnimation:shakeAnimation forKey:nil];
+    }];
     
-    CAKeyframeAnimation *pathAnimation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
-    pathAnimation.path = path.CGPath;
-    
-    CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-    rotateAnimation.removedOnCompletion = YES;
-    rotateAnimation.fromValue = [NSNumber numberWithFloat:0];
-    rotateAnimation.toValue = [NSNumber numberWithFloat:12];
-    rotateAnimation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    
-    
-    CAAnimationGroup *groups = [CAAnimationGroup animation];
-    groups.animations = @[pathAnimation,rotateAnimation];
-    groups.duration = 1.2f;
-    groups.removedOnCompletion = NO;
-    groups.fillMode = kCAFillModeForwards;
-    groups.delegate = self;
-    [self.layer addAnimation:groups forKey:@"group"];
 }
 
 /**
@@ -999,23 +973,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             
         }];
     }];
-}
-
-
-
-#pragma mark --- 动画结束 ---
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    
-    self.addCartBtn.userInteractionEnabled = YES;
-    [self.layer removeFromSuperlayer];
-    self.layer = nil;
-    CABasicAnimation *shakeAnimation = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
-    shakeAnimation.duration = 0.25f;
-    shakeAnimation.fromValue = [NSNumber numberWithFloat:-5];
-    shakeAnimation.toValue = [NSNumber numberWithFloat:5];
-    shakeAnimation.autoreverses = YES;
-    [self.cartBtn.layer addAnimation:shakeAnimation forKey:nil];
-    
 }
 
 #pragma mark --- UIScrollViewDelegate ---

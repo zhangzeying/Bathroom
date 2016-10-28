@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface GoodsService : NSObject
+
++ (GoodsService *)sharedInstance;
 /**
  * 根据商品id获取商品详情
  */

@@ -32,6 +32,21 @@
     return self;
 }
 
++ (GoodsService *)sharedInstance {
+    
+    static GoodsService *_sharedService = nil;
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        _sharedService = [[self alloc] init];
+        
+    });
+    
+    return _sharedService;
+}
+
 /**
  * 根据商品id获取商品详情
  */

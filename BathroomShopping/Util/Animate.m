@@ -8,7 +8,24 @@
 
 #import "Animate.h"
 
+@interface Animate()<CAAnimationDelegate>
+/** layer */
+@property(nonatomic,strong)CALayer *layer;
+@end
+
 @implementation Animate
+
++ (Animate *)sharedInstance {
+    
+    static dispatch_once_t pred;
+    static Animate *instance = nil;
+    dispatch_once(&pred, ^{
+        
+        instance = [[self alloc] init];
+    });
+    return instance;
+}
+
 // 动画1
 + (CATransform3D)firstStepTransform {
     CATransform3D transform = CATransform3DIdentity;
@@ -29,7 +46,9 @@
     return transform;
 }
 
-//启动动画
+/**
+ * 启动动画
+ */
 + (void)startAnimation:(NSTimeInterval)timer {
     
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
@@ -69,4 +88,57 @@
                      }];
 }
 
+/**
+ * 加入购物车动画
+ */
+- (void)addCartAnimation:(CGPoint)startPoint endPoint:(CGPoint)endPoint goodsImage:(UIImageView *)goodsImage completion:(AnimationFinishBlock)completion {
+
+    self.layer = [[CALayer alloc]init];
+    self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 25, 25);
+    self.layer.contents = (id)goodsImage.layer.contents;
+    self.layer.contentsGravity = kCAGravityResizeAspectFill;
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = self.layer.frame.size.width / 2;
+    [[[UIApplication sharedApplication] windows].lastObject.layer addSublayer:self.layer];
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
+    [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
+    
+    CAKeyframeAnimation *pathAnimation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
+    pathAnimation.path = path.CGPath;
+    
+    CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotateAnimation.removedOnCompletion = YES;
+    rotateAnimation.fromValue = [NSNumber numberWithFloat:0];
+    rotateAnimation.toValue = [NSNumber numberWithFloat:12];
+    rotateAnimation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    
+    CAAnimationGroup *groups = [CAAnimationGroup animation];
+    groups.animations = @[pathAnimation,rotateAnimation];
+    groups.duration = 1.0f;
+    groups.removedOnCompletion = NO;
+    groups.fillMode = kCAFillModeForwards;
+    groups.delegate = self;
+    [self.layer addAnimation:groups forKey:@"group"];
+    if (completion) {
+        
+        self.animationFinisnBlock = completion;
+    }
+}
+
+#pragma mark --- 动画结束 ---
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    
+    if (anim == [self.layer animationForKey:@"group"]) {
+        
+        [self.layer removeFromSuperlayer];
+        self.layer = nil;
+        if (self.animationFinisnBlock) {
+            self.animationFinisnBlock();
+        }
+    }
+    
+    
+}
 @end

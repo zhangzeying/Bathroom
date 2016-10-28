@@ -51,17 +51,6 @@ static NSString *homeHeaderID = @"homeHeader";
 
 @implementation HomeViewController
 
-#pragma mark --- LazyLoad ---
-- (HomeService *)homeService {
-    
-    if (_homeService == nil) {
-        
-        _homeService = [[HomeService alloc]init];
-    }
-    
-    return _homeService;
-}
-
 - (NSMutableArray *)hotGoodsArr {
     
     if (_hotGoodsArr == nil) {
@@ -85,6 +74,7 @@ static NSString *homeHeaderID = @"homeHeader";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.homeService = [HomeService sharedInstance];
     CustomSearchBar *searchBar = [CustomSearchBar searchBar];
     searchBar.delegate = self;
     searchBar.width = 250;

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface HomeService : NSObject
-
++ (HomeService *)sharedInstance;
 - (void)getNewsList:(void(^)(id))handler;
 - (void)getActivityGoodsList:(void(^)(id))handler;
 - (void)getHotGoodsList:(void(^)(id))completion;

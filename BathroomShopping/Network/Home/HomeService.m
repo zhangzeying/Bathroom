@@ -32,6 +32,21 @@
     return self;
 }
 
++ (HomeService *)sharedInstance {
+    
+    static HomeService *_sharedService = nil;
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        _sharedService = [[self alloc] init];
+        
+    });
+    
+    return _sharedService;
+}
+
 /**
  * 首页滚动消息的网络请求
  */
