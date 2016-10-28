@@ -60,9 +60,8 @@
                 [[CommUtils sharedInstance] saveUserInfo:model];
                 [[CommUtils sharedInstance] saveToken:dictData[@"token"]];
                 [[CommUtils sharedInstance] saveOutTime:([dictData[@"outTime"] longLongValue]) / 1000];
-                
-                
-                NSMutableArray *cartArr = [ShoppingCartDetailModel getCartList];
+
+                NSMutableArray *cartArr = [ShoppingCartDetailModel getCartList:NO];
                 if (cartArr.count > 0) {
                     
                     NSMutableArray *dataArr = @[].mutableCopy;
@@ -81,9 +80,12 @@
                     
                     [weakSelf.goodsService uploadCart:jsonString completion:^{
                         
-                        [ShoppingCartDetailModel deleteAllCart];
+                        [ShoppingCartDetailModel deleteAllCart:NO];
                     }];
                 }
+                
+                
+                
                 completion();
                 
             }else {

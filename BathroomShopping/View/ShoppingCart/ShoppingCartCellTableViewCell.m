@@ -107,21 +107,59 @@
         }else {
             
             self.detailModel.buyCount++;
-            self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
-            if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
+            if ([ShoppingCartDetailModel updateCartModel:self.detailModel]) {
                 
-                [self.delegate changeBuyCount];
+                self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
+                if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [self.delegate changeBuyCount];
+                }
             }
+            
         }
     }else {
     
-//        //如果大于库存
-//        if (self.detailModel.buyCount + 1 > self.detailModel.buySpecInfo.specStock) {
-//            
-//            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足，是否需要预约商品？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//            [alertView show];
-//            return;
-//        }
+        //如果大于库存
+        if (self.detailModel.buyCount + 1 > self.detailModel.packageStock) {
+            
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+        if ([[CommUtils sharedInstance] isLogin]) {
+            
+            NSDictionary *param = @{@"packageID":self.detailModel.packageId,
+                                    @"proIDs":self.detailModel.productIds,
+                                    @"desIDs":self.detailModel.specIds,
+                                    @"buyCount":@(self.detailModel.buyCount + 1),
+                                    @"token":[[CommUtils sharedInstance] fetchToken]};
+            
+            __weak typeof (self)weakSelf = self;
+            [self.service updatePackageCartCount:param completion:^{
+                
+                weakSelf.detailModel.buyCount++;
+                weakSelf.buyCount.text = [NSString stringWithFormat:@"%ld",(long)weakSelf.detailModel.buyCount];
+                if ([weakSelf.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [weakSelf.delegate changeBuyCount];
+                }
+                
+            }];
+            
+        }else {
+            
+            self.detailModel.buyCount++;
+            if ([ShoppingCartDetailModel updateCartModel:self.detailModel]) {
+                
+                self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
+                if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [self.delegate changeBuyCount];
+                }
+            }
+            
+        }
     }
     
 }
@@ -136,34 +174,78 @@
         return;
     }
     
-    if ([[CommUtils sharedInstance] isLogin]) {
-        
-        NSDictionary *param = @{@"productID":self.detailModel.id,
-                                @"buySpecID":self.detailModel.buySpecInfo.id,
-                                @"buyCount":@(self.detailModel.buyCount - 1),
-                                @"token":[[CommUtils sharedInstance] fetchToken]};
-        
-        __weak typeof (self)weakSelf = self;
-        [self.service updateCartCount:param completion:^{
+    if (!self.detailModel.isPackage) {
+    
+        if ([[CommUtils sharedInstance] isLogin]) {
             
-            weakSelf.detailModel.buyCount--;
-            weakSelf.buyCount.text = [NSString stringWithFormat:@"%ld",(long)weakSelf.detailModel.buyCount];
-            if ([weakSelf.delegate respondsToSelector:@selector(changeBuyCount)]) {
+            NSDictionary *param = @{@"productID":self.detailModel.id,
+                                    @"buySpecID":self.detailModel.buySpecInfo.id,
+                                    @"buyCount":@(self.detailModel.buyCount - 1),
+                                    @"token":[[CommUtils sharedInstance] fetchToken]};
+            
+            __weak typeof (self)weakSelf = self;
+            [self.service updateCartCount:param completion:^{
                 
-                [weakSelf.delegate changeBuyCount];
+                weakSelf.detailModel.buyCount--;
+                weakSelf.buyCount.text = [NSString stringWithFormat:@"%ld",(long)weakSelf.detailModel.buyCount];
+                if ([weakSelf.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [weakSelf.delegate changeBuyCount];
+                }
+                
+            }];
+            
+        }else {
+            
+            self.detailModel.buyCount--;
+            if ([ShoppingCartDetailModel updateCartModel:self.detailModel]) {
+            
+                self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
+                if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [self.delegate changeBuyCount];
+                }
             }
             
-        }];
+        }
         
     }else {
     
-        self.detailModel.buyCount--;
-        self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
-        if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
+        if ([[CommUtils sharedInstance] isLogin]) {
             
-            [self.delegate changeBuyCount];
+            NSDictionary *param = @{@"packageID":self.detailModel.packageId,
+                                    @"proIDs":self.detailModel.productIds,
+                                    @"desIDs":self.detailModel.specIds,
+                                    @"buyCount":@(self.detailModel.buyCount - 1),
+                                    @"token":[[CommUtils sharedInstance] fetchToken]};
+            
+            __weak typeof (self)weakSelf = self;
+            [self.service updateCartCount:param completion:^{
+                
+                weakSelf.detailModel.buyCount--;
+                weakSelf.buyCount.text = [NSString stringWithFormat:@"%ld",(long)weakSelf.detailModel.buyCount];
+                if ([weakSelf.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [weakSelf.delegate changeBuyCount];
+                }
+                
+            }];
+            
+        }else {
+            
+            self.detailModel.buyCount--;
+            if ([ShoppingCartDetailModel updateCartModel:self.detailModel]) {
+            
+                self.buyCount.text = [NSString stringWithFormat:@"%ld",(long)self.detailModel.buyCount];
+                if ([self.delegate respondsToSelector:@selector(changeBuyCount)]) {
+                    
+                    [self.delegate changeBuyCount];
+                }
+            }
+            
         }
     }
+    
     
     
 }

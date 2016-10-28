@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 @class MallPackageModel;
+@class ActivityGoodsDetailModel;
 
 @interface MallTableCell : UITableViewCell
 + (instancetype)cellWithTableView:(UITableView *)table;
 /** 模型 */
 @property(nonatomic,strong)MallPackageModel *model;
+/** 模型 */
+@property(nonatomic,strong)ActivityGoodsDetailModel *detailModel;
 @end

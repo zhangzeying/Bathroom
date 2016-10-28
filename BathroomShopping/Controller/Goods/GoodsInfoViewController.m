@@ -752,7 +752,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
  */
 - (void)addCartClick:(UIButton *)sender {
 
-    if (self.packgeModel == nil) {
+    if (self.packgeModel == nil) {//单品
         
         GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
         if (model.specStock < self.goodsSpecView.buyNumber) {
@@ -796,7 +796,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             
         }else {//如果未登录存本地
             
-            ShoppingCartDetailModel *cartDetailModel = [ShoppingCartDetailModel getCartModelById:self.goodsId specId:model.id];
+            ShoppingCartDetailModel *cartDetailModel = [ShoppingCartDetailModel getCartModelById:self.goodsId specId:model.id packageId:@"" isPackage:NO];
             if (cartDetailModel != nil) {//如果存在某个商品，更新数量
                 
                 cartDetailModel.buyCount += self.goodsSpecView.buyNumber;
@@ -815,6 +815,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
                 detailModel.buyCount = self.goodsSpecView.buyNumber;
                 detailModel.nowPrice = model.specPrice;
                 detailModel.buySpecInfo = model;
+                detailModel.isPackage = NO;
                 if ([ShoppingCartDetailModel saveCartModelToDB:detailModel]) {
                     
                     self.cartCount.hidden = NO;
@@ -823,7 +824,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             }
         }
         
-    }else {
+    }else {//套餐
     
         PackageSpecModel *model = self.packageDetailModel.specAllList[self.goodsSpecView.currentIndex];
         if (model.minStock < self.goodsSpecView.buyNumber) {
@@ -867,31 +868,35 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             
         }else {//如果未登录存本地
             
-//            ShoppingCartDetailModel *cartDetailModel = [ShoppingCartDetailModel getCartModelById:self.goodsId specId:model.id];
-//            if (cartDetailModel != nil) {//如果存在某个商品，更新数量
-//                
-//                cartDetailModel.buyCount += self.goodsSpecView.buyNumber;
-//                if ([ShoppingCartDetailModel updateCartModel:cartDetailModel]) {
-//                    
-//                    self.cartCount.hidden = NO;
-//                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
-//                }
-//                
-//            }else {//如果不存在，新增记录
-//                
-//                ShoppingCartDetailModel *detailModel = [[ShoppingCartDetailModel alloc]init];
-//                detailModel.id = self.goodsDetailModel.id;
-//                detailModel.name = self.goodsDetailModel.name;
-//                detailModel.picture = self.goodsDetailModel.picture;
-//                detailModel.buyCount = self.goodsSpecView.buyNumber;
-//                detailModel.nowPrice = model.specPrice;
-//                detailModel.buySpecInfo = model;
-//                if ([ShoppingCartDetailModel saveCartModelToDB:detailModel]) {
-//                    
-//                    self.cartCount.hidden = NO;
-//                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
-//                }
-//            }
+            ShoppingCartDetailModel *cartDetailModel = [ShoppingCartDetailModel getCartModelById:model.productIds specId:model.specIds packageId:self.packgeModel.id isPackage:YES];
+            if (cartDetailModel != nil) {//如果存在某个商品，更新数量
+                
+                cartDetailModel.buyCount += self.goodsSpecView.buyNumber;
+                if ([ShoppingCartDetailModel updateCartModel:cartDetailModel]) {
+                    
+                    self.cartCount.hidden = NO;
+                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+                }
+                
+            }else {//如果不存在，新增记录
+                
+                ShoppingCartDetailModel *detailModel = [[ShoppingCartDetailModel alloc]init];
+                detailModel.id = model.productIds;
+                detailModel.name = self.packgeModel.name;
+                detailModel.picture = self.packgeModel.picture;
+                detailModel.buyCount = self.goodsSpecView.buyNumber;
+                detailModel.packagePice = self.packgeModel.totalPrice;
+                detailModel.specDesc = model.specDesc;
+                detailModel.specIds = model.specIds;
+                detailModel.packageStock = model.minStock;
+                detailModel.packageId = self.packgeModel.id;
+                detailModel.isPackage = YES;
+                if ([ShoppingCartDetailModel saveCartModelToDB:detailModel]) {
+                    
+                    self.cartCount.hidden = NO;
+                    self.cartCount.text = [NSString stringWithFormat:@"%ld",(long)([self.cartCount.text integerValue] + self.goodsSpecView.buyNumber)];
+                }
+            }
         }
     }
 }

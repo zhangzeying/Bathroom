@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FMDB.h"
+@class ShoppingCartDetailModel;
 @interface ShoppingCartInfoDB : NSObject
 @property(nonatomic,strong)FMDatabase *db;
 
@@ -16,19 +17,19 @@
 /**
  * 新增
  */
-- (BOOL)saveShoppingcartData:(NSData *)cartinfo goodsId:(NSString *)goodsId specId:(NSString *)specId buyNumber:(NSInteger)buyNumber;
+- (BOOL)saveShoppingcartData:(ShoppingCartDetailModel *)model;
 /**
  * 更新
  */
-- (BOOL)updateCartById:(NSData *)cartinfo goodsId:(NSString *)goodsId specId:(NSString *)specId buyNumber:(NSInteger)buyNumber;
+- (BOOL)updateCartById:(ShoppingCartDetailModel *)model;
 /**
  * 根据id查询某个商品是否存在
  */
-- (NSData *)getCartInfoById:(NSString *)goodsId specId:(NSString *)specId;
+- (NSData *)getCartInfoById:(NSString *)goodsId specId:(NSString *)specId packageId:(NSString *)packageId isPackage:(BOOL)isPackage;
 /**
  * 查询所有数据
  */
-- (NSMutableArray *)getAllCartInfo;
+- (NSMutableArray *)getAllCartInfo:(BOOL)isPackage;
 /**
  * 获取购物车商品总数
  */
@@ -36,11 +37,15 @@
 /**
  * 根据id删除数据
  */
-- (BOOL)deleteCartGoodsById:(NSString *)goodsId specId:(NSString *)specId;
+- (BOOL)deleteCartById:(NSString *)cartId;
+/**
+ * 根据ids删除多条数据
+ */
+- (BOOL)deleteCartByIds:(NSMutableArray *)cartIdArr;
 /**
  * 删除所有数据
  */
-- (BOOL)deleteAll;
+- (BOOL)deleteAll:(BOOL)isPackage;
 /**
  * 移除sqlite
  */

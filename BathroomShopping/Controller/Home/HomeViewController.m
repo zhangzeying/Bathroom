@@ -110,7 +110,7 @@ static NSString *homeHeaderID = @"homeHeader";
     [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
-    UICollectionView *collect = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH - 64) collectionViewLayout:layout];
+    UICollectionView *collect = [[UICollectionView alloc]initWithFrame:self.view.frame collectionViewLayout:layout];
     collect.showsVerticalScrollIndicator = NO;
     UINib *preferenCellNib = [UINib nibWithNibName:@"ActivityGoodsCollectionCell" bundle: [NSBundle mainBundle]];
     [collect registerNib:preferenCellNib forCellWithReuseIdentifier:preferenID];

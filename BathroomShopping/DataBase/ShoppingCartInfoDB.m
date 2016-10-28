@@ -9,6 +9,7 @@
 #import "ShoppingCartInfoDB.h"
 #import "FileNameDefine.h"
 #import "ShoppingCartDetailModel.h"
+#import "GoodsSpecModel.h"
 @implementation ShoppingCartInfoDB
 /**
  * 拿到数据库实例
@@ -36,7 +37,7 @@
     }
     @try {
         [_db open];
-        return [_db executeUpdate:@"CREATE TABLE IF NOT EXISTS tb_shoppingcart (id INTEGER PRIMARY KEY AUTOINCREMENT, goodsId TEXT, specId TEXT,buyNumber INTEGER, cartinfo BLOB, ispackage TEXT)"];
+        return [_db executeUpdate:@"CREATE TABLE IF NOT EXISTS tb_shoppingcart (id INTEGER PRIMARY KEY AUTOINCREMENT, goodsId TEXT, specId TEXT,buyNumber INTEGER, cartinfo BLOB,packageId TEXT, ispackage TEXT)"];
     }
     @catch (NSException *exception) {
         BSLog(@"CREATE TABLE tb_shoppingcart %@",[exception reason]);
@@ -49,7 +50,7 @@
 /**
  * 新增
  */
-- (BOOL)saveShoppingcartData:(NSData *)cartinfo goodsId:(NSString *)goodsId specId:(NSString *)specId buyNumber:(NSInteger)buyNumber isPackage:(BOOL)isPackage{
+- (BOOL)saveShoppingcartData:(ShoppingCartDetailModel *)model {
     
     if (!_db) {
         
@@ -57,13 +58,23 @@
     }
     @try {
         [_db open];
-        NSString * sql = [NSString stringWithFormat:@"insert into tb_shoppingcart(goodsId,specId,buyNumber,cartinfo,ispackage) values (?,?,?,?,?)"];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+        NSString * sql = [NSString stringWithFormat:@"insert into tb_shoppingcart(goodsId,specId,buyNumber,cartinfo,packageId,ispackage) values (?,?,?,?,?,?)"];
         NSMutableArray *params = [NSMutableArray array];
-        [params addObject:goodsId];
-        [params addObject:specId];
-        [params addObject:@(buyNumber)];
-        [params addObject:cartinfo];
-        [params addObject:@(isPackage)];
+        [params addObject:model.id];
+        if (model.isPackage) {
+            
+            [params addObject:model.specIds];
+            
+        }else {
+        
+            [params addObject:model.buySpecInfo.id];
+        }
+        
+        [params addObject:@(model.buyCount)];
+        [params addObject:data];
+        [params addObject:model.packageId?:@""];
+        [params addObject:@(model.isPackage)];
         return [_db executeUpdate:sql withArgumentsInArray:params];
     }
     @catch (NSException *exception) {
@@ -79,7 +90,7 @@
 /**
  * 更新
  */
-- (BOOL)updateCartById:(NSData *)cartinfo goodsId:(NSString *)goodsId specId:(NSString *)specId buyNumber:(NSInteger)buyNumber {
+- (BOOL)updateCartById:(ShoppingCartDetailModel *)model {
     
     if (!_db) {
         
@@ -87,12 +98,23 @@
     }
     @try {
         [_db open];
-        NSString * sql = [NSString stringWithFormat:@"update tb_shoppingcart set cartinfo = ?,buyNumber = ? where goodsId = ? and specId = ?"];
+        NSString * sql = [NSString stringWithFormat:@"update tb_shoppingcart set cartinfo = ?,buyNumber = ? where goodsId = ? and specId = ? and packageId = ? and ispackage = ?"];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
         NSMutableArray *params = [NSMutableArray array];
-        [params addObject:cartinfo];
-        [params addObject:@(buyNumber)];
-        [params addObject:goodsId];
-        [params addObject:specId];
+        [params addObject:data];
+        [params addObject:@(model.buyCount)];
+        [params addObject:model.id];
+        if (model.isPackage) {
+            
+            [params addObject:model.specIds];
+            
+        }else {
+        
+            [params addObject:model.buySpecInfo.id];
+        }
+        
+        [params addObject:model.packageId?:@""];
+        [params addObject:@(model.isPackage)];
         return [_db executeUpdate:sql withArgumentsInArray:params];
     }
     @catch (NSException *exception) {
@@ -106,9 +128,9 @@
 }
 
 /**
- * 查询所有数据
+ * 查询所有数据(ispackage区分是单品还是套餐)
  */
-- (NSMutableArray *)getAllCartInfo {
+- (NSMutableArray *)getAllCartInfo:(BOOL)isPackage {
     
     NSMutableArray *dataArr = [NSMutableArray array];
     if (!_db) {
@@ -117,12 +139,15 @@
     }
     @try {
         [_db open];
-        NSString *sql = [NSString stringWithFormat:@"select cartinfo from tb_shoppingcart"];
-        FMResultSet *set = [_db executeQuery:sql withArgumentsInArray:nil];
+        NSString *sql = [NSString stringWithFormat:@"select cartinfo,id from tb_shoppingcart where ispackage = ?"];
+        NSMutableArray *params = [NSMutableArray array];
+        [params addObject:@(isPackage)];
+        FMResultSet *set = [_db executeQuery:sql withArgumentsInArray:params];
         while ([set next]) {
             
             NSData *data = [set objectForColumnName:@"cartinfo"];
             ShoppingCartDetailModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            model.cartId = [set objectForColumnName:@"id"];
             [dataArr addObject:model];
         }
     }
@@ -140,7 +165,7 @@
 /**
  * 根据id查询某个商品是否存在
  */
-- (NSData *)getCartInfoById:(NSString *)goodsId specId:(NSString *)specId {
+- (NSData *)getCartInfoById:(NSString *)goodsId specId:(NSString *)specId packageId:(NSString *)packageId isPackage:(BOOL)isPackage {
     
     NSData *data = nil;
     if (!_db) {
@@ -149,10 +174,12 @@
     }
     @try {
         [_db open];
-        NSString *sql = [NSString stringWithFormat:@"select cartinfo from tb_shoppingcart where goodsId = ? and specId = ?"];
+        NSString *sql = [NSString stringWithFormat:@"select cartinfo from tb_shoppingcart where goodsId = ? and specId = ? and packageId = ? and ispackage = ?"];
         NSMutableArray *params = [NSMutableArray array];
         [params addObject:goodsId];
         [params addObject:specId];
+        [params addObject:packageId?:@""];
+        [params addObject:@(isPackage)];
         FMResultSet *set = [_db executeQuery:sql withArgumentsInArray:params];
         if ([set next]) {
             
@@ -204,7 +231,7 @@
 /**
  * 根据id删除数据
  */
-- (BOOL)deleteCartGoodsById:(NSString *)goodsId specId:(NSString *)specId {
+- (BOOL)deleteCartById:(NSString *)cartId {
     
     if (!_db) {
         
@@ -213,15 +240,14 @@
     @try {
         
         [_db open];
-        NSString *sql = [NSString stringWithFormat:@"delete from tb_shoppingcart where goodsId = ? and specId = ?"];
+        NSString *sql = [NSString stringWithFormat:@"delete from tb_shoppingcart where id = ?"];
         NSMutableArray *params = [NSMutableArray array];
-        [params addObject:goodsId];
-        [params addObject:specId];
+        [params addObject:cartId];
         return [_db executeUpdate:sql withArgumentsInArray:params];
     }
     @catch (NSException *exception) {
         
-        BSLog(@"delete from tb_shoppingcart where goodsId = ? and specId = ? %@",[exception reason]);
+        BSLog(@"delete from tb_shoppingcart where id = ? %@",[exception reason]);
     }
     @finally {
         
@@ -230,9 +256,57 @@
 }
 
 /**
+ * 根据ids删除多条数据
+ */
+- (BOOL)deleteCartByIds:(NSMutableArray *)cartModelArr {
+    
+    if (!_db) {
+        
+        return FALSE;
+    }
+    BOOL isRollBack = NO; //是否回滚
+    BOOL flag = YES;
+    @try {
+        
+        [_db open];
+        [_db beginTransaction];//开始事务
+        
+        
+        for (ShoppingCartDetailModel *model in cartModelArr) {
+            
+            NSString *sql = [NSString stringWithFormat:@"delete from tb_shoppingcart where id = ?"];
+            NSMutableArray *params = [NSMutableArray array];
+            [params addObject:model.cartId];
+            if (![_db executeUpdate:sql withArgumentsInArray:params]) {
+                
+                flag = NO;
+                break;
+            }
+        }
+        
+    }
+    @catch (NSException *exception) {
+        
+        BSLog(@"delete from tb_shoppingcart where id = ? %@",[exception reason]);
+        isRollBack = YES;
+        [_db rollback];
+    }
+    @finally {
+        
+        if (!isRollBack) {
+            
+            [_db commit];
+            [_db close];
+        }
+        
+        return flag;
+    }
+}
+
+/**
  * 删除所有数据
  */
-- (BOOL)deleteAll {
+- (BOOL)deleteAll:(BOOL)isPackage {
     
     if (!_db) {
         
@@ -241,8 +315,10 @@
     @try {
         
         [_db open];
-        NSString *sql = [NSString stringWithFormat:@"delete from tb_shoppingcart"];
-        return [_db executeUpdate:sql withArgumentsInArray:nil];
+        NSMutableArray *params = [NSMutableArray array];
+        [params addObject:@(isPackage)];
+        NSString *sql = [NSString stringWithFormat:@"delete from tb_shoppingcart where ispackage = ?"];
+        return [_db executeUpdate:sql withArgumentsInArray:params];
     }
     @catch (NSException *exception) {
         

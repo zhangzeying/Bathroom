@@ -10,7 +10,7 @@
 
 @interface PackageSpecModel : NSObject
 /** <##> */
-@property(assign,nonatomic)double minStock;
+@property(assign,nonatomic)NSInteger minStock;
 /** <##> */
 @property(nonatomic,copy)NSString *productIds;
 /** <##> */

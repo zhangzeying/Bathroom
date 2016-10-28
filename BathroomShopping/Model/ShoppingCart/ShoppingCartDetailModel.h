@@ -10,6 +10,8 @@
 @class GoodsSpecModel;
 
 @interface ShoppingCartDetailModel : NSObject<NSCoding>
+/** 购物车id */
+@property(nonatomic,copy)NSString *cartId;
 /** 商品id */
 @property(nonatomic,copy)NSString *id;
 /** 名称 */
@@ -22,8 +24,16 @@
 @property(assign,nonatomic)double nowPrice;
 /** <##> */
 @property(nonatomic,strong)GoodsSpecModel *buySpecInfo;
-/** <##> */
+/** 套餐id */
+@property(nonatomic,copy)NSString *packageId;
+/** 套餐下的商品id */
+@property(nonatomic,copy)NSString *productIds;
+/** 套餐的规格 */
 @property(nonatomic,copy)NSString *specDesc;
+/** 套餐的规格id */
+@property(nonatomic,copy)NSString *specIds;
+/** 套餐的库存 */
+@property(nonatomic,assign)NSInteger packageStock;
 /** 单价格 */
 @property(assign,nonatomic)double price;
 /** 套餐价格 */
@@ -51,17 +61,21 @@
 /**
  * 获取购物车所有数据
  */
-+ (NSMutableArray *)getCartList;
++ (NSMutableArray *)getCartList:(BOOL)isPackage;
 /**
  * 获取某条记录
  */
-+ (ShoppingCartDetailModel *)getCartModelById:(NSString *)goodsId specId:(NSString *)specId;
++ (ShoppingCartDetailModel *)getCartModelById:(NSString *)goodsId specId:(NSString *)specId packageId:(NSString *)packageId isPackage:(BOOL)isPackage;
 /**
  * 根据id删除购物车某条数据
  */
-+ (BOOL)deleteCartById:(NSString *)goodsId specId:(NSString *)specId;
++ (BOOL)deleteCartById:(NSString *)cartId;
+/**
+ * 根据ids删除购物车多条数据
+ */
++ (BOOL)deleteCartByIds:(NSMutableArray *)cartModelArr;
 /**
  * 移除数据库
  */
-+ (BOOL)deleteAllCart;
++ (BOOL)deleteAllCart:(BOOL)isPackage;
 @end

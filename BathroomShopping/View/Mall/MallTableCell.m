@@ -8,6 +8,7 @@
 
 #import "MallTableCell.h"
 #import "MallPackageModel.h"
+#import "ActivityGoodsDetailModel.h"
 static NSString *ID = @"mallCell";
 
 @interface MallTableCell()
@@ -43,7 +44,16 @@ static NSString *ID = @"mallCell";
     _model = model;
     self.goodsNameLbl.text = model.name;
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, model.picture];
-    [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+    [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"sys_xiao8"]];
     self.price.text = [NSString stringWithFormat:@"￥%.2f",model.totalPrice];
+}
+
+- (void)setDetailModel:(ActivityGoodsDetailModel *)detailModel {
+
+    _detailModel = detailModel;
+    self.goodsNameLbl.text = detailModel.name;
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, detailModel.picture];
+    [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"sys_xiao8"]];
+    self.price.text = detailModel.nowPrice;
 }
 @end

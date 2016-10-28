@@ -18,8 +18,6 @@ static NSString *ID = @"newsCell";
 @property (nonatomic, weak)UITableView *newsTable;
 /** 计时器 */
 @property(nonatomic,strong)NSTimer *timer;
-/** 第一条消息用UILabel来实现，这样为了实现循环滚动的假象 */
-@property (nonatomic, weak)UILabel *firstNewsLbl;
 @end
 
 @implementation HomeScrollNewsView
@@ -39,7 +37,7 @@ static NSString *ID = @"newsCell";
         [self addSubview:voiceIcon];
         
         CGFloat tableX = CGRectGetMaxX(voiceIcon.frame) + 10;
-        UITableView *newsTable = [[UITableView alloc]initWithFrame:CGRectMake(tableX, CGRectGetHeight(self.frame), ScreenW - tableX, self.height) style:UITableViewStylePlain];
+        UITableView *newsTable = [[UITableView alloc]initWithFrame:CGRectMake(tableX, 0, ScreenW - tableX, self.height) style:UITableViewStylePlain];
         newsTable.delegate = self;
         newsTable.dataSource = self;
         newsTable.rowHeight = self.height;
@@ -48,16 +46,8 @@ static NSString *ID = @"newsCell";
         newsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:newsTable];
         self.newsTable = newsTable;
-        
-        UILabel *firstNewsLbl = [[UILabel alloc]init];
-        firstNewsLbl.frame = CGRectMake(tableX + 8, 0, ScreenW - tableX, self.height);
-        firstNewsLbl.textColor = CustomColor(102, 102, 102);
-        firstNewsLbl.font = [UIFont systemFontOfSize:12];
-        [self addSubview:firstNewsLbl];
-        self.firstNewsLbl = firstNewsLbl;
-        
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:kHeadTimerINterval target:self selector:@selector(scroll) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    
+        [self addTimer];
     }
     return self;
 }
@@ -69,44 +59,9 @@ static NSString *ID = @"newsCell";
  */
 - (void)scroll {
 
-    if (self.firstNewsLbl.y != 0) {
-        
-        CGPoint newOffset = self.newsTable.contentOffset;
-        newOffset.y += self.height;
-        if (newOffset.y > (self.newsTable.contentSize.height - self.height)) {
-            
-            newOffset.y = 0.0f;
-            [UIView animateWithDuration:0.25 animations:^{
-                
-                self.firstNewsLbl.y = 0;
-                self.newsTable.y = - self.height;
-                
-            } completion:^(BOOL finished) {
-                
-                self.newsTable.y = self.height;
-                self.newsTable.contentOffset = newOffset;
-            }];
-            
-        }else {
-        
-            [self.newsTable setContentOffset:newOffset animated:YES];
-        }
-        
-        
-    }else {
-    
-        [UIView animateWithDuration:0.25 animations:^{
-            
-            self.firstNewsLbl.y = - self.height;
-            self.newsTable.y = 0;
-            
-        } completion:^(BOOL finished) {
-            
-            self.firstNewsLbl.y = self.height;
-        }];
-
-    }
-    
+    CGPoint oldPoint = self.newsTable.contentOffset;
+    oldPoint.y += self.newsTable.frame.size.height;
+    [self.newsTable setContentOffset:oldPoint animated:YES];
 }
 
 #pragma mark --- UITableViewDataSource ---
@@ -122,20 +77,46 @@ static NSString *ID = @"newsCell";
     return cell;
 }
 
+//当图片滚动时调用scrollView的代理方法
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (self.newsTable.contentOffset.y == self.newsTable.frame.size.height * (self.newsArr.count )) {
+        
+        [self.newsTable setContentOffset:CGPointMake(0, 0) animated:NO];
+        
+    }
+}
+
 #pragma mark --- setter ---
 - (void)setNewsArr:(NSMutableArray *)newsArr {
 
     _newsArr = newsArr;
-    self.firstNewsLbl.text = [newsArr firstObject];
-    [newsArr removeObjectAtIndex:0];
+    
+    if (newsArr == nil || newsArr.count == 1) {
+        
+        [self removeTimer];
+        return;
+    }
+
     [self.newsTable reloadData];
     
+}
+
+- (void)addTimer {
+
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:kHeadTimerINterval target:self selector:@selector(scroll) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+
+- (void)removeTimer {
+    
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 #pragma mark --- dealloc ---
 - (void)dealloc {
     
-    [self.timer invalidate];
-    self.timer = nil;
+    [self removeTimer];
 }
 @end

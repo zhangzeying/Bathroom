@@ -156,10 +156,10 @@
                     flag = NO;
                     if (packageIDStr.length == 0) {
                         
-                        [packageIDStr appendString:detailModel.id];
+                        [packageIDStr appendString:detailModel.packageId];
                     }else {
                         
-                        [packageIDStr appendString:[NSString stringWithFormat:@",%@",detailModel.id]];
+                        [packageIDStr appendString:[NSString stringWithFormat:@",%@",detailModel.packageId]];
                     }
                     [self.deletePackageArr addObject:detailModel];
                 }
@@ -263,21 +263,19 @@
         
     }else {
     
-        NSMutableArray *dataArr = [ShoppingCartDetailModel getCartList];
-        if (dataArr.count == 0) {
+        NSMutableArray *dataArr = [ShoppingCartDetailModel getCartList:NO];
+        NSMutableArray *packageDataArr = [ShoppingCartDetailModel getCartList:YES];
+        if (dataArr.count == 0 && packageDataArr.count == 0) {
             
             [self.table removeFromSuperview];
             [self.footerView removeFromSuperview];
-            ErrorView *errorView = [[ErrorView alloc]initWithFrame:self.view.frame];
-            errorView.warnStr = @"购物车空空如也！";
-            errorView.imgName = @"sys_xiao8";
-            errorView.btnTitle = @"";
-            [self.view addSubview:errorView];
+            [self.view addWarnViewWithIcon:@"sys_xiao8" positionY:0 text:@"购物车空空如也！"];
             
         }else {
         
             ShoppingCartModel *cModel = [[ShoppingCartModel alloc]init];
             cModel.productList = dataArr;
+            cModel.pgCartList = packageDataArr;
             self.model = cModel;
             self.footerView.model = cModel;
             [self.table reloadData];
@@ -381,10 +379,7 @@
 - (void)cartDelete:(UITableViewCell *)cell model:(ShoppingCartDetailModel *)model{
 
     NSIndexPath *indexPath = [self.table indexPathForCell:cell];
-//    NSIndexSet *set = [NSIndexSet all]
-    NSLog(@"%d,%d",indexPath.row,indexPath.section);
     if ([[CommUtils sharedInstance] isLogin]) {
-        
         
         if (!model.isPackage) {
             
@@ -401,7 +396,7 @@
                     [weakSelf.model.productList removeObjectAtIndex:indexPath.row];
                     
                     [weakSelf.table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                     [weakSelf.table endUpdates];
+                    [weakSelf.table endUpdates];
                     [weakSelf.table reloadData];
                     [weakSelf numerationPrice];
                     
@@ -438,12 +433,24 @@
 
     }else {
     
-        if ([ShoppingCartDetailModel deleteCartById:model.id specId:model.buySpecInfo.id]) {
+        
             
-            [self.model.productList removeObjectAtIndex:indexPath.row];
-            [self.table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-            [self.table reloadData];
-        }
+            if ([ShoppingCartDetailModel deleteCartById:model.cartId ]) {
+                
+                if (!model.isPackage) {
+                    
+                    [self.model.productList removeObjectAtIndex:indexPath.row];
+                    
+                    [self.table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                    
+                    
+                }else {
+                    
+                    [self.model.pgCartList removeObjectAtIndex:indexPath.row];
+                }
+                
+                [self.table reloadData];
+            }
     }
 }
 
@@ -524,16 +531,13 @@
         
     }else {
         
-        NSMutableArray *dataArr = [ShoppingCartDetailModel getCartList];
-        if (dataArr.count == 0) {
+        NSMutableArray *dataArr = [ShoppingCartDetailModel getCartList:NO];
+        NSMutableArray *packageDataArr = [ShoppingCartDetailModel getCartList:YES];
+        if (dataArr.count == 0 && packageDataArr.count == 0) {
             
             [self.table removeFromSuperview];
             [self.footerView removeFromSuperview];
-            ErrorView *errorView = [[ErrorView alloc]initWithFrame:self.view.frame];
-            errorView.warnStr = @"购物车空空如也！";
-            errorView.imgName = @"sys_xiao8";
-            errorView.btnTitle = @"";
-            [self.view addSubview:errorView];
+            [self.view addWarnViewWithIcon:@"sys_xiao8" positionY:0 text:@"购物车空空如也！"];
             
         }else {
             
@@ -605,15 +609,50 @@
             
         }else {
             
-            if ([ShoppingCartDetailModel deleteAllCart]) {
+            if (self.footerView.checkBox.selected) {//全选
                 
-                for (ShoppingCartDetailModel *detailModel in self.deleteArr) {
+                if ([ShoppingCartDetailModel deleteAllCart:NO]) {
                     
-                    [self.model.productList removeObject:detailModel];
+                    for (ShoppingCartDetailModel *detailModel in self.deleteArr) {
+                        
+                        [self.model.productList removeObject:detailModel];
+                    }
+                    [self numerationPrice];
+                    [self.table reloadData];
                 }
-                [self numerationPrice];
-                [self.table reloadData];
+                
+                if ([ShoppingCartDetailModel deleteAllCart:YES]) {
+                    
+                    for (ShoppingCartDetailModel *detailModel in self.deletePackageArr) {
+                        
+                        [self.model.pgCartList removeObject:detailModel];
+                    }
+                    [self numerationPrice];
+                    [self.table reloadData];
+                }
+                
+            }else {
+            
+                NSMutableArray *array = @[].mutableCopy;
+                [array addObjectsFromArray:self.deletePackageArr];
+                [array addObjectsFromArray:self.deleteArr];
+                if ([ShoppingCartDetailModel deleteCartByIds:array]) {
+                    
+                    for (ShoppingCartDetailModel *detailModel in self.deleteArr) {
+                        
+                        [self.model.productList removeObject:detailModel];
+                    }
+                    for (ShoppingCartDetailModel *detailModel in self.deletePackageArr) {
+                        
+                        [self.model.pgCartList removeObject:detailModel];
+                    }
+                    [self numerationPrice];
+                    [self.table reloadData];
+                }
+
             }
+            
+            
         }
         
     }

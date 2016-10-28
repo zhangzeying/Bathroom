@@ -57,7 +57,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     MallTableCell *cell = [MallTableCell cellWithTableView:tableView];
-    cell.model = self.goodsArr[indexPath.row];
+    cell.detailModel = self.goodsArr[indexPath.row];
     return cell;
 }
 
