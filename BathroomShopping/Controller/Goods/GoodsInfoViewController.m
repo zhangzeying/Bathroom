@@ -190,14 +190,6 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     _cartCount.layer.cornerRadius = cartCountH / 2;
 }
 
-- (CALayer *)layer {
-    
-    if (_layer == nil) {
-        
-        _layer = [[CALayer alloc] init];
-    }
-    return _layer;
-}
 
 - (UIImageView *)goodsImage {
     
@@ -301,6 +293,9 @@ typedef NS_ENUM(NSInteger ,PopViewType){
                 weakSelf.detailImage.contentMode = UIViewContentModeScaleAspectFit;
             }
             
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
+            [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+            
             //        [weakSelf.service getRecommendGoodsList:goodsDetailModel.catalogID completion:^(NSMutableArray *recommendGoodsArr) {
             //
             //            weakSelf.recommendGoodsArr = recommendGoodsArr;
@@ -331,6 +326,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
                 weakSelf.detailImage.contentMode = UIViewContentModeScaleAspectFit;
             }
             [weakSelf.tableView reloadData];
+            [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
         }];
     }
 }
@@ -561,6 +557,8 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [addCartBtn addTarget:self action:@selector(addCartClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:addCartBtn];
     self.addCartBtn = addCartBtn;
+    
+    
 }
 
 
@@ -752,6 +750,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
  */
 - (void)addCartClick:(UIButton *)sender {
 
+    
     if (self.packgeModel == nil) {//单品
         
         GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
@@ -763,24 +762,9 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         }
         
         sender.userInteractionEnabled = NO;
-        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
-        [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-        CGPoint startPoint = [self.bottomView convertPoint:self.addCartBtn.center toView:self.view];
-        CGPoint endPoint = [self.bottomView convertPoint:self.cartBtn.center toView:self.view];
-        self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 20, 20);
-        self.layer.contents = (id)self.goodsImage.layer.contents;
-        [self.view.layer addSublayer:self.layer];
         
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
-        [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
         
-        CAKeyframeAnimation *animation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
-        animation.fillMode = kCAFillModeBoth;
-        animation.duration = 0.6;
-        animation.delegate = self;
-        animation.path = path.CGPath;
-        [self.layer addAnimation:animation forKey:@"animation"];
+        
         if ([[CommUtils sharedInstance] isLogin]) {//如果登录
             
             __weak typeof (self)weakSelf = self;
@@ -834,24 +818,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
         }
         
         sender.userInteractionEnabled = NO;
-        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.packgeModel.picture];
-        [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-        CGPoint startPoint = [self.bottomView convertPoint:self.addCartBtn.center toView:self.view];
-        CGPoint endPoint = [self.bottomView convertPoint:self.cartBtn.center toView:self.view];
-        self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 20, 20);
-        self.layer.contents = (id)self.goodsImage.layer.contents;
-        [self.view.layer addSublayer:self.layer];
         
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
-        [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
-        
-        CAKeyframeAnimation *animation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
-        animation.fillMode = kCAFillModeBoth;
-        animation.duration = 0.6;
-        animation.delegate = self;
-        animation.path = path.CGPath;
-        [self.layer addAnimation:animation forKey:@"animation"];
         if ([[CommUtils sharedInstance] isLogin]) {//如果登录
             
             __weak typeof (self)weakSelf = self;
@@ -899,6 +866,35 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             }
         }
     }
+    
+    self.layer = [[CALayer alloc]init];
+    CGPoint startPoint = [self.bottomView convertPoint:self.addCartBtn.center toView:self.view];
+    self.layer.frame = CGRectMake(startPoint.x, startPoint.y, 20, 20);
+    self.layer.contents = (id)self.goodsImage.layer.contents;
+    [self.view.layer addSublayer:self.layer];
+    
+    CGPoint endPoint = [self.bottomView convertPoint:self.cartBtn.center toView:self.view];
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
+    [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
+    
+    CAKeyframeAnimation *pathAnimation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
+    pathAnimation.path = path.CGPath;
+    
+    CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotateAnimation.removedOnCompletion = YES;
+    rotateAnimation.fromValue = [NSNumber numberWithFloat:0];
+    rotateAnimation.toValue = [NSNumber numberWithFloat:12];
+    rotateAnimation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    
+    
+    CAAnimationGroup *groups = [CAAnimationGroup animation];
+    groups.animations = @[pathAnimation,rotateAnimation];
+    groups.duration = 1.2f;
+    groups.removedOnCompletion = NO;
+    groups.fillMode = kCAFillModeForwards;
+    groups.delegate = self;
+    [self.layer addAnimation:groups forKey:@"group"];
 }
 
 /**
