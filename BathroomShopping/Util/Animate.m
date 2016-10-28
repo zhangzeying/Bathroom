@@ -28,4 +28,45 @@
     transform = CATransform3DScale(transform, 0.8, 0.8, 1.0);
     return transform;
 }
+
+//启动动画
++ (void)startAnimation:(NSTimeInterval)timer {
+    
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    CGSize size = window.bounds.size;
+    NSString *viewOrientation = @"Portrait";  //横屏请设置成 @"Landscape"
+    NSString *launchImage = nil;
+    
+    NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
+    for (NSDictionary* dict in imagesDict)
+    {
+        CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
+        
+        if (CGSizeEqualToSize(imageSize, size) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
+        {
+            launchImage = dict[@"UILaunchImageName"];
+        }
+    }
+    
+    UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:launchImage]];
+    launchView.frame = window.bounds;
+    launchView.contentMode = UIViewContentModeScaleAspectFill;
+    [window addSubview:launchView];
+    
+    [UIView animateWithDuration:timer
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         
+                         launchView.alpha = 0.0f;
+                         launchView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.5, 1.5, 1);
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         [launchView removeFromSuperview];
+                         
+                     }];
+}
+
 @end

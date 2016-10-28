@@ -16,6 +16,7 @@
 #import "AppDelegate+Notification.h"
 #import "MineService.h"
 #import <Bugly/Bugly.h>
+#import "Animate.h"
 @interface AppDelegate ()<WXApiDelegate>
 /** <##> */
 @property(nonatomic,strong)MineService *mineService;
@@ -54,6 +55,8 @@
     HomeTabBarController *loginVC = [[HomeTabBarController alloc]init];
     self.window.rootViewController = loginVC;
     [self.window makeKeyAndVisible];
+    
+    [Animate startAnimation:3.f];
 }
 
 - (void)initApp {

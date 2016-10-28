@@ -13,4 +13,6 @@
 + (CATransform3D)firstStepTransform;
 // 动画2
 + (CATransform3D)secondStepTransform;
+//启动动画
++ (void)startAnimation:(NSTimeInterval)timer;
 @end
