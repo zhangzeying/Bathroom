@@ -56,7 +56,7 @@
     self.window.rootViewController = loginVC;
     [self.window makeKeyAndVisible];
     
-    [Animate startAnimation:3.f];
+    [Animate startAnimation:2.f];
 }
 
 - (void)initApp {
