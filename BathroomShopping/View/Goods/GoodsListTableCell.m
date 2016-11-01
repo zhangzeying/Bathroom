@@ -46,9 +46,20 @@ static NSString *ID = @"goodsListTableCell";
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, model.picture];
     [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
     
-    self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.nowPrice];
+    
     self.numberLbl.text = [NSString stringWithFormat:@"×%ld",(long)model.buyCount];
-    self.specLbl.text = [NSString stringWithFormat:@"%@%@",model.buySpecInfo.specColor,model.buySpecInfo.specSize];
+    
+    
+    if (model.isPackage) {
+        
+        self.specLbl.text = [NSString stringWithFormat:@"规格:%@",model.specDesc];
+        self.priceLbl.text = [NSString stringWithFormat:@"¥%.2f",model.packagePice];
+        
+    }else {
+        
+        self.specLbl.text = [NSString stringWithFormat:@"%@%@",model.buySpecInfo.specColor,model.buySpecInfo.specSize];
+        self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.nowPrice];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

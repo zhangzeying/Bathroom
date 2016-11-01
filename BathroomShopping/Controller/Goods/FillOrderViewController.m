@@ -282,18 +282,34 @@
         UILabel *specLbl = [[UILabel alloc]init];
         specLbl.x = CGRectGetMaxX(numberLbl.frame) + 15;
         specLbl.y = numberLbl.y;
-        specLbl.text = [NSString stringWithFormat:@"规格:%@%@",detailModel.buySpecInfo.specColor,detailModel.buySpecInfo.specSize];
+        
+        
         specLbl.font = [UIFont systemFontOfSize:10];
         specLbl.textColor = [UIColor darkGrayColor];
-        [specLbl sizeToFit];
-        [middleView addSubview:specLbl];
+        
         
         UILabel *priceLbl = [[UILabel alloc]init];
         priceLbl.x = nameLbl.x;
         priceLbl.y = CGRectGetMaxY(numberLbl.frame) + 15;
-        priceLbl.text = [NSString stringWithFormat:@"¥%.2f",detailModel.nowPrice];
+        
         priceLbl.font = [UIFont systemFontOfSize:12];
         priceLbl.textColor = [UIColor redColor];
+       
+        
+        if (detailModel.isPackage) {
+            
+            specLbl.text = [NSString stringWithFormat:@"规格:%@",detailModel.specDesc];
+            priceLbl.text = [NSString stringWithFormat:@"¥%.2f",detailModel.packagePice];
+            
+        }else {
+            
+            specLbl.text = [NSString stringWithFormat:@"规格:%@%@",detailModel.buySpecInfo.specColor,detailModel.buySpecInfo.specSize];
+            priceLbl.text = [NSString stringWithFormat:@"¥%.2f",detailModel.nowPrice];
+        }
+        
+        [specLbl sizeToFit];
+        [middleView addSubview:specLbl];
+        
         [priceLbl sizeToFit];
         [middleView addSubview:priceLbl];
         

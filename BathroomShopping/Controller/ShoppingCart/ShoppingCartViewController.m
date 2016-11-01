@@ -196,6 +196,14 @@
                     }
                 }
                 
+                for (ShoppingCartDetailModel *detailModel in weakSelf.model.pgCartList) {
+                    
+                    if (detailModel.isChecked) {
+                        
+                        [selectArr addObject:detailModel];
+                    }
+                }
+                
                 if (selectArr.count == 0) {
                     
                     [SVProgressHUD showErrorWithStatus:@"您还没有选择商品哦！" maskType:SVProgressHUDMaskTypeBlack];
