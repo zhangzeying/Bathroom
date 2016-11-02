@@ -161,8 +161,15 @@
     self.goodsImg.frame = CGRectMake(15, 0, 80, 80);
     if (self.goodsType == SingleGood) {
         
-        GoodsSpecModel *model = self.specModelArr[self.currentIndex];
-        self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.specPrice];
+        if (self.specModelArr.count == 0) {
+            
+            self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",self.price];
+            
+        }else {
+        
+            GoodsSpecModel *model = self.specModelArr[self.currentIndex];
+            self.priceLbl.text = [NSString stringWithFormat:@"￥%.2f",model.specPrice];
+        }
         
     }else {
     
@@ -174,8 +181,11 @@
     self.line.frame = CGRectMake(0, CGRectGetMaxY(self.goodsImg.frame) + 15 - 20, ScreenW, 0.5);
     CGFloat scrollY = CGRectGetMaxY(self.line.frame) + 15;
     self.scroll.frame = CGRectMake(0, scrollY, ScreenW, self.height - scrollY);
-    [self.titleLbl sizeToFit];
-    self.titleLbl.frame = CGRectMake(10, 0, self.titleLbl.width, self.titleLbl.height);
+    if (self.specModelArr.count > 0) {
+        
+        [self.titleLbl sizeToFit];
+        self.titleLbl.frame = CGRectMake(10, 0, self.titleLbl.width, self.titleLbl.height);
+    }
     NSInteger row = 0; //记录行数
     for (int i = 1; i < self.specBgView.subviews.count; i++) {
         
@@ -226,7 +236,7 @@
     
     [self.countLbl sizeToFit];
     
-    self.countLbl.frame = CGRectMake(self.titleLbl.x, CGRectGetMaxY(self.specBgView.frame) + 25, self.countLbl.width, self.countLbl.height);
+    self.countLbl.frame = CGRectMake(10, CGRectGetMaxY(self.specBgView.frame) + 25, self.countLbl.width, self.countLbl.height);
     
     self.increaseBtn.frame = CGRectMake(ScreenW - 10 - 30, self.countLbl.y, 30, 30);
     

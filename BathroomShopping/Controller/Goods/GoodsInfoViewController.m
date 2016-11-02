@@ -103,7 +103,12 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             
             _goodsSpecView.goodsType = SingleGood;
             _goodsSpecView.imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, self.goodsDetailModel.picture];
+            if (self.goodsDetailModel.specList == 0) {
+                
+                _goodsSpecView.price = [self.goodsDetailModel.price doubleValue];
+            }
             _goodsSpecView.specModelArr = self.goodsDetailModel.specList;
+            
             
         }else {
         
