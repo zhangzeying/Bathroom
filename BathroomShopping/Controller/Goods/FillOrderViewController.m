@@ -568,18 +568,40 @@
 - (void)submitClick {
 
     NSMutableString *str = [[NSMutableString alloc] initWithCapacity:10];
+    NSMutableString *packageIdstr = [[NSMutableString alloc] initWithCapacity:10];
     for (int i = 0; i < self.goodsArr.count; i++) {
         
         ShoppingCartDetailModel *detailMode = self.goodsArr[i];
-        if (i == 0) {
+        if (!detailMode.isPackage) {
             
-            [str appendString:detailMode.id];
-            
-        }else {
-        
-            [str appendString:[NSString stringWithFormat:@",%@",detailMode.id]];
+            if (i == 0) {
+                
+                [str appendString:detailMode.id];
+                
+            }else {
+                
+                [str appendString:[NSString stringWithFormat:@",%@",detailMode.id]];
+            }
         }
+    }
+    
+    NSInteger index = 1;
+    for (int i = 0; i < self.goodsArr.count; i++) {
         
+        ShoppingCartDetailModel *detailMode = self.goodsArr[i];
+        if (detailMode.packageId != nil && ![detailMode.packageId isEqualToString:@""] && detailMode.isPackage) {
+            
+            if (index == 1) {
+                
+                [packageIdstr appendString:detailMode.packageId];
+                
+            }else {
+                
+                [packageIdstr appendString:[NSString stringWithFormat:@",%@",detailMode.packageId]];
+            }
+            
+            index++;
+        }
     }
 
     ReceiverAddressModel *addressModel = self.addressModelArr[0];
@@ -591,10 +613,10 @@
         
         NSDictionary *params = @{@"expressCode":deliverymodel.code,
                                  @"otherRequirement":self.remarkTxt.text?:@"",
-                                 @"productIds":[str copy],
+                                 @"productIds":[str copy]?:@"",
                                  @"selectAddressID":addressModel.id,
                                  @"token":[[CommUtils sharedInstance] fetchToken],
-                                 @"packageIdArr":@""};
+                                 @"packageIdArr":[packageIdstr copy]?:@""};
         
         calculateVC.params = params;
     }

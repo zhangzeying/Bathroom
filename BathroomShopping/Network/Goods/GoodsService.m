@@ -130,6 +130,13 @@
                              };
                 }];
                 
+                [ShoppingCartDetailModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                    return @{
+                             @"packageId" : @"id",
+                             @"productIds" : @"prodIds"
+                             };
+                }];
+                
                 ShoppingCartModel *model = [ShoppingCartModel mj_objectWithKeyValues:dictData[@"result"]];
                 
                 model.pgCartList = [ShoppingCartDetailModel mj_objectArrayWithKeyValuesArray:dictData[@"pgCartList"]];
