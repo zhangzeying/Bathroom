@@ -21,7 +21,7 @@
  */
 #ifdef BSDEBUG
 
-#define baseurl @"http://123.56.186.181:8080/jeeshop"
+#define baseurl @"http://139.224.227.184:8080/jeeshop"
 //获取轮播图
 #define kAPIPageScrollList @"/app/api/indexImg/query"
 //获取首页滚动新闻
