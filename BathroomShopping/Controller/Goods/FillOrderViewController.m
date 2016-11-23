@@ -7,9 +7,8 @@
 //
 
 #import "FillOrderViewController.h"
-#import "GoodsService.h"
+#import "OrderService.h"
 #import "DeliveryModel.h"
-#import "MineService.h"
 #import "ReceiverAddressModel.h"
 #import "CalculateViewController.h"
 #import "ShoppingCartDetailModel.h"
@@ -17,11 +16,12 @@
 #import "GoodsListViewController.h"
 #import "ErrorView.h"
 #import "AddressListViewController.h"
+#import "ConfirmOrderModel.h"
+#import "ProPackageModel.h"
 @interface FillOrderViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
 /** 配送方式网络请求对象 */
-@property(nonatomic,strong)GoodsService *goodsService;
-/** 我的地址网络请求对象 */
-@property(nonatomic,strong)MineService *mineService;
+@property(nonatomic,strong)OrderService *service;
+
 /** 配送方式模型数组 */
 @property(nonatomic,strong)NSMutableArray *deliveryModelArr;
 /** 我的地址模型数组 */
@@ -64,25 +64,14 @@
     return _group;
 }
 
-- (GoodsService *)goodsService {
+- (OrderService *)service {
     
-    if (_goodsService == nil) {
+    if (_service == nil) {
         
-        _goodsService = [[GoodsService alloc]init];
+        _service = [[OrderService alloc]init];
     }
     
-    return _goodsService;
-}
-
-
-- (MineService *)mineService {
-    
-    if (_mineService == nil) {
-        
-        _mineService = [[MineService alloc]init];
-    }
-    
-    return _mineService;
+    return _service;
 }
 
 - (NSMutableArray *)deliveryModelArr {
@@ -530,79 +519,39 @@
 - (void)onLoad {
 
     __weak typeof (self)weakSelf = self;
-    
-    dispatch_group_enter(self.group);
-    [self.goodsService getDelivery:^(NSMutableArray *deliveryModelArr) {
-        dispatch_group_leave(weakSelf.group);
-        weakSelf.deliveryModelArr = deliveryModelArr;
+    [self.service confirmOrder:self.params completion:^(ConfirmOrderModel *model) {
         
+        weakSelf.deliveryModelArr = model.expressList;
+        weakSelf.addressModelArr = model.addressList;
+        self.goodsArr = [NSMutableArray arrayWithArray:model.productList];
+        for (ProPackageModel *packageModel in model.proPackageList) {
+            
+            ShoppingCartDetailModel *detailModel = [[ShoppingCartDetailModel alloc]init];
+            detailModel.name = packageModel.name;
+            detailModel.packagePice = packageModel.packagePice;
+            detailModel.specDesc = packageModel.specDesc;
+            detailModel.buyCount = packageModel.buyCount;
+            detailModel.picture = packageModel.picture;
+            detailModel.isPackage = YES;
+            [self.goodsArr addObject:detailModel];
+        }
+        if (weakSelf.addressModelArr.count == 0) {
+            
+            [weakSelf initErrorView];
+            
+        }else {
+            
+            [weakSelf initView];
+        }
     }];
     
-    dispatch_group_enter(self.group);
-    [self.mineService getAddressList:^(NSMutableArray *addressModelArr) {
-        
-        dispatch_group_leave(weakSelf.group);
-        weakSelf.addressModelArr = addressModelArr;
-    }];
     
-    //当所有请求都执行完
-    dispatch_group_notify(self.group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        dispatch_sync(dispatch_get_main_queue(), ^(){
-            
-            if (weakSelf.addressModelArr.count == 0) {
-                
-                [weakSelf initErrorView];
-                
-            }else {
-                
-                [weakSelf initView];
-            }
-            
-            
-        });
-        
-    });
+    
+    
+    
 }
 
 - (void)submitClick {
-
-    NSMutableString *str = [[NSMutableString alloc] initWithCapacity:10];
-    NSMutableString *packageIdstr = [[NSMutableString alloc] initWithCapacity:10];
-    for (int i = 0; i < self.goodsArr.count; i++) {
-        
-        ShoppingCartDetailModel *detailMode = self.goodsArr[i];
-        if (!detailMode.isPackage) {
-            
-            if (i == 0) {
-                
-                [str appendString:detailMode.id];
-                
-            }else {
-                
-                [str appendString:[NSString stringWithFormat:@",%@",detailMode.id]];
-            }
-        }
-    }
-    
-    NSInteger index = 1;
-    for (int i = 0; i < self.goodsArr.count; i++) {
-        
-        ShoppingCartDetailModel *detailMode = self.goodsArr[i];
-        if (detailMode.packageId != nil && ![detailMode.packageId isEqualToString:@""] && detailMode.isPackage) {
-            
-            if (index == 1) {
-                
-                [packageIdstr appendString:detailMode.packageId];
-                
-            }else {
-                
-                [packageIdstr appendString:[NSString stringWithFormat:@",%@",detailMode.packageId]];
-            }
-            
-            index++;
-        }
-    }
 
     ReceiverAddressModel *addressModel = self.addressModelArr[0];
     addressModel.isSelected = YES;
@@ -611,17 +560,25 @@
     calculateVC.isOneMoneyLottery = self.pageType == OneSale;
     if (self.pageType != OneSale) {
         
-        NSDictionary *params = @{@"expressCode":deliverymodel.code,
-                                 @"otherRequirement":self.remarkTxt.text?:@"",
-                                 @"productIds":[str copy]?:@"",
-                                 @"selectAddressID":addressModel.id,
-                                 @"token":[[CommUtils sharedInstance] fetchToken],
-                                 @"packageIdArr":[packageIdstr copy]?:@""};
+        NSDictionary *payParams = @{@"token":[[CommUtils sharedInstance] fetchToken],
+                                    @"productIds":self.params[@"productIds"],
+                                    @"spescIds":self.params[@"spescIds"],
+                                    @"singleCounts":self.params[@"singleCounts"],
+                                    @"packageIds":self.params[@"packageIds"],
+                                    @"packageCounts":self.params[@"packageCounts"],
+                                    @"expressCode":deliverymodel.id,
+                                    @"addressId":addressModel.id,
+                                    @"advise":self.remarkTxt.text?:@""};
         
-        calculateVC.params = params;
+        calculateVC.params = payParams;
     }
     
     [self.navigationController pushViewController:calculateVC animated:YES];
+}
+
+- (void)setParams:(NSDictionary *)params {
+
+    _params = params;
 }
 
 - (void)setGoodsArr:(NSMutableArray *)goodsArr {

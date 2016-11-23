@@ -76,20 +76,34 @@
     __weak typeof (self)weakSelf = self;
     if (indexPath.row == 0) {//支付宝支付
         
-        if (self.isOneMoneyLottery) {//如果是一元抢购抽奖
+        if (self.orderId == nil) {
             
-            NSDictionary *params = @{@"amount":@"1",
-                                     @"payType":@"alipay",
-                                     @"token":[[CommUtils sharedInstance] fetchToken]
-                                     };
-            [self.service oneMoneyOrder:params completion:^(NSDictionary *dict) {
+            if (self.isOneMoneyLottery) {//如果是一元抢购抽奖
                 
-                [weakSelf pay:dict payType:@"alipay"];
-            }];
+                NSDictionary *params = @{@"amount":@"1",
+                                         @"payType":@"alipay",
+                                         @"token":[[CommUtils sharedInstance] fetchToken]
+                                         };
+                [self.service oneMoneyOrder:params completion:^(NSDictionary *dict) {
+                    
+                    [weakSelf pay:dict payType:@"alipay"];
+                }];
+                
+            }else {
+                
+                [self.service order:self.params url:kAPIAlipay completion:^(NSDictionary *dict) {
+                    
+                    [weakSelf pay:dict payType:@"alipay"];
+                }];
+            }
             
         }else {
-            
-            [self.service order:self.params url:kAPIAlipay completion:^(NSDictionary *dict) {
+        
+            NSDictionary *params = @{@"orderId":self.orderId,
+                                     @"payType":@"zfb",
+                                     @"token":[[CommUtils sharedInstance] fetchToken]
+                                     };
+            [self.service payAgain:params completion:^(NSDictionary *dict) {
                 
                 [weakSelf pay:dict payType:@"alipay"];
             }];
@@ -98,25 +112,38 @@
         
     }else {//微信支付
         
+        if (self.orderId == nil) {
         
-        if (self.isOneMoneyLottery) {//如果是一元抢购抽奖
-            
-            NSDictionary *params = @{@"amount":@"1",
-                                     @"payType":@"weixin",
+            if (self.isOneMoneyLottery) {//如果是一元抢购抽奖
+                
+                NSDictionary *params = @{@"amount":@"1",
+                                         @"payType":@"weixin",
+                                         @"token":[[CommUtils sharedInstance] fetchToken]
+                                         };
+                [self.service oneMoneyOrder:params completion:^(NSDictionary *dict) {
+                    
+                    [weakSelf pay:dict payType:@"weixin"];
+                }];
+                
+            }else {
+                
+                [self.service order:self.params url:kAPIWXPay completion:^(NSDictionary *dict) {
+                    
+                    [weakSelf pay:dict payType:@"weixin"];
+                }];
+            }
+        }else {
+        
+            NSDictionary *params = @{@"orderId":self.orderId,
+                                     @"payType":@"wx",
                                      @"token":[[CommUtils sharedInstance] fetchToken]
                                      };
-            [self.service oneMoneyOrder:params completion:^(NSDictionary *dict) {
-                
-                [weakSelf pay:dict payType:@"weixin"];
-            }];
-            
-        }else {
-            
-            [self.service order:self.params url:kAPIWXPay completion:^(NSDictionary *dict) {
+            [self.service payAgain:params completion:^(NSDictionary *dict) {
                 
                 [weakSelf pay:dict payType:@"weixin"];
             }];
         }
+        
     }
 }
 

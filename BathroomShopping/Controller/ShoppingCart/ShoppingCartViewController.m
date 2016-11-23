@@ -114,7 +114,6 @@
         if (weakSelf.editBtn.selected) {
             
             NSMutableArray *dataArr = [weakSelf.model.productList mutableCopy];
-            
             BOOL flag = YES;
             NSMutableString *productIDStr = [[NSMutableString alloc]initWithCapacity:10];
             NSMutableString *buySpecIDStr = [[NSMutableString alloc]initWithCapacity:10];
@@ -187,10 +186,40 @@
         
             if ([[CommUtils sharedInstance] isLogin]) {
                 
+                NSMutableString *productIDStr = [[NSMutableString alloc]initWithCapacity:10];
+                NSMutableString *buySpecIDStr = [[NSMutableString alloc]initWithCapacity:10];
+                NSMutableString *packageIDStr = [[NSMutableString alloc]initWithCapacity:10];
+                NSMutableString *singleCountStr = [[NSMutableString alloc]initWithCapacity:10];
+                NSMutableString *packageCountStr = [[NSMutableString alloc]initWithCapacity:10];
                 NSMutableArray *selectArr = @[].mutableCopy;
                 for (ShoppingCartDetailModel *detailModel in weakSelf.model.productList) {
                     
                     if (detailModel.isChecked) {
+                        
+                        if (productIDStr.length == 0) {
+                            
+                            [productIDStr appendString:detailModel.id];
+                            
+                        }else {
+                            
+                            [productIDStr appendString:[NSString stringWithFormat:@",%@",detailModel.id]];
+                        }
+                        if (buySpecIDStr.length == 0) {
+                            
+                            [buySpecIDStr appendString:detailModel.buySpecInfo.id];
+                            
+                        }else {
+                            
+                            [buySpecIDStr appendString:[NSString stringWithFormat:@",%@",detailModel.buySpecInfo.id]];
+                        }
+                        if (singleCountStr.length == 0) {
+                            
+                            [singleCountStr appendString:[NSString stringWithFormat:@"%ld",(long)detailModel.buyCount]];
+                            
+                        }else {
+                            
+                            [singleCountStr appendString:[NSString stringWithFormat:@",%ld",(long)detailModel.buyCount]];
+                        }
                         
                         [selectArr addObject:detailModel];
                     }
@@ -200,6 +229,21 @@
                     
                     if (detailModel.isChecked) {
                         
+                        if (packageIDStr.length == 0) {
+                            
+                            [packageIDStr appendString:detailModel.packageId];
+                        }else {
+                            
+                            [packageIDStr appendString:[NSString stringWithFormat:@",%@",detailModel.packageId]];
+                        }
+                        if (packageCountStr.length == 0) {
+                            
+                            [packageCountStr appendString:[NSString stringWithFormat:@"%ld",(long)detailModel.buyCount]];
+                            
+                        }else {
+                            
+                            [packageCountStr appendString:[NSString stringWithFormat:@",%ld",(long)detailModel.buyCount]];
+                        }
                         [selectArr addObject:detailModel];
                     }
                 }
@@ -210,8 +254,15 @@
                     
                 }else {
                     
+                    NSDictionary *params = @{@"token":[[CommUtils sharedInstance] fetchToken],
+                                             @"packageIds":packageIDStr,
+                                             @"productIds":productIDStr,
+                                             @"spescIds":buySpecIDStr,
+                                             @"singleCounts":singleCountStr,
+                                             @"packageCounts":packageCountStr};
+                    
                     FillOrderViewController *fillOrderVC = [[FillOrderViewController alloc]init];
-                    fillOrderVC.goodsArr = selectArr;
+                    fillOrderVC.params = params;
                     fillOrderVC.totalPrice = self.total;
                     fillOrderVC.pageType = selectArr.count > 1 ? MoreGoods : OneGoods;
                     [weakSelf.navigationController pushViewController:fillOrderVC animated:YES];

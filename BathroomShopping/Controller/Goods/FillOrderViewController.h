@@ -21,4 +21,6 @@ typedef NS_ENUM(NSInteger, PageType){
 @property(nonatomic,strong)NSMutableArray *goodsArr;
 /** <##> */
 @property(assign,nonatomic)double totalPrice;
+/** <##> */
+@property(nonatomic,strong)NSDictionary *params;
 @end

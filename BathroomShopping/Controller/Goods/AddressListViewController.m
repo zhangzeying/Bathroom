@@ -8,16 +8,37 @@
 
 #import "AddressListViewController.h"
 #import "AddressListTableCell.h"
+#import "MineService.h"
 @interface AddressListViewController ()<UITableViewDelegate, UITableViewDataSource>
 /** <##> */
 @property (nonatomic, weak)UITableView *table;
+/** 我的地址网络请求对象 */
+@property(nonatomic,strong)MineService *mineService;
 @end
 
 @implementation AddressListViewController
 
+- (MineService *)mineService {
+    
+    if (_mineService == nil) {
+        
+        _mineService = [[MineService alloc]init];
+    }
+    
+    return _mineService;
+}
+
+
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    __weak typeof (self)wSelf = self;
+    [self.mineService getAddressList:^(NSMutableArray *addressModelArr) {
+    
+        wSelf.addressArr = addressModelArr;
+        [wSelf.table reloadData];
+    }];
     self.navigationItem.title = @"收货地址";
     [self initView];
 }
@@ -49,12 +70,6 @@
 
     [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadAddressInfo" object:self.addressArr[indexPath.row]];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)setAddressArr:(NSMutableArray *)addressArr {
-
-    _addressArr = addressArr;
-    [self.table reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -25,4 +25,13 @@
  * 取消订单
  */
 - (void)cancelOrder:(NSString *)orderId completion:(void(^)())completion;
+/**
+ * 确认订单
+ */
+- (void)confirmOrder:(NSDictionary *)params completion:(void(^)(id))completion;
+/**
+ * 订单再次支付
+ */
+- (void)payAgain:(NSDictionary *)params completion:(void(^)(id))completion;
+
 @end

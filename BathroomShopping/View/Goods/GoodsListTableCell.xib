@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -54,7 +54,6 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="iCh-pl-bOc" firstAttribute="trailing" secondItem="OKd-Xr-phx" secondAttribute="trailing" id="0zy-rP-rL9"/>
                     <constraint firstItem="iCh-pl-bOc" firstAttribute="leading" secondItem="OKd-Xr-phx" secondAttribute="leading" id="12U-zT-99f"/>
                     <constraint firstItem="OKd-Xr-phx" firstAttribute="top" secondItem="1sL-fp-5I0" secondAttribute="bottom" id="2yK-20-Nm9"/>
                     <constraint firstAttribute="trailingMargin" secondItem="1sL-fp-5I0" secondAttribute="trailing" constant="60" id="4Rt-IA-eG9"/>
@@ -71,11 +70,12 @@
                     <constraint firstItem="AsZ-mH-JT6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="cy3-MN-nBq"/>
                     <constraint firstItem="qNp-5d-YJp" firstAttribute="top" secondItem="iCh-pl-bOc" secondAttribute="top" id="ea0-Kx-mfg"/>
                     <constraint firstItem="wxp-oU-VM3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gxu-Rc-HF1"/>
-                    <constraint firstItem="OKd-Xr-phx" firstAttribute="trailing" secondItem="1sL-fp-5I0" secondAttribute="trailing" id="hPJ-GZ-3fP"/>
+                    <constraint firstItem="OKd-Xr-phx" firstAttribute="trailing" secondItem="qNp-5d-YJp" secondAttribute="trailing" id="ka2-5M-PSt"/>
                     <constraint firstItem="qNp-5d-YJp" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="10" id="lPE-AK-6BN"/>
                     <constraint firstAttribute="trailingMargin" secondItem="AsZ-mH-JT6" secondAttribute="trailing" constant="-8" id="pWI-mW-98U"/>
                     <constraint firstItem="wxp-oU-VM3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="rBM-aJ-1p3"/>
                     <constraint firstItem="iCh-pl-bOc" firstAttribute="top" secondItem="OKd-Xr-phx" secondAttribute="bottom" constant="15" id="szu-SE-vNi"/>
+                    <constraint firstItem="iCh-pl-bOc" firstAttribute="trailing" secondItem="1sL-fp-5I0" secondAttribute="trailing" id="vaC-2Q-1hz"/>
                     <constraint firstAttribute="bottomMargin" secondItem="AsZ-mH-JT6" secondAttribute="bottom" constant="-8" id="xjh-c4-oFi"/>
                 </constraints>
                 <variation key="default">

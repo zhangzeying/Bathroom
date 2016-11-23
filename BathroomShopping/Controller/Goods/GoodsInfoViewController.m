@@ -88,6 +88,8 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 @property (nonatomic, weak)ScrollTitleView *titleView;
 /** <##> */
 @property (nonatomic, weak)UIImageView *detailImage;
+/** <##> */
+@property (nonatomic, weak)UIButton *buyBtn;
 @end
 
 @implementation GoodsInfoViewController
@@ -499,17 +501,17 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [self.view addSubview:bottomView];
     self.bottomView = bottomView;
     
-    CustomButton *shareBtn = [[CustomButton alloc]init];
-    shareBtn.frame = CGRectMake(0, 5, ScreenW / 6, bottomView.height);
-    [shareBtn setImage:[UIImage imageNamed:@"share_icon"] forState:UIControlStateNormal];
-    [shareBtn setTitle:@"分享" forState:UIControlStateNormal];
-    [shareBtn setTitleColor:CustomColor(153, 153, 153) forState:UIControlStateNormal];
-    shareBtn.centerOffset = 10;
-    shareBtn.titleLabel.font = [UIFont systemFontOfSize:9];
-    [bottomView addSubview:shareBtn];
+//    CustomButton *shareBtn = [[CustomButton alloc]init];
+//    shareBtn.frame = CGRectMake(0, 5, ScreenW / 6, bottomView.height);
+//    [shareBtn setImage:[UIImage imageNamed:@"share_icon"] forState:UIControlStateNormal];
+//    [shareBtn setTitle:@"分享" forState:UIControlStateNormal];
+//    [shareBtn setTitleColor:CustomColor(153, 153, 153) forState:UIControlStateNormal];
+//    shareBtn.centerOffset = 10;
+//    shareBtn.titleLabel.font = [UIFont systemFontOfSize:9];
+//    [bottomView addSubview:shareBtn];
     
     CustomButton *appointBtn = [[CustomButton alloc]init];
-    appointBtn.frame = CGRectMake(CGRectGetMaxX(shareBtn.frame), 5, ScreenW / 6, bottomView.height);
+    appointBtn.frame = CGRectMake(0, 5, ScreenW / 6, bottomView.height);
     [appointBtn setImage:[UIImage imageNamed:@"edit_icon"] forState:UIControlStateNormal];
     [appointBtn setTitle:@"预约" forState:UIControlStateNormal];
     [appointBtn setTitleColor:CustomColor(153, 153, 153) forState:UIControlStateNormal];
@@ -534,7 +536,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     
     appointBtn.hidden = self.packgeModel != nil;
     likeBtn.hidden = self.packgeModel != nil;
-    shareBtn.hidden = self.packgeModel != nil;
+//    shareBtn.hidden = self.packgeModel != nil;
     
     UIButton *cartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cartBtn setImage:[UIImage imageNamed:@"cart"] forState:UIControlStateNormal];
@@ -543,8 +545,17 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [bottomView addSubview:cartBtn];
     self.cartBtn = cartBtn;
     
+    UIButton *buyBtn = [[UIButton alloc]init];
+    buyBtn.frame = CGRectMake(ScreenW * 2 / 3, 0, ScreenW / 3, bottomView.height);
+    [buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+    buyBtn.backgroundColor = NavgationBarColor;
+    buyBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [buyBtn addTarget:self action:@selector(buyClick:) forControlEvents:UIControlEventTouchUpInside];
+    [bottomView addSubview:buyBtn];
+    self.buyBtn = buyBtn;
+    
     UIButton *addCartBtn = [[UIButton alloc]init];
-    addCartBtn.frame = CGRectMake(ScreenW * 2 / 3, 0, ScreenW / 3, bottomView.height);
+    addCartBtn.frame = CGRectMake(ScreenW / 3, 0, ScreenW / 3, bottomView.height);
     [addCartBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
     addCartBtn.backgroundColor = CustomColor(252, 21, 32);
     addCartBtn.titleLabel.font = [UIFont systemFontOfSize:16];

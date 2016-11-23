@@ -13,4 +13,6 @@
 @property(nonatomic,strong)NSDictionary *params;
 /** 是否是一元抢购抽奖下订单 */
 @property(assign,nonatomic)BOOL isOneMoneyLottery;
+/** 支付类型 */
+@property(copy,nonatomic)NSString *orderId;
 @end

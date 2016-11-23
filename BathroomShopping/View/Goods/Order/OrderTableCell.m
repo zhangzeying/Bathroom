@@ -10,6 +10,7 @@
 #import "OrderModel.h"
 #import "OrderDetailModel.h"
 #import "OrderDetailViewController.h"
+#import "CalculateViewController.h"
 static NSString *ID = @"orderTableCell";
 @interface OrderTableCell()
 @property (weak, nonatomic) IBOutlet UILabel *orderStateLbl;
@@ -154,7 +155,9 @@ static NSString *ID = @"orderTableCell";
     
     if ([sender.titleLabel.text isEqualToString:@"去支付"]) {
         
-        
+        CalculateViewController *calculateVC = [[CalculateViewController alloc]init];
+        calculateVC.orderId = self.model.id;
+        [[[CommUtils sharedInstance] topViewController].navigationController pushViewController:calculateVC animated:YES];
     }
 }
 @end

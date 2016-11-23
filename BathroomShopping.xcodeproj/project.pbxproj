@@ -123,6 +123,8 @@
 		5A5F510A1D7580B200508117 /* DeliveryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5F51091D7580B200508117 /* DeliveryModel.m */; };
 		5A63777B1D5473B6000DFB99 /* MallService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A63777A1D5473B6000DFB99 /* MallService.m */; };
 		5A6B8A081D80F2C600E47714 /* TriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6B8A071D80F2C600E47714 /* TriangleView.m */; };
+		5A6FA2D91DDDE31D00A5DBFC /* ConfirmOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FA2D81DDDE31D00A5DBFC /* ConfirmOrderModel.m */; };
+		5A6FA2DC1DDDE5C200A5DBFC /* ProPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FA2DB1DDDE5C200A5DBFC /* ProPackageModel.m */; };
 		5A6FB4D91D81519B0067B500 /* AppointGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FB4D71D81519B0067B500 /* AppointGoodsViewController.m */; };
 		5A6FB4DA1D81519B0067B500 /* AppointGoodsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A6FB4D81D81519B0067B500 /* AppointGoodsViewController.xib */; };
 		5A7015291D927F76005ECAE2 /* AppointDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7015281D927F76005ECAE2 /* AppointDetailModel.m */; };
@@ -527,6 +529,10 @@
 		5A63777A1D5473B6000DFB99 /* MallService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallService.m; sourceTree = "<group>"; };
 		5A6B8A061D80F2C600E47714 /* TriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangleView.h; sourceTree = "<group>"; };
 		5A6B8A071D80F2C600E47714 /* TriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriangleView.m; sourceTree = "<group>"; };
+		5A6FA2D71DDDE31D00A5DBFC /* ConfirmOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderModel.h; sourceTree = "<group>"; };
+		5A6FA2D81DDDE31D00A5DBFC /* ConfirmOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderModel.m; sourceTree = "<group>"; };
+		5A6FA2DA1DDDE5C200A5DBFC /* ProPackageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProPackageModel.h; sourceTree = "<group>"; };
+		5A6FA2DB1DDDE5C200A5DBFC /* ProPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProPackageModel.m; sourceTree = "<group>"; };
 		5A6FB4D61D81519B0067B500 /* AppointGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppointGoodsViewController.h; sourceTree = "<group>"; };
 		5A6FB4D71D81519B0067B500 /* AppointGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppointGoodsViewController.m; sourceTree = "<group>"; };
 		5A6FB4D81D81519B0067B500 /* AppointGoodsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppointGoodsViewController.xib; sourceTree = "<group>"; };
@@ -1362,6 +1368,8 @@
 				5ADBAFF01D93672B002225E5 /* OrderModel.m */,
 				5ADBAFF21D936CA4002225E5 /* OrderDetailModel.h */,
 				5ADBAFF31D936CA4002225E5 /* OrderDetailModel.m */,
+				5A6FA2D71DDDE31D00A5DBFC /* ConfirmOrderModel.h */,
+				5A6FA2D81DDDE31D00A5DBFC /* ConfirmOrderModel.m */,
 			);
 			path = Goods;
 			sourceTree = "<group>";
@@ -1408,6 +1416,8 @@
 				5AF7AC471DABCD4C0011E3FD /* PackageDetailModel.m */,
 				5AF7AC491DABCD8C0011E3FD /* PackageSpecModel.h */,
 				5AF7AC4A1DABCD8C0011E3FD /* PackageSpecModel.m */,
+				5A6FA2DA1DDDE5C200A5DBFC /* ProPackageModel.h */,
+				5A6FA2DB1DDDE5C200A5DBFC /* ProPackageModel.m */,
 			);
 			path = Mall;
 			sourceTree = "<group>";
@@ -2001,11 +2011,13 @@
 				5A8A09C11D8FB430009338FA /* LotteryTableCell.m in Sources */,
 				5A3FC06B1D41BCEF001E89B6 /* ActivityGoodsDetailModel.m in Sources */,
 				5A00F52B1D5D58FD007141E1 /* UserInfoModel.m in Sources */,
+				5A6FA2DC1DDDE5C200A5DBFC /* ProPackageModel.m in Sources */,
 				5A521C2E1D5C088900950C03 /* ShoppingCartModel.m in Sources */,
 				5A1EFB951D8295B5006E81AD /* NSString+Extension.m in Sources */,
 				5A76B3E31D73E3CF0065FDB7 /* FillOrderViewController.m in Sources */,
 				5A3B85F21D26519800E9B3E4 /* BaseNavigationController.m in Sources */,
 				5A7E34D71D6D80DD006686A8 /* AddressView.m in Sources */,
+				5A6FA2D91DDDE31D00A5DBFC /* ConfirmOrderModel.m in Sources */,
 				5A28080C1D34858900DCFC30 /* ShoppingSaleDetailViewController.m in Sources */,
 				5A3246271D6834620043ACBD /* AddressManageTableCell.m in Sources */,
 				5AF9D16F1D25FA42009C2759 /* AppDelegate.m in Sources */,

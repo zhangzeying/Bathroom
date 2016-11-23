@@ -89,7 +89,7 @@
 //取消预约
 #define kAPICancelAppoint @"/reserve/updateRserve"
 //上传头像
-#define kAPIUploadAvator @"http://123.56.186.181:8080/jeeshop/app/api/account/headPortrait"
+#define kAPIUploadAvator @"http://139.224.227.184:8080/jeeshop/app/api/account/headPortrait"
 //修改个人资料
 #define kAPIUpdateUserInfo @"/app/api/account/updateBaseInfo"
 //修改密码
@@ -108,10 +108,11 @@
 #define kAPIOrder @"/app/api/order/pay"
 //获取配送方式
 #define kAPIDelivery @"/app/api/cart/express"
-//生成微信订单
-#define kAPIWXPay @"/app/api/order/wxprepay"
 //生成支付宝订单
-#define kAPIAlipay @"/app/api/order/pay"
+#define kAPIAlipay @"/app/api/onceOrder/zfbPrePay"
+//生成微信订单
+#define kAPIWXPay @"/app/api/onceOrder/wxPrePay"
+
 //获取验证码
 #define kAPIGetVerifyCode @"/app/api/sms/send"
 //获取订单（type：all:个人全部订单 nopay:未付款 payed:已付款（未发货） send:已发货（未签收）sign:已签收（已完成））
@@ -132,6 +133,10 @@
 #define kAPIGetAboutContent @"/app/api/account/aboutOurs"
 //取消订单
 #define kAPICancelOrder @"/app/api/order/cancle"
+//确认订单接口
+#define kAPIConfirmOrder @"/app/api/onceOrder/confirmOrder"
+//再次支付
+#define kAPIPayAgain @"/app/api/onceOrder/prePayAgain"
 /**
  * 处于发布阶段
  */
