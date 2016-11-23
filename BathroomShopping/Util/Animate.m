@@ -103,7 +103,7 @@
     
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(startPoint.x, startPoint.y)];
-    [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW * 2 / 3 + 20,ScreenH - 180)];
+    [path addQuadCurveToPoint:CGPointMake(endPoint.x, endPoint.y) controlPoint:CGPointMake(ScreenW / 2,ScreenH - 180)];
     
     CAKeyframeAnimation *pathAnimation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
     pathAnimation.path = path.CGPath;

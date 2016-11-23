@@ -33,6 +33,7 @@
 #import "PackageDetailModel.h"
 #import "MallPackageModel.h"
 #import "PackageSpecModel.h"
+#import "FillOrderViewController.h"
 typedef NS_ENUM(NSInteger ,PopViewType){
     
     SpecView, //规格view
@@ -511,7 +512,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 //    [bottomView addSubview:shareBtn];
     
     CustomButton *appointBtn = [[CustomButton alloc]init];
-    appointBtn.frame = CGRectMake(0, 5, ScreenW / 6, bottomView.height);
+    appointBtn.frame = CGRectMake(0, 5, ScreenW / 8, bottomView.height);
     [appointBtn setImage:[UIImage imageNamed:@"edit_icon"] forState:UIControlStateNormal];
     [appointBtn setTitle:@"预约" forState:UIControlStateNormal];
     [appointBtn setTitleColor:CustomColor(153, 153, 153) forState:UIControlStateNormal];
@@ -521,7 +522,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [bottomView addSubview:appointBtn];
     
     CustomButton *likeBtn = [[CustomButton alloc]init];
-    likeBtn.frame = CGRectMake(CGRectGetMaxX(appointBtn.frame), 6, ScreenW / 6, bottomView.height);
+    likeBtn.frame = CGRectMake(CGRectGetMaxX(appointBtn.frame), 6, ScreenW / 8, bottomView.height);
     [likeBtn setImage:[UIImage imageNamed:@"like_icon"] forState:UIControlStateSelected];
     [likeBtn setImage:[UIImage imageNamed:@"not_like_icon"] forState:UIControlStateNormal];
     [likeBtn setTitle:@"收藏" forState:UIControlStateNormal];
@@ -540,22 +541,22 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     
     UIButton *cartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cartBtn setImage:[UIImage imageNamed:@"cart"] forState:UIControlStateNormal];
-    cartBtn.frame = CGRectMake(CGRectGetMaxX(likeBtn.frame), 0, ScreenW / 6, bottomView.height);
+    cartBtn.frame = CGRectMake(CGRectGetMaxX(likeBtn.frame), 0, ScreenW / 8, bottomView.height);
     [cartBtn addTarget:self action:@selector(cartClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:cartBtn];
     self.cartBtn = cartBtn;
     
     UIButton *buyBtn = [[UIButton alloc]init];
-    buyBtn.frame = CGRectMake(ScreenW * 2 / 3, 0, ScreenW / 3, bottomView.height);
+    buyBtn.frame = CGRectMake(ScreenW * 2 / 3 + 15, 0, ScreenW / 3 - 15, bottomView.height);
     [buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
     buyBtn.backgroundColor = NavgationBarColor;
     buyBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [buyBtn addTarget:self action:@selector(buyClick:) forControlEvents:UIControlEventTouchUpInside];
+    [buyBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:buyBtn];
     self.buyBtn = buyBtn;
     
     UIButton *addCartBtn = [[UIButton alloc]init];
-    addCartBtn.frame = CGRectMake(ScreenW / 3, 0, ScreenW / 3, bottomView.height);
+    addCartBtn.frame = CGRectMake(ScreenW / 3 + 30, 0, ScreenW / 3 - 15, bottomView.height);
     [addCartBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
     addCartBtn.backgroundColor = CustomColor(252, 21, 32);
     addCartBtn.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -730,6 +731,51 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     UIViewController *vc = [[cls alloc]init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+/**
+ * 立即购买
+ */
+- (void)buyClick {
+
+    NSDictionary *params;
+    double total;
+    if (self.packgeModel == nil) {//单品
+    
+        GoodsSpecModel *model = self.goodsDetailModel.specList[self.goodsSpecView.currentIndex];
+        if (model.specStock < self.goodsSpecView.buyNumber) {
+            
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"当前商品库存不足，是否需要预约商品？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alertView show];
+            return;
+        }
+        
+        params = @{@"productIds":self.goodsId ,
+                   @"singleCounts":@(self.goodsSpecView.buyNumber),
+                   @"spescIds":model.id,
+                   @"token":[[CommUtils sharedInstance] fetchToken]};
+        total = self.goodsSpecView.buyNumber * model.specPrice;
+        
+    }else {//套餐
+    
+        PackageSpecModel *model = self.packageDetailModel.specAllList[self.goodsSpecView.currentIndex];
+        if (model.minStock < self.goodsSpecView.buyNumber) {
+            
+            [SVProgressHUD showErrorWithStatus:@"当前套餐库存不足！" maskType:SVProgressHUDMaskTypeBlack];
+            return;
+        }
+        
+        params = @{@"packageIds":self.packgeModel.id ,
+                   @"packageCounts":@(self.goodsSpecView.buyNumber),
+                   @"token":[[CommUtils sharedInstance] fetchToken]};
+        total = self.goodsSpecView.buyNumber * self.packgeModel.totalPrice;
+    }
+    
+    FillOrderViewController *fillOrderVC = [[FillOrderViewController alloc]init];
+    fillOrderVC.params = params;
+    fillOrderVC.totalPrice = total;
+    fillOrderVC.pageType = OneGoods;
+    [self.navigationController pushViewController:fillOrderVC animated:YES];
 }
 
 /**

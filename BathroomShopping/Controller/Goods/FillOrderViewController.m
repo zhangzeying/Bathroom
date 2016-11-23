@@ -561,11 +561,11 @@
     if (self.pageType != OneSale) {
         
         NSDictionary *payParams = @{@"token":[[CommUtils sharedInstance] fetchToken],
-                                    @"productIds":self.params[@"productIds"],
-                                    @"spescIds":self.params[@"spescIds"],
-                                    @"singleCounts":self.params[@"singleCounts"],
-                                    @"packageIds":self.params[@"packageIds"],
-                                    @"packageCounts":self.params[@"packageCounts"],
+                                    @"productIds":self.params[@"productIds"]?:@"",
+                                    @"spescIds":self.params[@"spescIds"]?:@"",
+                                    @"singleCounts":self.params[@"singleCounts"]?:@"",
+                                    @"packageIds":self.params[@"packageIds"]?:@"",
+                                    @"packageCounts":self.params[@"packageCounts"]?:@"",
                                     @"expressCode":deliverymodel.id,
                                     @"addressId":addressModel.id,
                                     @"advise":self.remarkTxt.text?:@""};
