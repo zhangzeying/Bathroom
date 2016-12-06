@@ -269,12 +269,19 @@ typedef NS_ENUM(NSInteger ,PopViewType){
             
             NSMutableArray *imageArr = @[].mutableCopy;
             NSDictionary *dict = goodsDetailModel.productImageList[0];
+            
+            NSMutableArray *ImgArr = @[].mutableCopy;
+            for (NSMutableArray *arr in imageArr) {
+                
+                [ImgArr addObject:[arr lastObject]];
+            }
+            
             for (int i = 0; i < dict.count; i++) {
                 
                 NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, dict[[NSString stringWithFormat:@"image%zd",i+1]]];
                 [imageArr addObject:imageUrl];
             }
-            
+
             weakSelf.goodsInfoDetailVC.imageUrl = imageArr[0];
             weakSelf.pageScrollView.imageUrlArr = imageArr;
             weakSelf.likeBtn.selected = goodsDetailModel.favorite;
@@ -420,7 +427,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     
     //轮播图
     PageScrollView *pageScrollView = [[PageScrollView alloc]initWithIsStartTimer:NO];
-    pageScrollView.height = 200;
+    pageScrollView.height = ScreenW / 1.8;
     pageScrollView.width = ScreenW;
     tableView.tableHeaderView = pageScrollView;
     self.pageScrollView = pageScrollView;
@@ -549,6 +556,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     UIButton *buyBtn = [[UIButton alloc]init];
     buyBtn.frame = CGRectMake(ScreenW * 2 / 3 + 15, 0, ScreenW / 3 - 15, bottomView.height);
     [buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+    buyBtn.isCheckLogin = YES;
     buyBtn.backgroundColor = NavgationBarColor;
     buyBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [buyBtn addTarget:self action:@selector(buyClick) forControlEvents:UIControlEventTouchUpInside];

@@ -49,34 +49,41 @@
 
 - (void)initTable {
 
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH - 60) style:UITableViewStyleGrouped];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) style:UITableViewStyleGrouped];
     tableView.dataSource = self;
     tableView.delegate = self;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.backgroundColor = CustomColor(240, 242, 245);
     [self.view addSubview:tableView];
     
+    if ([self.model.paystatus isEqualToString:@"n"]) {
+        
+        tableView.height -= 60;
+        OrderDetailFooterView *footer = [OrderDetailFooterView instanceFooterView];
+        footer.frame = CGRectMake(0, CGRectGetMaxY(tableView.frame), ScreenW, 60);
+        [self.view addSubview:footer];
+        __weak typeof (self)wSelf = self;
+        footer.footerViewBlock = ^(NSString *btnType) {
+            
+            if ([btnType isEqualToString:@"pay"]) {//去支付
+                
+                
+            }else {//取消订单
+                
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定取消订单吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                alertView.delegate = wSelf;
+                [alertView show];
+            }
+        };
+        
+    }
+    
     OrderDetailHeaderView *header = [OrderDetailHeaderView instanceHeaderView];
     header.model = self.model;
     header.height = [self.model.remark isEqualToString:@"一元抢购"] ? 50 : 140;
     tableView.tableHeaderView = header;
     
-    OrderDetailFooterView *footer = [OrderDetailFooterView instanceFooterView];
-    footer.frame = CGRectMake(0, CGRectGetMaxY(tableView.frame), ScreenW, 60);
-    [self.view addSubview:footer];
-    __weak typeof (self)wSelf = self;
-    footer.footerViewBlock = ^(NSString *btnType) {
     
-        if ([btnType isEqualToString:@"pay"]) {//去支付
-            
-            
-        }else {//取消订单
-            
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定取消订单吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            alertView.delegate = wSelf;
-            [alertView show];
-        }
-    };
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

@@ -137,6 +137,8 @@
 #define kAPIConfirmOrder @"/app/api/onceOrder/confirmOrder"
 //再次支付
 #define kAPIPayAgain @"/app/api/onceOrder/prePayAgain"
+//申请权限
+#define kAPIApplyRoot @"/app/api/account/showApply"
 /**
  * 处于发布阶段
  */

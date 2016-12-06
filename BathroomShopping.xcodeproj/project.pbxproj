@@ -1746,6 +1746,8 @@
 					};
 					5AF9D17F1D25FA42009C2759 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = HKTFA7L9W6;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 5AF9D1661D25FA41009C2759;
 					};
 					5AF9D18A1D25FA42009C2759 = {
@@ -2272,6 +2274,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = HKTFA7L9W6;
 				INFOPLIST_FILE = BathroomShoppingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzy.BathroomShoppingTests;
@@ -2284,6 +2288,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = HKTFA7L9W6;
 				INFOPLIST_FILE = BathroomShoppingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zzy.BathroomShoppingTests;

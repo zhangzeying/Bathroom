@@ -129,16 +129,13 @@
                 case 9000:
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"payAlipayCallBack" object:@"1"];
                     break;
-                    
                     //支付失败
                 case 4000:
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"payAlipayCallBack" object:@"0"];
                     break;
-                    
                     //支付正在处理中
                 case 8000:
                     break;
-                    
                 default:
                     break;
             }

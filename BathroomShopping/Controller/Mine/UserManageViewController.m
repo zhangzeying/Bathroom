@@ -29,6 +29,8 @@ static NSString *ID = @"cell";
 @property(nonatomic,strong)MineService *service;
 /** <##> */
 @property (nonatomic, weak)UITableView *table;
+/** <##> */
+@property(assign,nonatomic)BOOL isshow;
 @end
 
 @implementation UserManageViewController
@@ -46,8 +48,10 @@ static NSString *ID = @"cell";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    UserInfoModel *userModel = [[CommUtils sharedInstance] fetchUserInfo];
+    self.isshow = userModel.isshow;
     self.navigationItem.title = @"账户管理";
-    self.titleArr = @[@[@"头像",@"用户名",@"昵称"],@[@"修改密码",@"地址管理"]];
+    self.titleArr = @[@[@"头像",@"用户名",@"昵称"],@[@"修改密码",@"地址管理",@"权限申请"]];
     self.model = [[CommUtils sharedInstance] fetchUserInfo];
     [self setupTableView];
 }
@@ -135,6 +139,30 @@ static NSString *ID = @"cell";
         nickLbl.x = ScreenW - arrowImg.width - 10 - 8 - nickLbl.width;
         nickLbl.textAlignment = NSTextAlignmentRight;
         [cell.contentView addSubview:nickLbl];
+        
+    }else if (indexPath.row == 2 && indexPath.section == 1) {
+        
+        arrowImg.hidden = YES;
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.titleLabel.font = [UIFont systemFontOfSize:11];
+        [cell.contentView addSubview:btn];
+        if (self.isshow) {
+            
+            [btn setTitle:@"审核已通过" forState:UIControlStateNormal];
+            btn.enabled = NO;
+            [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            
+        }else {
+        
+            [btn setTitle:@"申请" forState:UIControlStateNormal];
+            btn.backgroundColor = [UIColor redColor];
+            [btn addTarget:self action:@selector(applyClick) forControlEvents:UIControlEventTouchUpInside];
+        }
+        [btn sizeToFit];
+        btn.centerY = cell.height / 2;
+        btn.layer.cornerRadius = 12;
+        btn.x = ScreenW - arrowImg.width - 10 - 8 - btn.width;
+        
     }
     return cell;
 }
@@ -223,7 +251,14 @@ static NSString *ID = @"cell";
             [[NSNotificationCenter defaultCenter]postNotificationName:@"loginStateChange" object:nil];
         }];
     }];
-    
+}
+
+/**
+ * 申请权限
+ */
+- (void)applyClick {
+
+    [self.service applyUserRoot];
 }
 
 - (void)didReceiveMemoryWarning {

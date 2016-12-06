@@ -49,4 +49,8 @@
  * 获取关于我们公司介绍
  */
 - (void)getAboutContent:(void(^)(id))completion;
+/**
+ * 申请权限
+ */
+- (void)applyUserRoot;
 @end

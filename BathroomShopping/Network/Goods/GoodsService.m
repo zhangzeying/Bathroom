@@ -52,9 +52,8 @@
  */
 - (void)getGoodsDetailInfo:(NSString *)goodsId completion:(void(^)(id))completion {
     
-    NSDictionary *params = @{@"token":[[CommUtils sharedInstance] fetchToken]?:@""};
     [MBProgressHUD showMessage:@"加载中....."];
-    [self.restService afnetworkingPost:kAPIGoodsDetailInfo(goodsId) parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+    [self.restService afnetworkingPost:kAPIGoodsDetailInfo(goodsId) parameters:nil completion:^(id myAfNetBlokResponeDic, BOOL flag) {
         [MBProgressHUD hideHUD];
         if (flag) {
             

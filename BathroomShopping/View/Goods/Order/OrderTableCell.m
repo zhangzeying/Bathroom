@@ -71,7 +71,6 @@ static NSString *ID = @"orderTableCell";
         nameLbl.centerY = scroll.height / 2;
         nameLbl.font = [UIFont systemFontOfSize:13];
         [scroll addSubview:nameLbl];
-        
         self.totalNumLbl.hidden = YES;
         
     }else {

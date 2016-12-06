@@ -321,6 +321,27 @@
 }
 
 /**
+ * 申请权限
+ */
+- (void)applyUserRoot {
+    
+    NSDictionary *parameters = @{@"token":[[CommUtils sharedInstance] fetchToken]};
+    [SVProgressHUD show];
+    [self.restService afnetworkingPost:kAPIApplyRoot parameters:parameters completion:^(id myAfNetBlokResponeDic, BOOL flag) {
+        
+        if (flag) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"申请成功，请等待审核！" maskType:SVProgressHUDMaskTypeBlack];
+            
+        }else {
+        
+            [SVProgressHUD showSuccessWithStatus:@"申请失败，请重试！" maskType:SVProgressHUDMaskTypeBlack];
+        }
+        
+    }];
+}
+
+/**
  * 获取关于我们公司介绍
  */
 - (void)getAboutContent:(void(^)(id))completion {

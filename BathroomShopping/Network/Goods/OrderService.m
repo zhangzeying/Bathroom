@@ -187,11 +187,11 @@
  */
 - (void)payAgain:(NSDictionary *)params completion:(void(^)(id))completion {
 
-    [SVProgressHUD show];
+    [MBProgressHUD showMessage:@"加载中....."];
     [self.restService afnetworkingPost:kAPIPayAgain parameters:params completion:^(id myAfNetBlokResponeDic, BOOL flag) {
         if (flag) {
             
-            [SVProgressHUD dismiss];
+            [MBProgressHUD hideHUD];
             NSDictionary *dictData = myAfNetBlokResponeDic;
             completion(dictData[@"result"]);
         }

@@ -76,7 +76,7 @@
     __weak typeof (self)weakSelf = self;
     if (indexPath.row == 0) {//支付宝支付
         
-        if (self.orderId == nil) {
+        if (self.orderId == nil) {//如果是正常支付
             
             if (self.isOneMoneyLottery) {//如果是一元抢购抽奖
                 
@@ -97,7 +97,7 @@
                 }];
             }
             
-        }else {
+        }else {//如果是再次支付
         
             NSDictionary *params = @{@"orderId":self.orderId,
                                      @"payType":@"zfb",
@@ -112,7 +112,7 @@
         
     }else {//微信支付
         
-        if (self.orderId == nil) {
+        if (self.orderId == nil) {//如果是正常支付
         
             if (self.isOneMoneyLottery) {//如果是一元抢购抽奖
                 
@@ -132,7 +132,7 @@
                     [weakSelf pay:dict payType:@"weixin"];
                 }];
             }
-        }else {
+        }else {//如果是再次支付
         
             NSDictionary *params = @{@"orderId":self.orderId,
                                      @"payType":@"wx",
@@ -208,12 +208,19 @@
     //如果支付成功跳转成功的页面
     if ([state isEqualToString:@"1"]) {
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"OrderSuccess" object:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+//        self.tabBarController.selectedIndex = 3;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [SVProgressHUD showSuccessWithStatus:@"支付成功！"];
+        });
     }
     
     //如果支付失败跳转失败的页面
     else {
        
-        
+        [SVProgressHUD showSuccessWithStatus:@"支付失败！"];
     }
 }
 
@@ -226,13 +233,19 @@
     //如果支付成功跳转成功的页面
     if ([state isEqualToString:@"1"]) {
         
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"OrderSuccess" object:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        //        self.tabBarController.selectedIndex = 3;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [SVProgressHUD showSuccessWithStatus:@"支付成功！"];
+        });
     }
     
     //如果支付失败跳转失败的页面
     else {
         
-        
+        [SVProgressHUD showSuccessWithStatus:@"支付失败！"];
     }
     
 }
