@@ -213,6 +213,7 @@
     
         if ([[CommUtils sharedInstance] isLogin]) {
             
+            
             NSDictionary *param = @{@"packageID":self.detailModel.packageId,
                                     @"proIDs":self.detailModel.productIds,
                                     @"desIDs":self.detailModel.specIds,
@@ -220,7 +221,7 @@
                                     @"token":[[CommUtils sharedInstance] fetchToken]};
             
             __weak typeof (self)weakSelf = self;
-            [self.service updateCartCount:param completion:^{
+            [self.service updatePackageCartCount:param completion:^{
                 
                 weakSelf.detailModel.buyCount--;
                 weakSelf.buyCount.text = [NSString stringWithFormat:@"%ld",(long)weakSelf.detailModel.buyCount];
