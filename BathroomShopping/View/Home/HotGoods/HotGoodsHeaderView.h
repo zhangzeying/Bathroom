@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HotGoodsHeaderView : UICollectionReusableView
-
+@property (weak, nonatomic) IBOutlet UILabel *titleLbl;
 @end

@@ -18,5 +18,7 @@
 /** <##> */
 @property(assign,nonatomic)double totalPrice;
 /** <##> */
+@property(assign,nonatomic)NSInteger sellCount;
+/** <##> */
 @property(nonatomic,strong)NSMutableArray *productList;
 @end

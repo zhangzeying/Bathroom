@@ -10,7 +10,7 @@
 
 @interface HotGoodsHeaderView()
 @property (weak, nonatomic) IBOutlet UILabel *splitView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLbl;
+
 
 @end
 

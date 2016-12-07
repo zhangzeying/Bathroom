@@ -8,6 +8,7 @@
 
 #import "HotGoodsCollectionCell.h"
 #import "ActivityGoodsDetailModel.h"
+#import "MallPackageModel.h"
 @interface HotGoodsCollectionCell()
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImage;
@@ -38,6 +39,15 @@
 
     self.price.text = [NSString stringWithFormat:@"￥%@",model.price];
     self.saleCountLbl.text = [NSString stringWithFormat:@"已售数量%ld",(long)model.sellCount];
+}
 
+- (void)setPackageModel:(MallPackageModel *)packageModel {
+    
+    _packageModel = packageModel;
+    self.goodsNameLbl.text = packageModel.name;
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, packageModel.picture];
+    [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"sys_xiao8"]];
+    self.price.text = [NSString stringWithFormat:@"￥%.2f",packageModel.totalPrice];
+    self.saleCountLbl.text = [NSString stringWithFormat:@"已售数量%ld",(long)packageModel.sellCount];
 }
 @end

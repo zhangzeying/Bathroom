@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 @class ActivityGoodsDetailModel;
-
+@class MallPackageModel;
 @interface HotGoodsCollectionCell : UICollectionViewCell
 /** 模型 */
 @property(nonatomic,strong)ActivityGoodsDetailModel *model;
+/** 模型 */
+@property(nonatomic,strong)MallPackageModel *packageModel;
 @end

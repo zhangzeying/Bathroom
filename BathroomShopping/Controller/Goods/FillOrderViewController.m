@@ -544,11 +544,6 @@
             [weakSelf initView];
         }
     }];
-    
-    
-    
-    
-    
 }
 
 - (void)submitClick {
