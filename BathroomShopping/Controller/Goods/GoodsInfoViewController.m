@@ -34,6 +34,7 @@
 #import "MallPackageModel.h"
 #import "PackageSpecModel.h"
 #import "FillOrderViewController.h"
+#import "EmitterButton.h"
 typedef NS_ENUM(NSInteger ,PopViewType){
     
     SpecView, //规格view
@@ -82,7 +83,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
 /** 推荐商品数组 */
 @property(nonatomic,strong)NSMutableArray *recommendGoodsArr;
 /** <##> */
-@property (nonatomic, weak)CustomButton *likeBtn;
+@property (nonatomic, weak)EmitterButton *likeBtn;
 /** <##> */
 @property (nonatomic, weak)GoodsInfoDetailViewController *goodsInfoDetailVC;
 /** <##> */
@@ -528,7 +529,7 @@ typedef NS_ENUM(NSInteger ,PopViewType){
     [appointBtn addTarget:self action:@selector(appointClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:appointBtn];
     
-    CustomButton *likeBtn = [[CustomButton alloc]init];
+    EmitterButton *likeBtn = [[EmitterButton alloc]init];
     likeBtn.frame = CGRectMake(CGRectGetMaxX(appointBtn.frame), 6, ScreenW / 8, bottomView.height);
     [likeBtn setImage:[UIImage imageNamed:@"like_icon"] forState:UIControlStateSelected];
     [likeBtn setImage:[UIImage imageNamed:@"not_like_icon"] forState:UIControlStateNormal];

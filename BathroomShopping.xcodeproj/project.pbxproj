@@ -31,6 +31,7 @@
 		5A030DEF1D9D607A00F01D1A /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A030DEE1D9D607A00F01D1A /* NSObject+Extension.m */; };
 		5A0858C31D78463300B78879 /* OrderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0858C21D78463300B78879 /* OrderService.m */; };
 		5A0941411D964193009CAF01 /* GradualLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0941401D964193009CAF01 /* GradualLabel.m */; };
+		5A0969681DFA792F00AFB699 /* EmitterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0969671DFA792F00AFB699 /* EmitterButton.m */; };
 		5A09A5251D600EB4002C1A02 /* GoodsActivityTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A09A5231D600EB4002C1A02 /* GoodsActivityTableCell.m */; };
 		5A09A5261D600EB4002C1A02 /* GoodsActivityTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A09A5241D600EB4002C1A02 /* GoodsActivityTableCell.xib */; };
 		5A09A52A1D600ED8002C1A02 /* GoodsRecommendTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A09A5281D600ED8002C1A02 /* GoodsRecommendTableCell.m */; };
@@ -165,6 +166,7 @@
 		5A9DA5B81DB4B18A00726830 /* OrderDetailGoodsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A9DA5B71DB4B18A00726830 /* OrderDetailGoodsTableCell.xib */; };
 		5A9DA5BE1DB4B58400726830 /* UIView+WarnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9DA5BD1DB4B58400726830 /* UIView+WarnView.m */; };
 		5A9E084B1D584C580032129C /* GoodsRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E084A1D584C580032129C /* GoodsRefreshHeader.m */; };
+		5AA0A1971E0B6EBC009D9D6B /* LoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA0A1961E0B6EBC009D9D6B /* LoginButton.m */; };
 		5AAC15241D9AB0240024A5FC /* MallPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAC15231D9AB0240024A5FC /* MallPackageModel.m */; };
 		5ADBAFF11D93672B002225E5 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADBAFF01D93672B002225E5 /* OrderModel.m */; };
 		5ADBAFF41D936CA4002225E5 /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADBAFF31D936CA4002225E5 /* OrderDetailModel.m */; };
@@ -287,6 +289,8 @@
 		5A0858C21D78463300B78879 /* OrderService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderService.m; sourceTree = "<group>"; };
 		5A09413F1D964193009CAF01 /* GradualLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradualLabel.h; sourceTree = "<group>"; };
 		5A0941401D964193009CAF01 /* GradualLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradualLabel.m; sourceTree = "<group>"; };
+		5A0969661DFA792F00AFB699 /* EmitterButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmitterButton.h; sourceTree = "<group>"; };
+		5A0969671DFA792F00AFB699 /* EmitterButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmitterButton.m; sourceTree = "<group>"; };
 		5A09A5221D600EB4002C1A02 /* GoodsActivityTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsActivityTableCell.h; sourceTree = "<group>"; };
 		5A09A5231D600EB4002C1A02 /* GoodsActivityTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsActivityTableCell.m; sourceTree = "<group>"; };
 		5A09A5241D600EB4002C1A02 /* GoodsActivityTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsActivityTableCell.xib; sourceTree = "<group>"; };
@@ -599,6 +603,8 @@
 		5A9DA5BD1DB4B58400726830 /* UIView+WarnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WarnView.m"; sourceTree = "<group>"; };
 		5A9E08491D584C580032129C /* GoodsRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsRefreshHeader.h; sourceTree = "<group>"; };
 		5A9E084A1D584C580032129C /* GoodsRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsRefreshHeader.m; sourceTree = "<group>"; };
+		5AA0A1951E0B6EBC009D9D6B /* LoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginButton.h; sourceTree = "<group>"; };
+		5AA0A1961E0B6EBC009D9D6B /* LoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginButton.m; sourceTree = "<group>"; };
 		5AAC15231D9AB0240024A5FC /* MallPackageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallPackageModel.m; sourceTree = "<group>"; };
 		5ADBAFEF1D93672B002225E5 /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
 		5ADBAFF01D93672B002225E5 /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
@@ -1451,6 +1457,10 @@
 				5AE10D941D4DB211003551C1 /* CustomButton.m */,
 				5A3510E61D6549D00067A8F8 /* MyButton.h */,
 				5A3510E71D6549D00067A8F8 /* MyButton.m */,
+				5A0969661DFA792F00AFB699 /* EmitterButton.h */,
+				5A0969671DFA792F00AFB699 /* EmitterButton.m */,
+				5AA0A1951E0B6EBC009D9D6B /* LoginButton.h */,
+				5AA0A1961E0B6EBC009D9D6B /* LoginButton.m */,
 			);
 			path = UIButton;
 			sourceTree = "<group>";
@@ -1904,6 +1914,7 @@
 				5A7E00981D5ED24D00526228 /* GoodsInfoTableCell.m in Sources */,
 				5A030DEF1D9D607A00F01D1A /* NSObject+Extension.m in Sources */,
 				5A1436F51D72A671008E89C6 /* ReceiverAddressModel.m in Sources */,
+				5A0969681DFA792F00AFB699 /* EmitterButton.m in Sources */,
 				5AE10DA71D4E2F64003551C1 /* ScrollTitleView.m in Sources */,
 				5A0D91E51D2BEB4B00EB4FCD /* CustomSearchBar.m in Sources */,
 				5AFF72741D71553100A1A04A /* OrderViewController.m in Sources */,
@@ -2037,6 +2048,7 @@
 				5ADBAFF41D936CA4002225E5 /* OrderDetailModel.m in Sources */,
 				5A18192B1D27836000EC7447 /* HomeViewController.m in Sources */,
 				5A0DCF241D6ED61800C8CAE7 /* NSDate+Extension.m in Sources */,
+				5AA0A1971E0B6EBC009D9D6B /* LoginButton.m in Sources */,
 				5A3510E81D6549D00067A8F8 /* MyButton.m in Sources */,
 				5A2808251D34E47700DCFC30 /* HotAndHistorySearchView.m in Sources */,
 				5A7370D41D3E48B5004DD025 /* HomeScrollNewsView.m in Sources */,

@@ -33,7 +33,7 @@
     _model = model;
     self.goodsNameLbl.text = model.name;
     
-    self.goodsImage.contentMode = UIViewContentModeScaleAspectFit;
+    self.goodsImage.contentMode = UIViewContentModeScaleToFill;
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",baseurl, model.picture];
     [self.goodsImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"sys_xiao8"]];
 
